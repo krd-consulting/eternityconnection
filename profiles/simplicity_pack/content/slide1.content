@@ -1,0 +1,68 @@
+<?php
+global $base_url;
+$node = array(
+    'type' => 'hp_slide',
+    'title' => 'We are simplicity',
+    'field_link' =>
+          array (
+            'und' =>
+            array (
+              0 =>
+              array (
+                'value' => $base_url.'/#',
+                'format' => NULL,
+                'safe_value' => 'http://simplicity.local/#',
+              ),
+            ),
+          ),
+    'body' => array(
+        'und' => array(
+            0 => array(
+                'value' => '',
+                'summary' => '',
+                'format' => 'filtered_html',
+            ),
+        )
+    ),
+    'field_subtext' =>
+              array (
+                'und' =>
+                array (
+                  0 =>
+                  array (
+                    'value' => '<p class="title">Building <span class="theme_color">Drupal custom themes</span> since 2008</p>
+
+                                <div class="contrast">
+                                <div class="hi-icon-wrap hi-icon-effect-8 hi-icon-effect-8a">
+                                <ul class="inline-list">
+                                	<li><a class="hi-icon fa fa-coffee" href="#" target="_self"><!-- icon --></a>
+
+                                	<p class="title">Coffee based</p>
+                                	</li>
+                                	<li><a class="hi-icon fa fa-headphones" href="#" target="_self"><!-- icon --></a>
+                                	<p class="title">Sound proof</p>
+                                	</li>
+                                	<li><a class="hi-icon fa fa-mobile" href="#" target="_self"><!-- icon --></a>
+                                	<p class="title">Mobile ready</p>
+                                	</li>
+                                </ul>
+                                </div>
+                                </div>
+',
+                    'summary' => '',
+                    'format' => 'full_html',
+                  ),
+                ),
+    ),
+    'language' => 'en',
+    'uid' => 3,
+    'status' => 1,
+    'promote' => 0,
+    'sticky' => 0,
+    'comment' => 0,
+    'format' => 2,
+    'revision' => 0,
+    'field_hp_slide' => array(
+        '0' => 'profiles/simplicity_pack/content/Images/slide1.jpg',
+    )
+);

@@ -1,0 +1,16 @@
+name = Big Blue Button Views
+description = Provides integration and default views.
+package = Big Blue Button
+dependencies[] = bbb
+dependencies[] = views
+core = 7.x
+
+; Views Handlers
+files[] = includes/views_handler_field_bbb_join_attendee.inc
+files[] = includes/views_handler_field_bbb_join_moderator.inc
+; Information added by Drupal.org packaging script on 2016-07-21
+version = "7.x-1.1"
+core = "7.x"
+project = "bbb"
+datestamp = "1469099566"
+

@@ -1,0 +1,546 @@
+<?php
+
+$pages = array(
+    0 => array(
+            'type' => 'page',
+            'title' => 'About this theme',
+            'body' => array(
+                'und' => array(
+                    0 => array(
+                        'value' => '
+                        <p>Simplicity is a simple<span class="theme_color">Drupal</span> theme that targets what you need and what you need only. Take leverage of all the Drupal functionalities with our custom Portfolio, Blog, Twitter integration, full layout customization and more</p><hr>
+                        <div style="text-align:center;">
+                                    <div class="row" style="text-align:center;">
+                                      <h3 class="theme_color">Theme features</h3>
+                                    <p>&nbsp;</p><div class="col-md-4">
+                                                                        <i class="fa fa-tablet fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>100% Responsive Design</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    <p><br></p></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                                                        <i class="fa fa-magic fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>Unlimited fonts and colors</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    <p><br></p></div>
+                                    </div>
+                                    <div class="col-md-4">
+                                                                        <i class="fa fa-flag fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>Hundreds of icons</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    <p><br></p></div>
+                                    </div>
+                                    </div>
+                                    <div class="row" style="text-align:center;">
+                                    <div class="col-md-4"><i class="fa fa-pencil fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>4 Different Portfolio types</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4"><i class="fa fa-puzzle-piece fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>3 types of Blog pages</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    <p>&nbsp;</p>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4"><i class="fa fa-picture-o fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>Different slider options</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    <p>&nbsp;</p>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <div class="row" style="text-align:center;">
+                                    <div class="col-md-4">
+                                                                        <i class="fa fa-desktop fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>Personalized support</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                                                        <i class="fa fa-twitter fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>Twitter integration</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                                                        <i class="fa fa-code fa-2x bg_circle">
+                                    <!-- icon --></i><p></p>
+                                    <div class="highlight_content">
+                                    <h4>Clean code</h4>
+                                    <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <p>                                    &nbsp;</p>
+                                    <hr><p>This theme is available exclusively in themeforest.If you have any questions about the theme feel free to contact us through our themeforest account by clicking in the link bellow.</p>
+                                    <p>                                    <br><br><a class="btn btn-primary btn-lg" href="http://themeforest.net/user/joaogarin" target="_blank">Send us a message</a></p></div>',
+                        'summary' => '',
+                        'format' => 'full_html',
+                    ),
+                )
+            ),
+            'language' => 'und',
+            'menu' => array(
+                'enabled' => 1,
+                'mlid' => 0,
+                'module' => 'menu',
+                'hidden' => 0,
+                'has_children' => 0,
+                'customized' => 0,
+                'options' => array(),
+                'expanded' => 0,
+                'parent_depth_limit' => 8,
+                'link_title' => 'About',
+                'description' => '',
+                'parent' => 'main-menu:0',
+                'weight' => 1,
+                'plid' => 0,
+                'menu_name' => 'main-menu'
+            ),
+            'uid' => 3,
+            'status' => 1,
+            'promote' => 0,
+            'sticky' => 1,
+            'comment' => 0,
+            'format' => 2,
+            'revision' => 0,
+        ),
+        1 => array(
+        'type' => 'page',
+        'title' => 'Shortcodes included',
+        'body' => array(
+            'und' => array(
+                0 => array(
+                    'value' => '<p>Here you can find some explanation on how to use some of bootstrap and fontawesome predefined elements. Using these elements will save you a lot of work and time, not having to code everything by hand for making accordions, slideshows, alert messages, different kinds of buttons etc..</p>
+
+                                <div>
+                                <h3 class="theme_color">Using Javascript components</h3>
+
+                                <h4 class="underline_title_thin">Accordion</h4>
+
+                                <div>
+                                <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                <div class="panel-heading">
+                                <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" href="#collapseOne">Collapsible Group Item #1 </a></h4>
+                                </div>
+
+                                <div class="panel-collapse collapse in" id="collapseOne">
+                                <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
+                                </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                <div class="panel-heading">
+                                <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" href="#collapseTwo">Collapsible Group Item #2 </a></h4>
+                                </div>
+
+                                <div class="panel-collapse collapse" id="collapseTwo">
+                                <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
+                                </div>
+                                </div>
+
+                                <div class="panel panel-default">
+                                <div class="panel-heading">
+                                <h4 class="panel-title"><a data-parent="#accordion" data-toggle="collapse" href="#collapseThree">Collapsible Group Item #3 </a></h4>
+                                </div>
+
+                                <div class="panel-collapse collapse" id="collapseThree">
+                                <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.</div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+
+                                <h4 class="underline_title_thin">Tooltips</h4>
+
+                                <ul class="inline-list">
+                                	<li><button class="btn btn-default" data-placement="left" data-toggle="tooltip" title="Tooltip on left" type="button">Tooltip on left</button></li>
+                                	<li><button class="btn btn-default" data-placement="top" data-toggle="tooltip" title="Tooltip on top" type="button">Tooltip on top</button></li>
+                                	<li><button class="btn btn-default" data-placement="bottom" data-toggle="tooltip" title="Tooltip on bottom" type="button">Tooltip on bottom</button></li>
+                                	<li><button class="btn btn-default" data-placement="right" data-toggle="tooltip" title="Tooltip on right" type="button">Tooltip on right</button></li>
+                                </ul>
+
+                                <h4 class="underline_title_thin">Popover</h4>
+
+                                <ul class="inline-list">
+                                	<li><button class="btn btn-default" data-container="body" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="left" data-toggle="popover" type="button">Popover on left</button></li>
+                                	<li><button class="btn btn-default" data-container="body" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="top" data-toggle="popover" type="button">Popover on top</button></li>
+                                	<li><button class="btn btn-default" data-container="body" data-content="Vivamus
+                                                                sagittis lacus vel augue laoreet rutrum faucibus." data-placement="bottom" data-toggle="popover" type="button">Popover on bottom</button></li>
+                                	<li><button class="btn btn-default" data-container="body" data-content="Vivamus sagittis lacus vel augue laoreet rutrum faucibus." data-placement="right" data-toggle="popover" type="button">Popover on right</button></li>
+                                </ul>
+                                </div>
+
+                                <p>&nbsp;</p>
+
+                                <div>
+                                <h3 class="theme_color">Buttons</h3>
+
+                                <h4 class="underline_title_thin">Button types</h4>
+
+                                <div>
+                                <ul class="inline-list">
+                                	<li><!-- Standard button --><button class="btn btn-default" type="button">Default</button></li>
+                                	<li><!-- Provides extra visual weight and identifies the primary action in a set of buttons --><button class="btn btn-primary" type="button">Primary</button></li>
+                                	<li><!-- Indicates a successful or positive action --><button class="btn btn-success" type="button">Success</button></li>
+                                	<li><!-- Contextual button for informational alert messages --><button class="btn btn-info" type="button">Info</button></li>
+                                	<li><!-- Indicates caution should be taken with this action --><button class="btn btn-warning" type="button">Warning</button></li>
+                                	<li><!-- Indicates a dangerous or potentially negative action --><button class="btn btn-danger" type="button">Danger</button></li>
+                                	<li><!-- Deemphasize a button by making it look like a link while maintaining button behavior --><button class="btn btn-link" type="button">Link</button></li>
+                                </ul>
+                                </div>
+
+                                <h4 class="underline_title_thin">Button sizes</h4>
+
+                                <div>
+                                <ul class="inline-list">
+                                	<li><button class="btn btn-primary btn-lg" type="button">Large button</button></li>
+                                	<li><button class="btn btn-primary" type="button">Default button</button></li>
+                                	<li><button class="btn btn-primary btn-sm" type="button">Small button</button></li>
+                                	<li><button class="btn btn-primary btn-xs" type="button">Extra small button</button></li>
+                                </ul>
+                                </div>
+                                </div>
+
+                                <p>&nbsp;</p>
+
+                                <div>
+                                <h3 class="theme_color">Progress bars</h3>
+
+                                <h4 class="underline_title_thin">With label</h4>
+
+                                <div>
+                                <div class="progress">
+                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" class="progress-bar" role="progressbar" style="width: 60%;">60%</div>
+                                </div>
+                                </div>
+
+                                <h4 class="underline_title_thin">Contextual alternatives</h4>
+
+                                <div>
+                                <div class="progress">
+                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" class="progress-bar progress-bar-success" role="progressbar" style="width: 40%"><span class="sr-only">40% Complete (success)</span></div>
+                                </div>
+
+                                <div class="progress">
+                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" class="progress-bar progress-bar-info" role="progressbar" style="width: 20%"><span class="sr-only">20% Complete</span></div>
+                                </div>
+
+                                <div class="progress">
+                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" class="progress-bar progress-bar-warning" role="progressbar" style="width: 60%"><span class="sr-only">60% Complete (warning)</span></div>
+                                </div>
+
+                                <div class="progress">
+                                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" class="progress-bar progress-bar-danger" role="progressbar" style="width: 80%"><span class="sr-only">80% Complete</span></div>
+                                </div>
+                                </div>
+                                &nbsp;
+
+                                <div>
+                                <h3 class="theme_color">Grid system</h3>
+
+                                <h4 class="underline_title_thin">12 column fluid grid</h4>
+
+                                <div class="grid_system">
+                                <div class="container" style="max-width:100%;">
+                                <div class="row">
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+
+                                <div class="col-md-1">.col-md-1</div>
+                                </div>
+
+                                <div class="row">
+                                <div class="col-md-8">.col-md-8</div>
+
+                                <div class="col-md-4">.col-md-4</div>
+                                </div>
+
+                                <div class="row">
+                                <div class="col-md-4">.col-md-4</div>
+
+                                <div class="col-md-4">.col-md-4</div>
+
+                                <div class="col-md-4">.col-md-4</div>
+                                </div>
+
+                                <div class="row">
+                                <div class="col-md-6">.col-md-6</div>
+
+                                <div class="col-md-6">.col-md-6</div>
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+
+                                <p>&nbsp;</p>
+
+                                <div>
+                                <h3 class="theme_color">Alerts</h3>
+
+                                <h4 class="underline_title_thin">Pre-defined alert messages</h4>
+
+                                <div class="bs-example">
+                                <div class="alert alert-success"><strong>Well done!</strong> You successfully read this important alert message.</div>
+
+                                <div class="alert alert-info"><strong>Heads up!</strong> This alert needs your attention, but its not super important.</div>
+
+                                <div class="alert alert-warning"><strong>Warning!</strong> Better check yourself, you are not looking too good.</div>
+
+                                <div class="alert alert-danger"><strong>Oh snap!</strong> Change a few things up and try submitting again.</div>
+                                </div>
+                                </div>
+
+                                <p>&nbsp;</p>
+
+                                <div>
+                                <h3 class="theme_color">Icons</h3>
+
+                                <h4 class="underline_title_thin">Some of the latest icons</h4>
+
+                                <ul class="inline-list gray_icons">
+                                	<li><i class="fa fa-rub fa-1x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-pagelines fa-1x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-toggle-left fa-1x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-try fa-1x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-dot-circle-o fa-1x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-turkish-lira fa-1x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-plus-square-o fa-1x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-vimeo-square fa-1x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-wheelchair fa-1x theme_color"><!-- icon --></i></li>
+                                </ul>
+
+                                <h4 class="underline_title_thin">Social icons</h4>
+
+                                <div>
+                                <ul class="inline-list">
+                                	<li><i class="fa fa-facebook fa-2x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-twitter fa-2x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-google-plus fa-2x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-linkedin fa-2x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-pinterest fa-2x theme_color"><!-- icon --></i></li>
+                                	<li><i class="fa fa-tumblr fa-2x theme_color"><!-- icon --></i></li>
+                                </ul>
+                                </div>
+                                </div>
+
+                                <div>
+                                <h4 class="underline_title_thin">Fontawesome icons</h4>
+
+                                <div>
+                                <ul class="inline-list">
+                                	<li><i class="fa fa-desktop fa-2x bg_circle"><!-- icon --></i></li>
+                                	<li><i class="fa fa-bell fa-2x bg_circle"><!-- icon --></i></li>
+                                	<li><i class="fa fa-microphone fa-2x bg_circle"><!-- icon --></i></li>
+                                	<li><i class="fa fa-fire fa-2x bg_circle"><!-- icon --></i></li>
+                                	<li><i class="fa fa-cloud-upload fa-2x bg_circle"><!-- icon --></i></li>
+                                	<li><i class="fa fa-desktop fa-2x bg_circle"><!-- icon --></i></li>
+                                	<li><i class="fa fa-headphones fa-2x bg_circle"><!-- icon --></i></li>
+                                </ul>
+                                </div>
+                                </div>
+
+                                <div>
+                                <h4 class="underline_title_thin">9 Different icon effects</h4>
+                                <br />
+                                <a class="btn btn-primary btn-lg" href="/content/16-different-icon-effects">See the icon effects</a>
+
+                                <div>&nbsp;</div>
+                                </div>
+                                </div>
+
+                                <hr />
+                                <p>Not that not every feature is listed here, for a full documentation of the features in both bootstrap and fontawesome visit the pages. Information is presented in the right sidebar.</p>
+',
+                    'summary' => '',
+                    'format' => 'full_html',
+                ),
+            )
+        ),
+        'language' => 'und',
+        'menu' => array(
+            'enabled' => 1,
+            'mlid' => 0,
+            'module' => 'menu',
+            'hidden' => 0,
+            'has_children' => 0,
+            'customized' => 0,
+            'options' => array(),
+            'expanded' => 0,
+            'parent_depth_limit' => 8,
+            'link_title' => 'Shortcoding',
+            'description' => '',
+            'parent' => 'main-menu:0',
+            'weight' => 2,
+            'plid' => 0,
+            'menu_name' => 'main-menu'
+        ),
+        'uid' => 3,
+        'status' => 1,
+        'promote' => 0,
+        'sticky' => 1,
+        'comment' => 0,
+        'format' => 2,
+        'revision' => 0,
+    ),
+    2 => array(
+            'type' => 'page',
+            'title' => '16 Different icon effects',
+            'body' => array(
+                'und' => array(
+                    0 => array(
+                        'value' => '<p>Here you can find some explanation on how to use some of bootstrap and fontawesome predefined elements. Using these elements will save you a lot of work and time, not having to code everything by hand for making accordions, slideshows, alert messages, different kinds of buttons etc..</p>
+
+                                    <ul class="inline-list">
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-1 hi-icon-effect-1a"><br />
+                                    	<a class="hi-icon fa fa-envelope" href="#" target="_self"><!-- icon --></a>
+
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-1 hi-icon-effect-1b"><br />
+                                    	<a class="hi-icon fa fa-archive" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-2 hi-icon-effect-2a"><br />
+                                    	<a class="hi-icon fa fa-bell" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-2 hi-icon-effect-2b"><br />
+                                    	<a class="hi-icon fa fa-camera" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a"><br />
+                                    	<a class="hi-icon fa fa-book" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3b"><br />
+                                    	<a class="hi-icon fa fa-briefcase" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-4 hi-icon-effect-4a"><br />
+                                    	<a class="hi-icon fa fa-heart" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-4 hi-icon-effect-4b"><br />
+                                    	<a class="hi-icon fa fa-inbox" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5a"><br />
+                                    	<a class="hi-icon fa fa-microphone" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5b"><br />
+                                    	<a class="hi-icon fa fa-flask" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-6 hi-icon-effect-6a"><br />
+                                    	<a class="hi-icon fa fa-tint" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-7 hi-icon-effect-7a"><br />
+                                    	<a class="hi-icon fa fa-list-alt" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-7 hi-icon-effect-7b"><br />
+                                    	<a class="hi-icon fa fa-file-text" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-8 hi-icon-effect-8a"><br />
+                                    	<a class="hi-icon fa fa-gift" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9a"><br />
+                                    	<a class="hi-icon fa fa-coffee" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    	<li>
+                                    	<div class="hi-icon-wrap hi-icon-effect-9 hi-icon-effect-9b"><br />
+                                    	<a class="hi-icon fa fa-bars" href="#" target="_self"><!-- icon --></a>
+                                    	<p>&nbsp;</p>
+                                    	</div>
+                                    	</li>
+                                    </ul>
+
+                                    <hr />',
+                        'summary' => '',
+                        'format' => 'full_html',
+                    ),
+                )
+            ),
+            'language' => 'und',
+            'uid' => 3,
+            'status' => 1,
+            'promote' => 0,
+            'sticky' => 1,
+            'comment' => 0,
+            'format' => 2,
+            'revision' => 0,
+        )
+);

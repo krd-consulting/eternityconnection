@@ -1,0 +1,26 @@
+<?php
+
+$quotes = array(
+    0 => array(
+        'type' => 'quote',
+        'title' => 'Albert Einstein',
+        'body' => array(
+            'und' => array(
+                0 => array(
+                    'value' => 'Everything should be made as simple as possible, but not simpler.',
+                    'summary' => '',
+                    'format' => 'full_html',
+                ),
+            )
+        ),
+        'language' => 'und',
+        'uid' => 3,
+        'status' => 1,
+        'promote' => 0,
+        'sticky' => 1,
+        'comment' => 0,
+        'format' => 2,
+        'revision' => 0,
+    ),
+);
+

@@ -1,0 +1,126 @@
+<?php
+/**
+ * @file
+ * Code for the Change theme module.
+ */
+
+function change_theme_menu() {
+
+    $items['change_theme'] = array(
+        'title' => 'Change theme',
+        'page callback' => 'change_theme_altertheme',
+        'page arguments' => array(1),
+        'access callback' => TRUE,
+    );
+
+    $items['change_theme/redirect/%'] = array(
+        'title' => 'Change theme',
+        'description' => 'Receives a theme information to change it',
+        'page callback' => 'change_theme_altertheme',
+        'page arguments' => array(2),
+        'access arguments' => TRUE,
+        'access callback' => TRUE,
+        //'type' => MENU_LOCAL_TASK,
+    );
+
+    return $items;
+}
+
+/** * Implements hook_block_info(). */
+function change_theme_block_info() {
+    $blocks = array();
+    //block array
+    $blocks['change_theme'] = array(
+        'info' => t('Change theme'),
+    );
+
+    return $blocks;
+}
+
+function change_theme_altertheme($theme){
+
+    //global $custom_theme;
+    //$custom_theme = $theme;
+    $enable = array(
+        'theme_default' => $theme,
+        // 'admin_theme' => 'seven',
+        //'zen'
+    );
+
+    theme_enable($enable);
+
+    variable_set('theme_default',$theme);
+
+    drupal_goto("<front>");
+
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function change_theme_block_view($delta = '') {
+    $block = array();
+    switch ($delta) {
+        case 'change_theme':
+            $block['subject'] = '';
+            $block['content'] = change_theme_content();
+            break;
+    }
+    return $block;
+}
+
+function change_theme_content(){
+
+    global $base_url;
+
+    $output = '
+            <div id="show_colors" style="display: block; margin-left: 0px;">
+    <a class="open_settings">
+        <i class="fa fa-cog fa-2x">
+
+        </i>
+    </a>
+</div>
+
+<div id="switch" style="margin-left: 0px; display: none;">
+    <div class="content-switcher">
+
+        <h4>Style Options</h4>
+
+        <p>Color Skins:</p>
+
+        <ul class="header">
+            <li><a class="colors" href="'.$base_url.'?color=colors"><div class="button color switch" style="background-color:#F17A4E"></div>Simple orange</a></li>
+            <li><a class="colors_blue" href="'.$base_url.'?color=colors_blue"><div class="button color switch" style="background-color:#5E9DF1"></div>Blue header</a></li>
+            <li><a class="colors_red" href="'.$base_url.'?color=colors_red"><div class="button color switch" style="background-color:#FB3A48"></div>Bright Red</a></li>
+            <li><a class="colors_yellow" href="'.$base_url.'?color=colors_yellow"><div class="button color switch" style="background-color:#FAC863"></div>Yellow</a></li>
+            <li><a class="colors_salmon" href="'.$base_url.'?color=colors_salmon"><div class="button color switch" style="background-color:#FA8072"></div>Salmon</a></li>
+            <li><a class="colors_bordeaux" href="'.$base_url.'?color=colors_bordeaux"><div class="button color switch" style="background-color:#9E404B"></div>Bordeaux</a></li>
+        </ul>
+
+        <h4>Front page Slideshow</h4>
+
+        <select class="select_slideshow_type">
+              <option value="partial">Partial</option>
+              <option value="full">Full</option>
+        </select>
+<p>&nbsp</p>
+        <h4>Style Options</h4>
+
+        <select class="select_layout_type">
+              <option value="full_width">Full width</option>
+              <option value="boxed">Boxed</option>
+        </select>
+<p>&nbsp</p>
+        <div class="clear"></div>
+        <a class="close">
+            <i class="fa fa-times fa-1x">
+
+            </i>
+        </a>
+    </div>
+</div>';
+
+    return $output;
+}

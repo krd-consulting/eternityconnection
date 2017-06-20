@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Simplicity Blog feature.
+ */
+
+include_once('simplicity_blog.features.inc');

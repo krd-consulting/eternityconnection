@@ -1,0 +1,59 @@
+<?php
+global $base_url;
+$node = array(
+    'type' => 'hp_slide',
+    'title' => 'Organization is key',
+    'field_link' =>
+              array (
+                'und' =>
+                array (
+                  0 =>
+                  array (
+                    'value' => $base_url.'/#',
+                    'format' => NULL,
+                    'safe_value' => 'http://simplicity.local/#',
+                  ),
+                ),
+              ),
+    'body' => array(
+        'und' => array(
+            0 => array(
+                'value' => '',
+                'summary' => '',
+                'format' => 'filtered_html',
+            ),
+        )
+    ),
+    'field_subtext' =>
+                  array (
+                    'und' =>
+                    array (
+                      0 =>
+                      array (
+                        'value' => '<p class="title" style="margin-top:20px;">Well structured theme, built by developers</p>
+
+                                    <div class="contrast">
+                                    <div class="hi-icon-wrap hi-icon-effect-5 hi-icon-effect-5c">
+                                    <ul>
+                                    	<li><a class="hi-icon fa fa-code" href="#" target="_self"><!-- icon --></a></li>
+                                    </ul>
+                                    </div>
+                                    </div>
+',
+                        'summary' => '',
+                        'format' => 'full_html',
+                      ),
+                    ),
+        ),
+    'language' => 'en',
+    'uid' => 3,
+    'status' => 1,
+    'promote' => 0,
+    'sticky' => 0,
+    'comment' => 0,
+    'format' => 2,
+    'revision' => 0,
+    'field_hp_slide' => array(
+      '0' => 'profiles/simplicity_pack/content/Images/slide3.jpg',
+    )
+);

@@ -1,0 +1,263 @@
+<?php
+global $base_url;
+$custom_blocks = array(
+    0 => array(
+        'title' => '<none>',
+        'description' => 'Full featured drupal theme',
+        'status' => 1,
+                'weight' => 0,
+                'region' => 'content',
+                'visibility' => 1,
+                'pages' => '<front>',
+                'cache' => -1,
+        'content' => '<div style="text-align:center;">
+                      <div class="waypoint-effect" data-waypoint-effect="scaleUp">
+                      <h2 class="block-title">Portfolio &amp; Blog <span class="theme_color">Drupal theme</span></h2>
+                      </div>
+
+                      <div class="waypoint-effect" data-waypoint-effect="fade">
+                      <p style="max-width:80%;text-align:center;margin:auto;">Simplicity is a simple<span class="theme_color">Drupal</span> theme that targets what you need and what you need only. Take leverage of all the Drupal functionalities with our custom Portfolio, Blog, Twitter integration, full layout customization and more</p>
+                      </div>
+                      &nbsp;
+
+                      <div class="row">
+                      <div class="hi-icon-wrap hi-icon-effect-2 hi-icon-effect-2a">
+                      <div class="col-md-4">
+                      <div class="waypoint-effect" data-waypoint-effect="fromLeft">
+                      <div class="highlight-icon"><a class="hi-icon fa fa-tablet " href="/content/16-different-icon-effects" target="_self"><!-- icon --></a></div>
+
+                      <div class="highlight_content">
+                      <h4>100% Responsive Design</h4>
+
+                      <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                      </div>
+                      </div>
+                      </div>
+
+                      <div class="col-md-4">
+                      <div class="waypoint-effect" data-waypoint-effect="fade">
+                      <div class="highlight-icon"><a class="hi-icon fa fa-magic" href="/content/16-different-icon-effects" target="_self"><!-- icon --></a></div>
+
+                      <div class="highlight_content">
+                      <h4>Unlimited fonts and colors</h4>
+
+                      <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                      </div>
+                      </div>
+                      </div>
+
+                      <div class="col-md-4">
+                      <div class="waypoint-effect" data-waypoint-effect="fromRight">
+                      <div class="highlight-icon"><a class="hi-icon fa fa-flag " href="/content/16-different-icon-effects" target="_self"><!-- icon --></a></div>
+
+                      <div class="highlight_content">
+                      <h4>Hundreds of icons</h4>
+
+                      <p>Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna.</p>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+',
+    ),
+    1 => array(
+        'title' => 'Multi device rock solid system',
+        'description' => 'Drupal performance block',
+        'status' => 1,
+                'weight' => 0,
+                'region' => 'second_content',
+                'visibility' => 1,
+                'pages' => '<front>',
+                'cache' => -1,
+        'content' => '<div class="waypoint-effect" data-waypoint-effect="scaleUp">
+                      <p style="max-width:80%;margin:auto;text-align:center;"><span class="theme_color">Drupal</span> is not just any CMS. Fully flexible, endless extensions and no coding to be done. Extend your website in any way imaginary with the power of custom content types taking you out of the pain of having to be limited to posts, posts and more posts.</p>
+                      </div>
+
+                      <div class="waypoint-effect" data-waypoint-effect="fade">
+                      <div style="text-align: center;margin-top: 40px;"><img src="' . $base_url . '/sites/all/themes/simplicity/images/devices.png"/></div>
+                      </div>
+
+                      <p>&nbsp;</p>
+
+                      <div class="waypoint-effect" data-waypoint-effect="fade">
+                      <div class="row" style="max-width:80%;margin:auto;">
+                      <div class="hi-icon-wrap hi-icon-effect-3 hi-icon-effect-3a">
+                      <div class="col-md-3">
+                      <div class="highlight-icon"><a class="hi-icon fa fa-lock " href="#" target="_self"><!-- icon --> </a>
+
+                      <p>&nbsp;</p>
+                      </div>
+
+                      <div class="highlight_content">
+                      <h4>Secure</h4>
+                      </div>
+                      </div>
+
+                      <div class="col-md-3">
+                      <div class="highlight-icon"><a class="hi-icon fa fa-cloud-download " href="#" target="_self"><!-- icon --> </a>
+
+                      <p>&nbsp;</p>
+                      </div>
+
+                      <div class="highlight_content">
+                      <h4>Available</h4>
+                      </div>
+                      </div>
+
+                      <div class="col-md-3">
+                      <div class="highlight-icon"><a class="hi-icon fa fa-user" href="#" target="_self"><!-- icon --> </a>
+
+                      <p>&nbsp;</p>
+                      </div>
+
+                      <div class="highlight_content">
+                      <h4>Easy to use</h4>
+                      </div>
+                      </div>
+
+                      <div class="col-md-3">
+                      <div class="highlight-icon"><a class="hi-icon fa fa-file-text-o " href="#" target="_self"><!-- icon --> </a>
+
+                      <p>&nbsp;</p>
+                      </div>
+
+                      <div class="highlight_content">
+                      <h4>Well documented</h4>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+                      </div>
+
+                      <p>&nbsp;</p>
+',
+    ),
+    2 => array(
+            'title' => '<none>',
+            'description' => 'Footer block',
+            'status' => 1,
+                    'weight' => 0,
+                    'region' => 'footer',
+                    'visibility' => 0,
+                    'pages' => '',
+                    'cache' => -1,
+            'content' => '<div style="text-align:center;">
+                          <p><h4 class="theme_color">SIMPLICITY THEME</h4></p>
+                          <ul class="social_icons"><li>
+                          <a class="social_icon" href="#" target="_self"><i class="fa fa-facebook fa-2x"><!-- icon --></i></a>
+                          </li>
+                          <li>
+                          <a class="social_icon" href="#" target="_self"><i class="fa fa-google-plus fa-2x"><!-- icon --></i></a>
+                          </li>
+                          <li>
+                          <a class="social_icon" href="#" target="_self"><i class="fa fa-github fa-2x"><!-- icon --></i></a>
+                          </li>
+                          <li>
+                          <a class="social_icon" href="#" target="_self"><i class="fa fa-twitter fa-2x"><!-- icon --></i></a>
+                          </li>
+                          <li>
+                          <a class="social_icon" href="#" target="_self"><i class="fa fa-linkedin fa-2x"><!-- icon --></i></a>
+                          </li>
+                          <li>
+                          <a class="social_icon" href="#" target="_self"><i class="fa fa-tumblr fa-2x"><!-- icon --></i></a>
+                          </li>
+                          </ul><p>
+                          Custom Drupal 7 theme - development and design by Joao Garin
+                          </p>
+                          </div>',
+        ),
+         3 => array(
+             'title' => 'Find us in social networks',
+             'description' => 'Find us - social networks',
+             'status' => 1,
+                     'weight' => 5,
+                     'region' => 'sidebar_second',
+                     'visibility' => 1,
+                     'pages' => 'blog/*
+taxonomy/*',
+                     'cache' => -1,
+             'content' => '<p>t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout</p>
+
+                           <ul class="social_icons" style="margin-top:10px;">
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-facebook fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-google-plus fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-github fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-twitter fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-linkedin fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-tumblr fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           </ul>
+',
+         ),
+         4 => array(
+             'title' => 'Find us in social networks',
+             'description' => 'Find us - social networks - left',
+             'status' => 1,
+                     'weight' => 5,
+                     'region' => 'sidebar_first',
+                     'visibility' => 1,
+                     'pages' => 'blog-left-sidebar',
+                     'cache' => -1,
+             'content' => '<p>t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout</p>
+
+                           <ul class="social_icons" style="margin-top:10px;">
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-facebook fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-google-plus fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-github fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-twitter fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-linkedin fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           	<li><a class="social_icon small" href="#" target="_self"><i class="fa fa-tumblr fa-1x"><!-- icon --></i></a>
+                           	<p>&nbsp;</p>
+                           	</li>
+                           </ul>
+',
+         ),
+         5 => array(
+             'title' => 'Bootstrap ',
+             'description' => 'Bootstrap',
+             'status' => 1,
+                     'weight' => 5,
+                     'region' => 'sidebar_second',
+                     'visibility' => 1,
+                     'pages' => 'content/shortcodes-included',
+                     'cache' => -1,
+             'content' => '<p>Bootstrap is&nbsp;the most popular front-end framework for developing responsive, mobile first projects on the web. Everything in this page you can do without one line of code. Find out more in&nbsp;<a href="http://getbootstrap.com/" target="_blank">here</a>.</p>
+',
+         ),
+       6 => array(
+           'title' => 'Fontawesome ',
+           'description' => 'Fontawesome',
+           'status' => 1,
+                   'weight' => 5,
+                   'region' => 'sidebar_second',
+                   'visibility' => 1,
+                   'pages' => 'content/shortcodes-included',
+                   'cache' => -1,
+           'content' => '<p>Font Awesome gives you scalable vector icons that can instantly be customized — size, color, drop shadow, and anything that can be done with the power of CSS.Find more icons you can use in&nbsp;<a href="http://fortawesome.github.io/Font-Awesome/" target="_blank">here</a>.</p>
+',
+       )
+);
+

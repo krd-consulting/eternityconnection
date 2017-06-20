@@ -1,0 +1,71 @@
+<?php
+global $base_url;
+$node = array(
+    'type' => 'hp_slide',
+    'title' => 'Social integration',
+    'field_link' =>
+              array (
+                'und' =>
+                array (
+                  0 =>
+                  array (
+                    'value' => $base_url.'/#',
+                    'format' => NULL,
+                    'safe_value' => 'http://simplicity.local/#',
+                  ),
+                ),
+              ),
+    'body' => array(
+        'und' => array(
+            0 => array(
+                'value' => '',
+                'summary' => '',
+                'format' => 'filtered_html',
+            ),
+        )
+    ),
+    'field_subtext' =>
+                  array (
+                    'und' =>
+                    array (
+                      0 =>
+                      array (
+                        'value' => '<p class="title"><span class="theme_color">Engaging</span> designs in functional themes</p>
+
+                                    <div class="contrast">
+                                    <div class="hi-icon-wrap hi-icon-effect-1 hi-icon-effect-1a">
+                                    <ul class="inline-list">
+                                    	<li><br />
+                                    	<a class="hi-icon fa fa-twitter" href="#" target="_self"><!-- icon --></a>
+
+                                    	<p class="title">Twitter feed</p>
+                                    	</li>
+                                    	<li><br />
+                                    	<a class="hi-icon fa fa-youtube-square" href="#" target="_self"><!-- icon --></a>
+                                    	<p class="title">Easy embeds</p>
+                                    	</li>
+                                    	<li><br />
+                                    	<a class="hi-icon fa fa-html5" href="#" target="_self"><!-- icon --></a>
+                                    	<p class="title">HTML5 & CSS3</p>
+                                    	</li>
+                                    </ul>
+                                    </div>
+                                    </div>
+',
+                        'summary' => '',
+                        'format' => 'full_html',
+                      ),
+                    ),
+        ),
+    'language' => 'en',
+    'uid' => 3,
+    'status' => 1,
+    'promote' => 0,
+    'sticky' => 0,
+    'comment' => 0,
+    'format' => 2,
+    'revision' => 0,
+    'field_hp_slide' => array(
+      '0' => 'profiles/simplicity_pack/content/Images/slide2.jpg',
+    )
+);

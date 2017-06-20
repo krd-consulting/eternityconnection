@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Quotes feature.
+ */
+
+include_once('jota_quotes.features.inc');

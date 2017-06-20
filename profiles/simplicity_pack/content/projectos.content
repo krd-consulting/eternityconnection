@@ -1,0 +1,299 @@
+<?php
+global $base_url;
+
+$projects = array(
+    0 => array(
+        'type' => 'project',
+            'title' => 'Design concept',
+            'body' => array(
+                'und' => array(
+                    0 => array(
+                        'value' => '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        ',
+                        'summary' => '',
+                        'format' => 'full_html',
+                    ),
+                )
+            ),
+            'language' => 'und',
+            'uid' => 3,
+            'status' => 1,
+            'promote' => 0,
+            'sticky' => 0,
+            'comment' => 0,
+            'format' => 2,
+            'revision' => 0,
+            'field_project_image' => array(
+                '0' => 'profiles/simplicity_pack/content/Images/project1.jpg',
+            ),
+            'field_project_type' => array(
+                '0' => array(
+                    'name' => 'Web'
+                ),
+                '1' => array(
+                    'name' => 'Creative Video'
+                ),
+                '2' => array(
+                    'name' => 'Design'
+                )
+            ),
+            'field_project_url' => array(
+                                'und' => array(
+                                      0 => array(
+                                          'value' => 'http://themeforest.net'
+                                      ),
+                                  )
+                            ),
+    ),
+    1 => array(
+            'type' => 'project',
+                'title' => 'Notebook video',
+                'body' => array(
+                    'und' => array(
+                        0 => array(
+                            'value' => '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                               ',
+                            'summary' => '',
+                            'format' => 'full_html',
+                        ),
+                    )
+                ),
+                'language' => 'und',
+                'uid' => 3,
+                'status' => 1,
+                'promote' => 0,
+                'sticky' => 0,
+                'comment' => 0,
+                'format' => 2,
+                'revision' => 0,
+                'field_project_image' => array(
+                    '0' => 'profiles/simplicity_pack/content/Images/project2.jpg',
+                ),
+                'field_project_type' => array(
+                    '0' => array(
+                        'name' => 'Video production'
+                    ),
+                    '2' => array(
+                        'name' => 'Photography'
+                    )
+                ),
+                'field_project_url' => array(
+                                    'und' => array(
+                                          0 => array(
+                                              'value' => 'http://themeforest.net'
+                                          ),
+                                      )
+                                ),
+        ),
+         2 => array(
+                 'type' => 'project',
+                     'title' => 'Corporate cards',
+                     'body' => array(
+                         'und' => array(
+                             0 => array(
+                                 'value' => '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                   ',
+                                 'summary' => '',
+                                 'format' => 'full_html',
+                             ),
+                         )
+                     ),
+                     'language' => 'und',
+                     'uid' => 3,
+                     'status' => 1,
+                     'promote' => 0,
+                     'sticky' => 0,
+                     'comment' => 0,
+                     'format' => 2,
+                     'revision' => 0,
+                     'field_project_image' => array(
+                         '0' => 'profiles/simplicity_pack/content/Images/project3.jpg',
+                     ),
+                     'field_project_type' => array(
+                         '0' => array(
+                             'name' => 'Photography'
+                         ),
+                         '1' => array(
+                             'name' => 'Creative Video'
+                         ),
+                         '2' => array(
+                             'name' => 'Web'
+                         )
+                     ),
+                     'field_project_url' => array(
+                                         'und' => array(
+                                               0 => array(
+                                                   'value' => 'http://themeforest.net'
+                                               ),
+                                           )
+                                     ),
+             ),
+             3 => array(
+              'type' => 'project',
+                  'title' => 'Flyer promo',
+                  'body' => array(
+                      'und' => array(
+                          0 => array(
+                              'value' => '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>',
+                              'summary' => '',
+                              'format' => 'full_html',
+                          ),
+                      )
+                  ),
+                  'language' => 'und',
+                  'uid' => 3,
+                  'status' => 1,
+                  'promote' => 0,
+                  'sticky' => 0,
+                  'comment' => 0,
+                  'format' => 2,
+                  'revision' => 0,
+                  'field_project_image' => array(
+                      '0' => 'profiles/simplicity_pack/content/Images/project4.jpg',
+                  ),
+                  'field_project_type' => array(
+                      '0' => array(
+                          'name' => 'Design'
+                      ),
+                        '1' => array(
+                            'name' => 'Photography'
+                        ),
+                        '2' => array(
+                            'name' => 'Creative Video'
+                        )
+                  ),
+                  'field_project_url' => array(
+                                      'und' => array(
+                                            0 => array(
+                                                'value' => 'http://themeforest.net'
+                                            ),
+                                        )
+                                  ),
+          ),
+            4 => array(
+             'type' => 'project',
+                 'title' => 'Print project',
+                 'body' => array(
+                     'und' => array(
+                         0 => array(
+                             'value' => '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>',
+                             'summary' => '',
+                             'format' => 'full_html',
+                         ),
+                     )
+                 ),
+                 'language' => 'und',
+                 'uid' => 3,
+                 'status' => 1,
+                 'promote' => 0,
+                 'sticky' => 0,
+                 'comment' => 0,
+                 'format' => 2,
+                 'revision' => 0,
+                 'field_project_image' => array(
+                     '0' => 'profiles/simplicity_pack/content/Images/project5.jpg',
+                 ),
+                 'field_project_type' => array(
+                     '0' => array(
+                         'name' => 'Video production'
+                     ),
+                      '1' => array(
+                          'name' => 'Design'
+                      ),
+                      '2' => array(
+                          'name' => 'Creative Video'
+                      )
+                 ),
+                 'field_project_url' => array(
+                                     'und' => array(
+                                           0 => array(
+                                               'value' => 'http://themeforest.net'
+                                           ),
+                                       )
+                                 ),
+         ),
+         5 => array(
+          'type' => 'project',
+              'title' => 'Digital Magazine',
+              'body' => array(
+                  'und' => array(
+                      0 => array(
+                          'value' => '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>',
+                          'summary' => '',
+                          'format' => 'full_html',
+                      ),
+                  )
+              ),
+              'language' => 'und',
+              'uid' => 3,
+              'status' => 1,
+              'promote' => 0,
+              'sticky' => 0,
+              'comment' => 0,
+              'format' => 2,
+              'revision' => 0,
+              'field_project_image' => array(
+                  '0' => 'profiles/simplicity_pack/content/Images/project6.jpg',
+              ),
+              'field_project_type' => array(
+                  '0' => array(
+                      'name' => 'Web'
+                  ),
+                  '1' => array(
+                      'name' => 'Photography'
+                  ),
+                  '2' => array(
+                      'name' => 'Creative Video'
+                  )
+              ),
+              'field_project_url' => array(
+                    'und' => array(
+                          0 => array(
+                              'value' => 'http://themeforest.net'
+                          ),
+                      )
+                ),
+      ),
+     6 => array(
+      'type' => 'project',
+          'title' => 'Mini cards',
+          'body' => array(
+              'und' => array(
+                  0 => array(
+                      'value' => '<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industries standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>',
+                      'summary' => '',
+                      'format' => 'full_html',
+                  ),
+              )
+          ),
+          'language' => 'und',
+          'uid' => 3,
+          'status' => 1,
+          'promote' => 0,
+          'sticky' => 0,
+          'comment' => 0,
+          'format' => 2,
+          'revision' => 0,
+          'field_project_image' => array(
+              '0' => 'profiles/simplicity_pack/content/Images/project7.jpg',
+          ),
+          'field_project_type' => array(
+              '0' => array(
+                  'name' => 'Design'
+              ),
+              '1' => array(
+                  'name' => 'Web'
+              ),
+              '2' => array(
+                  'name' => 'Creative Video'
+              )
+          ),
+          'field_project_url' => array(
+                'und' => array(
+                      0 => array(
+                          'value' => 'http://themeforest.net'
+                      ),
+                  )
+            ),
+    ),
+);

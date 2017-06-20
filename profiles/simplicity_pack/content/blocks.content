@@ -1,0 +1,276 @@
+<?php
+
+$blocks = array(
+    0 => array(
+        'type' => 'block',
+        'title' => 'Block Headline 1',
+        'body' => array(
+            'und' => array(
+                0 => array(
+                    'value' => '<div style="text-align:center;"><h1>
+                Full featured <span class="theme_color">Drupal theme</span></h1>
+<p style="max-width:60%;text-align:center;margin:auto;">The one and only <span class="theme_color">Drupal</span> theme you will ever have to buy. No run of the mill, elementary professional with unlimited faces! <strong>Built with profession and love from a dedicated elite author.</strong></p><br/>
+            <div class="row">
+              <div class="col-md-4">
+            <div class="highlight-icon">
+              <a class="fa fa-tablet " href="#" target="_self"></a>
+              </div><div class="highlight_content">
+              <h4>100% Responsive Design</h4><p> Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna. </p>
+            </div>
+            </div>
+              <div class="col-md-4">
+            <div class="highlight-icon">
+              <a class="fa fa-tags " href="#" target="_self"></a>
+              </div><div class="highlight_content">
+              <h4>Unlimited fonts and colors</h4><p> Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna. </p>
+            </div>
+            </div>
+              <div class="col-md-4">
+            <div class="highlight-icon">
+              <a class="fa fa-flag " href="#" target="_self"></a>
+              </div><div class="highlight_content">
+              <h4>Hundreds of icons</h4><p> Praesent faucibus nisl sit amet nulla sollicitudin pretium a sed purus. Nullam bibendum porta magna. </p>
+            </div>
+            </div>
+
+            </div>
+            </div>',
+                    'format' => 'full_html',
+                ),
+            )
+        ),
+        'language' => 'und',
+        'field_block_placement' => array(
+            '0' => array(
+                'name' => 'headline'
+            )
+        ),
+        'field_block_position' => array(
+            'und' => array(
+                '0' => array(
+                    'value' => 1
+                )
+            )
+        ),
+        'uid' => 3,
+        'status' => 1,
+        'promote' => 0,
+        'sticky' => 1,
+        'comment' => 0,
+        'format' => 2,
+        'revision' => 0,
+    ),
+    1 => array(
+        'type' => 'block',
+        'title' => 'Built with the best CMS in the world',
+        'body' => array(
+            'und' => array(
+                0 => array(
+                    'value' => '<p style="max-width:80%;margin:auto;text-align:center;"><span class="theme_color">Drupal</span> is the most flexible CMS in the world. Fully flexible, endless extensions and no coding to be done. Extend your website in any way imaginary with the power of custom content types taking you out of the pain of having to be limited to posts, posts and more posts.</p>
+                                <br />
+                                <div class="row">
+                                	<div class="col-md-4">
+                                		<div>
+                                			<div class="pull-left" style="margin-right:10px;">
+                                				<i class="fa fa-code fa-2x bg_circle img-circle"></i>
+                                </div>
+                                			<div>
+                                				<h3>
+                                					Modular and extensible</h3>
+                                				<p>At vero eos et accusam et justo duo dolores et ea rebum.</p>
+                                			</div>
+                                		</div>
+                                		<div>
+                                			<div class="pull-left" style="margin-right:10px;">
+                                				<i class="fa fa-gears fa-2x bg_circle img-circle"></i>
+                                </div>
+                                			<div>
+                                				<h3>
+                                					Total control</h3>
+                                				<p>At vero eos et accusam et justo duo dolores et ea rebum.</p>
+                                			</div>
+                                		</div>
+                                		<div>
+                                			<div class="pull-left" style="margin-right:10px;">
+                                				<i class="fa fa-leaf fa-2x bg_circle img-circle"></i>
+                                </div>
+
+                                			<div>
+                                				<h3>
+                                					Continuous development</h3>
+                                				<p>At vero eos et accusam et justo duo dolores et ea rebum.</p>
+                                			</div>
+                                		</div>
+                                	</div>
+                                	<div class="col-md-8">
+                                		<img src="sites/all/themes/simplicity/content/Images/simplicity_tablet.png" /></div>
+                                </div>
+                                <p>&nbsp;</p>
+',
+                    'format' => 'full_html',
+                ),
+            )
+        ),
+        'language' => 'und',
+        'field_block_placement' => array(
+            '0' => array(
+                'name' => 'headline'
+            )
+        ),
+        'field_block_position' => array(
+            'und' => array(
+                '0' => array(
+                    'value' => 2
+                )
+            )
+        ),
+        'uid' => 3,
+        'status' => 1,
+        'promote' => 0,
+        'sticky' => 1,
+        'comment' => 0,
+        'format' => 2,
+        'revision' => 0,
+    ),
+    2 => array(
+        'type' => 'block',
+        'title' => 'Block Headline 3',
+        'body' => array(
+            'und' => array(
+                0 => array(
+                    'value' => '<h3 class="color_yellow">
+	Guaranteed maintenance</h3>
+<p class="pad_bot2"><strong><img alt="" src="/sites/all/themes/consulting/content/Images/page3-img1.png" /></strong></p>
+<p class="pad_bot2"><strong>Ned ut perspiciatis unde omnis</strong></p>
+<p>Natus error sit voluptatem accusantium doloremque laudantium.</p>
+<p><a class="button2" href="#">Read More</a></p>',
+                    'format' => 'full_html',
+                ),
+            )
+        ),
+        'language' => 'und',
+        'field_block_placement' => array(
+            '0' => array(
+                'name' => 'headline'
+            )
+        ),
+        'field_block_position' => array(
+            'und' => array(
+                '0' => array(
+                    'value' => 3
+                )
+            )
+        ),
+        'uid' => 3,
+        'status' => 1,
+        'promote' => 0,
+        'sticky' => 1,
+        'comment' => 0,
+        'format' => 2,
+        'revision' => 0,
+    ),
+     3 => array(
+        'type' => 'block',
+        'title' => 'Block Footer 1',
+        'body' => array(
+            'und' => array(
+                0 => array(
+                    'value' => '<div class="grid_4"><span class="footer-text"><span>Interior Design; 2011 Privacy Policy</span>website designed by <a href="http://www.wezards.com/">Wezards</a></span><div><!-- {%FOOTER_LINK} --></div></div>',
+                    'format' => 'full_html',
+                ),
+            )
+        ),
+        'language' => 'und',
+        'field_block_placement' => array(
+            '0' => array(
+                'name' => 'footer'
+            )
+        ),
+        'field_block_position' => array(
+            'und' => array(
+                '0' => array(
+                    'value' => 1
+                )
+            )
+        ),
+        'uid' => 3,
+        'status' => 1,
+        'promote' => 0,
+        'sticky' => 1,
+        'comment' => 0,
+        'format' => 2,
+        'revision' => 0,
+    ),
+     4 => array(
+        'type' => 'block',
+        'title' => 'Block Footer 2',
+        'body' => array(
+            'und' => array(
+                0 => array(
+                    'value' => '<h1 class="title-1">Tlf : 808 34 39 72</h1>',
+                    'format' => 'full_html',
+                ),
+            )
+        ),
+        'language' => 'und',
+        'field_block_placement' => array(
+            '0' => array(
+                'name' => 'footer'
+            )
+        ),
+        'field_block_position' => array(
+            'und' => array(
+                '0' => array(
+                    'value' => 2
+                )
+            )
+        ),
+        'uid' => 3,
+        'status' => 1,
+        'promote' => 0,
+        'sticky' => 1,
+        'comment' => 0,
+        'format' => 2,
+        'revision' => 0,
+    ),
+     5 => array(
+        'type' => 'block',
+        'title' => 'Block Footer 3',
+        'body' => array(
+            'und' => array(
+                0 => array(
+                    'value' => '<div class="">
+						<ul class="list-services">
+							<li><a href="#" class="l-1"></a></li>
+							<li><a href="#" class="l-2"></a></li>
+							<li><a href="#" class="l-3"></a></li>
+							<li><a href="#" class="l-4"></a></li>
+						</ul>
+					</div>',
+                    'format' => 'full_html',
+                ),
+            )
+        ),
+        'language' => 'und',
+        'field_block_placement' => array(
+            '0' => array(
+                'name' => 'footer'
+            )
+        ),
+        'field_block_position' => array(
+            'und' => array(
+                '0' => array(
+                    'value' => 3
+                )
+            )
+        ),
+        'uid' => 3,
+        'status' => 1,
+        'promote' => 0,
+        'sticky' => 1,
+        'comment' => 0,
+        'format' => 2,
+        'revision' => 0,
+    )
+);
+

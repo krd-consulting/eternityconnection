@@ -1,0 +1,11 @@
+core = "7.x"
+
+name = "Change theme"
+package = "Simplicity"
+php = "5.2.4"
+project = "Simplicity"
+version = "7.x-1.0"
+
+stylesheets[all][] = css/change_theme.css
+
+scripts[] = 'js/change_theme.js'

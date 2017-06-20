@@ -1,0 +1,40 @@
+<?php
+
+$node = array(
+    'type' => 'webform',
+    'title' => 'Contact',
+    'body' => array(
+        'und' => array(
+            0 => array(
+                'value' => '',
+                'summary' => '',
+                'format' => 'filtered_html',
+            ),
+        )
+    ),
+    'language' => 'en',
+    'menu' => array(
+        'enabled' => 1,
+        'mlid' => 0,
+        'module' => 'menu',
+        'hidden' => 0,
+        'has_children' => 0,
+        'customized' => 0,
+        'options' => array(),
+        'expanded' => 0,
+        'parent_depth_limit' => 8,
+        'link_title' => 'Contact',
+        'description' => '',
+        'parent' => 'main-menu:0',
+        'weight' => 0,
+        'plid' => 0,
+        'menu_name' => 'main-menu'
+    ),
+    'uid' => 3,
+    'status' => 1,
+    'promote' => 0,
+    'sticky' => 0,
+    'comment' => 0,
+    'format' => 2,
+    'revision' => 0,
+);

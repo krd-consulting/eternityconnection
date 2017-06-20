@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the flexslider feature.
+ */
+
+include_once('jota_flexslider.features.inc');

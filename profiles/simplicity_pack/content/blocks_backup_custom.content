@@ -1,0 +1,201 @@
+<?php
+
+$blocks = array(
+    0 => array(
+        'block' => array(
+            'title' => '',
+            'module' => 'block',
+            //TODO - COMO FAZER ISTO PARA QUALQUER THEME??
+            'theme' => 'consulting',
+            'status' => '1',
+            'weight' => '0',
+            'region' => 'preface',
+            'custom' => '0',
+            'visibility' => '0',
+            'pages' => '',
+            'cache' => '-1',
+        ),
+        'custom' => array(
+            'body' => '<h1 class="title-1">There is hope for our children</h1></br><p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout</p>',
+            'info' => 'Destaque',
+            'format' => 'full_html'
+        ),
+    ),
+    1 => array(
+        'block' => array(
+            'title' => '',
+            'module' => 'block',
+            //TODO - COMO FAZER ISTO PARA QUALQUER THEME??
+            'theme' => 'consulting',
+            'status' => '1',
+            'weight' => '0',
+            'region' => 'footer_one',
+            'custom' => '0',
+            'visibility' => '0',
+            'pages' => '',
+            'cache' => '-1',
+        ),
+        'custom' => array(
+            'body' => '<div class="grid_4"><span class="footer-text"><span>Interior Design; 2011 Privacy Policy</span>website designed by <a href="http://www.wezards.com/">Wezards</a></span><div><!-- {%FOOTER_LINK} --></div></div>',
+            'info' => 'Footer One',
+            'format' => 'full_html'
+        ),
+    ),
+    2 => array(
+        'block' => array(
+            'title' => '',
+            'module' => 'block',
+            //TODO - COMO FAZER ISTO PARA QUALQUER THEME??
+            'theme' => 'consulting',
+            'status' => '1',
+            'weight' => '0',
+            'region' => 'footer_two',
+            'custom' => '0',
+            'visibility' => '0',
+            'pages' => '',
+            'cache' => '-1',
+        ),
+        'custom' => array(
+            'body' => '<h1 class="title-1">Tlf : 808 34 39 72</h1>',
+            'info' => 'Footer Two',
+            'format' => 'full_html'
+        ),
+    ),
+    3 => array(
+        'block' => array(
+            'title' => '',
+            'module' => 'block',
+            //TODO - COMO FAZER ISTO PARA QUALQUER THEME??
+            'theme' => 'consulting',
+            'status' => '1',
+            'weight' => '0',
+            'region' => 'footer_three',
+            'custom' => '0',
+            'visibility' => '0',
+            'pages' => '',
+            'cache' => '-1',
+        ),
+        'custom' => array(
+            'body' => '<div class="">
+						<ul class="list-services">
+							<li><a href="#" class="l-1"></a></li>
+							<li><a href="#" class="l-2"></a></li>
+							<li><a href="#" class="l-3"></a></li>
+							<li><a href="#" class="l-4"></a></li>
+						</ul>
+					</div>',
+            'info' => 'Footer Three',
+            'format' => 'full_html'
+        ),
+    ),
+    4 => array(
+        'block' => array(
+            'title' => '',
+            'module' => 'block',
+            //TODO - COMO FAZER ISTO PARA QUALQUER THEME??
+            'theme' => 'consulting',
+            'status' => '1',
+            'weight' => '0',
+            'region' => 'sidebar',
+            'custom' => '0',
+            'visibility' => '1',
+            'pages' => '<front>',
+            'cache' => '-1',
+        ),
+        'custom' => array(
+            'body' => '<h2>On our Blog</h2><time datetime="2011-08-09" class="tdate-1">09.08.2011</time>
+						<p class="prev-indent-bot">
+							<a href="#">Lorem ipsum dolor amet, consectetur adipisicing elit</a>
+						</p>
+                                                <time datetime="2011-08-09" class="tdate-1">09.08.2011</time>
+						<p class="prev-indent-bot">
+							<a href="#">Lorem ipsum dolor amet, consectetur adipisicing elit</a>
+						</p>
+                                                <time datetime="2011-08-09" class="tdate-1">09.08.2011</time>
+						<p class="prev-indent-bot">
+							<a href="#">Lorem ipsum dolor amet, consectetur adipisicing elit</a>
+						</p>',
+            'info' => 'Recent News',
+            'format' => 'full_html'
+        ),
+    ),
+    5 => array(
+        'block' => array(
+            'title' => '',
+            'module' => 'block',
+            //TODO - COMO FAZER ISTO PARA QUALQUER THEME??
+            'theme' => 'consulting',
+            'status' => '1',
+            'weight' => '0',
+            'region' => 'box_one',
+            'custom' => '0',
+            'visibility' => '0',
+            'pages' => '',
+            'cache' => '-1',
+        ),
+        'custom' => array(
+            'body' => '<h3 class="color_yellow">
+	Mobile development</h3>
+<p class="pad_bot2"><strong><img alt="" src="/wpt-platform/sites/all/themes/consulting/content/Images/page3-img5.png" /></strong></p>
+<p class="pad_bot2"><strong>Ned ut perspiciatis unde omnis</strong></p>
+<p>Natus error sit voluptatem accusantium doloremque laudantium.</p>
+<p><a class="button2" href="#">Read More</a></p>
+',
+            'info' => 'Box One',
+            'format' => 'full_html'
+        ),
+    ),
+    6 => array(
+        'block' => array(
+            'title' => '',
+            'module' => 'block',
+            //TODO - COMO FAZER ISTO PARA QUALQUER THEME??
+            'theme' => 'consulting',
+            'status' => '1',
+            'weight' => '0',
+            'region' => 'box_two',
+            'custom' => '0',
+            'visibility' => '0',
+            'pages' => '',
+            'cache' => '-1',
+        ),
+        'custom' => array(
+            'body' => '<h3 class="color_yellow">
+	Timing is everything</h3>
+<p class="pad_bot2"><strong><img alt="" src="/wpt-platform/sites/all/themes/consulting/content/Images/page1-img3.png" /></strong></p>
+<p class="pad_bot2"><strong>Ned ut perspiciatis unde omnis</strong></p>
+<p>Natus error sit voluptatem accusantium doloremque laudantium.</p>
+<p><a class="button2" href="#">Read More</a></p>
+',
+            'info' => 'Box Two',
+            'format' => 'full_html'
+        ),
+    ),
+    7 => array(
+        'block' => array(
+            'title' => '',
+            'module' => 'block',
+            //TODO - COMO FAZER ISTO PARA QUALQUER THEME??
+            'theme' => 'consulting',
+            'status' => '1',
+            'weight' => '0',
+            'region' => 'box_three',
+            'custom' => '0',
+            'visibility' => '0',
+            'pages' => '',
+            'cache' => '-1',
+        ),
+        'custom' => array(
+            'body' => '<h3 class="color_yellow">
+	Guaranteed maintenance</h3>
+<p class="pad_bot2"><strong><img alt="" src="/wpt-platform/sites/all/themes/consulting/content/Images/page3-img1.png" /></strong></p>
+<p class="pad_bot2"><strong>Ned ut perspiciatis unde omnis</strong></p>
+<p>Natus error sit voluptatem accusantium doloremque laudantium.</p>
+<p><a class="button2" href="#">Read More</a></p>
+',
+            'info' => 'Box Three',
+            'format' => 'full_html'
+        ),
+    )
+);
+

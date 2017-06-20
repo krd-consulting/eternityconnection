@@ -1,0 +1,158 @@
+/**
+ * This file should get overwritten if Method 1 is used. If Method 2 is chosen,
+ * remove this comment and start adding your styles to this file.
+ */
+
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 1600;
+    /*background: url('../images/load_home.gif') 50% 50% no-repeat white;*/
+    background: white;
+    background-size: 40px;
+}
+.la-anim-1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 3px;
+    background: #272626;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    pointer-events: none;
+}
+
+.la-anim-1.la-animate {
+    z-index: 1601;
+    opacity: 0;
+    -webkit-transition: -webkit-transform 5s ease-in, opacity 1s 5s;
+    transition: transform 5s ease-in, opacity 1s 5s;
+    -webkit-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+}
+
+.loading_text{
+    text-transform: uppercase;
+    color: #272626;
+    top:40%;
+    position: absolute;
+    width:100%;
+    text-align: center;
+}
+
+.loading_text h3{
+    font-size:13px;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+.loading_text i{
+
+}
+
+#show_colors {
+    z-index: 99999;
+    margin-left: 0px;
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    background: #222222;
+    border-radius: 3px 3px 0px 0px;
+    margin-top: 10px;
+    padding: 10px 5px;
+    cursor: pointer;
+    width: 6%;
+    text-align: center;
+    left: 47%;
+}
+
+#switch {
+    background: #fff;
+    position: fixed;
+    display: none;
+    padding: 10px;
+    z-index: 9999;
+    margin-left: -200px;
+    border-radius: 5px 5px 0px 0px;
+    font-family: 'Open Sans', Arial, sans-serif;
+    -webkit-box-shadow: 0px 3px 10px 0px #555;
+    box-shadow: 0px 3px 10px 0px #555;
+    bottom: 0;
+    width: 30%;
+    left: 35%;
+    height: auto;
+}
+
+#switch h4 {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    padding-top: 0px;
+    border-bottom: #ededed 1px solid;
+    margin-top:0;
+}
+
+#switch ul{
+    padding-left: 0;
+}
+#switch ul li {
+    text-transform: uppercase;
+    margin-bottom: 0;
+    font-size: 12px;
+    display: block;
+    list-style: none;
+    clear: both;
+}
+
+#switch ul li a{
+    line-height: 40px;
+    font-size: 10px;
+    color:#888;
+}
+
+#switch ul li .button {
+    border-radius: 2px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 7px 7px 0 0;
+    height: 25px;
+    padding: 5px;
+    width: 34px;
+    float:left;
+}
+
+#switch .close{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/*TABLET MODE*/
+@media (max-width: 767px) {
+    #show_colors {
+        width: 10%;
+        left: 45%;
+    }
+}
+
+
+
+/* Mobile display. */
+@media only screen and (max-width:500px) {
+
+    #show_colors {
+
+        width: 20%;
+        left: 40%;
+    }
+
+    #switch{
+        width:100%;
+        left: 0;
+    }
+
+}

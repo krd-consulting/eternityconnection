@@ -1,0 +1,48 @@
+<?php
+
+$node = array(
+    'type' => 'galeria',
+    'title' => 'Gallery',
+    'body' => array(
+        'und' => array(
+            0 => array(
+                'value' => '<div class="body">Hey! Welcome to your brand new wedding website. We&#39;ve added a bunch of example content throughout the site that you should edit before you make your site public, such as this welcome page (i.e. you should remove this text too ;-) ). You can edit the content of this page <a href="/node/1/edit">here</a>, or manage all the content of your site <a href="/manage/pages">here</a>.<br /> <br /> Hope you enjoy the site, and please don&#39;t hesitate to contact us if you have any queries, suggestions, or run into any problems.<br /> <br /> ----<br /> <br /> Welcome everyone to our wedding web site! For all of you who will be attending, all of the information you could ever want to know about us and our wedding will be available for you here. For those of you who will not be able to make it to our wedding, we thought this would be a great way for us to share all of our experiences with you.</div><div class="body">&nbsp;</div><div class="body">After several wonderful years together, we are looking forward to having our dream wedding in our hometown. We will be adding information to this website over the next few months as our plans progress as well as suggestions for places to stay and things to do for out of towners and photos and personal information about ourselves and the wedding party.</div><div class="body">&nbsp;</div><div class="body">We are looking forward to seeing everyone in just a few months. Thank you to all of our friends and family for supporting us and loving us over the years</div><div class="body">&nbsp;</div><div class="body">- The Happy Couple</div>',
+                'summary' => '',
+                'format' => 'filtered_html',
+            ),
+        )
+    ),
+    'language' => 'en',
+    'menu' => array(
+        'enabled' => 1,
+        'mlid' => 0,
+        'module' => 'menu',
+        'hidden' => 0,
+        'has_children' => 0,
+        'customized' => 0,
+        'options' => array(),
+        'expanded' => 0,
+        'parent_depth_limit' => 8,
+        'link_title' => 'Gallery',
+        'description' => '',
+        'parent' => 'main-menu:0',
+        'weight' => 4,
+        'plid' => 0,
+        'menu_name' => 'main-menu'
+    ),
+    'uid' => 3,
+    'status' => 1,
+    'promote' => 0,
+    'sticky' => 0,
+    'comment' => 0,
+    'format' => 2,
+    'revision' => 0,
+    'field_galeria_imagem' => array(
+        '0' => 'sites/all/themes/consulting/content/Images/gallery-img1.jpg',
+        '1' => 'sites/all/themes/consulting/content/Images/gallery-img2.jpg',
+        '2' => 'sites/all/themes/consulting/content/Images/gallery-img3.jpg',
+        '3' => 'sites/all/themes/consulting/content/Images/gallery-img4.jpg',
+        '4' => 'sites/all/themes/consulting/content/Images/gallery-img5.jpg',
+        '5' => 'sites/all/themes/consulting/content/Images/gallery-img6.jpg',
+    )
+);
