@@ -1,5 +1,7 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the OOO Conference Main feature.
  */
+
+include_once 'ooo_conference_main.features.inc';
