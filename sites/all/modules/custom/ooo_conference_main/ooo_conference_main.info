@@ -1,0 +1,9 @@
+name = OOO Conference Main
+description = Contains content types, roles, permissions and etc. for One-on-One Conference feature
+core = 7.x
+package = One-on-One Conference
+version = 7.x-1.0
+dependencies[] = features
+features[features_api][] = api:2
+features[user_role][] = buyer
+features[user_role][] = provider
