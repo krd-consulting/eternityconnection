@@ -1,0 +1,7 @@
+name = "Appoitment Product"
+description = Creates/Updates product for each appointment.
+package = "Custom"
+project = appointment_product
+version = "7.x-1.0"
+core = "7.x"
+dependencies[] = commerce

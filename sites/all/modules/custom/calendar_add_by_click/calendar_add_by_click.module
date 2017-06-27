@@ -1,0 +1,13 @@
+<?php
+
+// This function prepopulates the time field when the event is created.
+// Replace 'mymodule' with the name of your module.
+// Replace 'event' with the name of your CCK content type.
+// Replace 'time' with the name of your date field.
+function calendar_add_by_click_form_alter(&$form, $form_state, $form_id) {
+ if (isset($_GET['date']) && $form_id == 'event_calendar_node_form') {
+    $lang = $form['event_calendar_date']['#language'];
+    $form['event_calendar_date'][$lang][0]['#default_value']['value'] = check_plain($_GET['date']);
+  }
+}
+

@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * Implements hook_node_presave().
+ * @see http://polso.info/how-create-drupal-commerce-products-programmatically
+ */
+
+function appointment_product_node_presave($node)  {
+  // @todo save node ID.
+  global $user;
+  if (isset($node->bbb)) {
+    $lang = $node->language;
+    if (empty($node->nid)) {
+      $cp = commerce_product_new('product');
+      $cp->is_new = TRUE;
+      $cp->revision_id = NULL;
+      $cp->uid = $user->uid;
+      $cp->status = 1;
+      $cp->created = $cp->changed = time();
+      $cp->sku = $node->nid;
+      $cp->language = $lang;
+    }
+    else {
+      $cp = commerce_product_load_by_sku($node->nid);
+    }
+
+
+    if (isset($cp->is_new) || $cp->title != $node->title
+      || $node->field_appointment_price[$lang][0]['amount'] != $cp->commerce_price[$lang][0]['amount'])
+    {
+      $cp->title = $node->title;
+      $cp->changed = time();
+      $cp->commerce_price = array(
+        $lang => array(
+          0 => array(
+            'amount' => $node->field_appointment_price[$lang][0]['amount'],
+            'currency_code' => $node->field_appointment_price[$lang][0]['currency_code'],
+          )
+        )
+      );
+      commerce_product_save($cp);
+    }
+    $node->field_appointment_product[$lang][0]['product_id'] = $cp->product_id;
+  }
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function appointment_product_entity_update($entity, $type) {
+  if ($type == 'commerce_product') {
+    $node = node_load($entity->sku);
+    // Sync price back to node.
+    $lang = $entity->language;
+    if ($node->field_appointment_price[$lang][0]['amount'] != $entity->commerce_price[$lang][0]['amount'])
+    {
+      $node->changed = time();
+      $node->field_appointment_price[$lang][0]['amount'] = $entity->commerce_price[$lang][0]['amount'];
+      node_save($node);
+    }
+  }
+}
+

@@ -1,0 +1,8 @@
+name = "Calendar Add by Click"
+description = Allow to create new event by clicking date in calendar
+package = "Custom"
+project = calendar_add_by_click
+version = "7.x-1.0"
+core = "7.x"
+scripts[] = 'calendar_add_by_click.js'
+dependencies[] = event_calendar
