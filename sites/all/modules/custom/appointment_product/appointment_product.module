@@ -1,5 +1,68 @@
 <?php
 
+
+/**
+ * Implements hook_menu().
+ */
+function appointment_product_menu () {
+  $items['payment-confirmation-page/%'] = array(
+    'title' => 'Payment Confirmation Page',
+    'page callback' => 'appointment_product_payment_confirmation_page',
+    'page arguments' => array(1),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+  return $items;
+}
+
+
+function appointment_product_payment_confirmation_page($nid = '') {
+  global $user;
+
+  if (!civicrm_initialize()) {return;}
+  if (empty($nid) || !is_numeric($nid)) return;
+  $node = node_load($nid);
+  $lang = $node->language;
+
+  $result = civicrm_api3('Contribution', 'create', array(
+    'sequential' => 1,
+    'financial_type_id' => "1",
+    'total_amount' => $node->field_appointment_price[$lang][0]['amount'] / 100,
+    'source' => $node->title,
+    'currency' => $node->field_appointment_price[$lang][0]['currency_code'],
+    'contact_id' => $user->uid,
+
+  ));
+  echo 'Created civiContribution for node id' . check_plain($nid);
+  #dpm ($result);
+
+  // Update source node at successful payment.
+  $node->event_calendar_status[$lang][0]['tid'] = 31;
+  node_save($node);
+}
+
+
+
+
+function appointment_product_preprocess_page(&$vars) {
+  $node = $vars['node'];
+  if($node->type == 'event_calendar') {
+    $lang = $node->language;
+    if ($node->event_calendar_status[$lang][0]['tid'] == 31) {
+      $vars['title_prefix']['appointment_product']['#markup'] = '<div class="title-badge" style="
+float:left;
+background:#22b24c;
+color:white;
+padding: 10px;
+font-size:18px;
+border-radius: 4px;
+margin-right: 5px;
+">Booked</div>';
+    }
+  }
+}
+
+
 /**
  * Implements hook_node_presave().
  * @see http://polso.info/how-create-drupal-commerce-products-programmatically
