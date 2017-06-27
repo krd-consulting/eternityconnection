@@ -70,7 +70,7 @@ function appointment_product_preprocess_page(&$vars) {
  * @see http://polso.info/how-create-drupal-commerce-products-programmatically
  */
 
-function appointment_product_node_presave($node)  {
+function appointment_product_node_aftersave($node)  {
   // @todo save node ID.
   global $user;
   if (isset($node->bbb)) {
