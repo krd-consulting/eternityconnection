@@ -45,19 +45,21 @@ function appointment_product_payment_confirmation_page($nid = '') {
 
 
 function appointment_product_preprocess_page(&$vars) {
-  $node = $vars['node'];
-  if($node->type == 'event_calendar') {
-    $lang = $node->language;
-    if ($node->event_calendar_status[$lang][0]['tid'] == 31) {
-      $vars['title_prefix']['appointment_product']['#markup'] = '<div class="title-badge" style="
-float:left;
-background:#22b24c;
-color:white;
-padding: 10px;
-font-size:18px;
-border-radius: 4px;
-margin-right: 5px;
-">Booked</div>';
+  if (isset($vars['node'])) {
+    $node = $vars['node'];
+    if($node->type == 'event_calendar') {
+      $lang = $node->language;
+      if ($node->event_calendar_status[$lang][0]['tid'] == 31) {
+        $vars['title_prefix']['appointment_product']['#markup'] = '<div class="title-badge" style="
+  float:left;
+  background:#22b24c;
+  color:white;
+  padding: 10px;
+  font-size:18px;
+  border-radius: 4px;
+  margin-right: 5px;
+  ">Booked</div>';
+      }
     }
   }
 }
