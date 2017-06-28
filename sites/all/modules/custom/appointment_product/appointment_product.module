@@ -64,18 +64,13 @@ function appointment_product_preprocess_page(&$vars) {
   }
 }
 
-
-/**
- * Implements hook_node_presave().
- * @see http://polso.info/how-create-drupal-commerce-products-programmatically
- */
-
-function appointment_product_node_aftersave($node)  {
+function appointment_product_create_related_product($node)  {
   // @todo save node ID.
   global $user;
   if (isset($node->bbb)) {
     $lang = $node->language;
-    if (empty($node->nid)) {
+    $cp = commerce_product_load_by_sku($node->nid);
+    if (empty($cp)) {
       $cp = commerce_product_new('product');
       $cp->is_new = TRUE;
       $cp->revision_id = NULL;
@@ -85,12 +80,8 @@ function appointment_product_node_aftersave($node)  {
       $cp->sku = $node->nid;
       $cp->language = $lang;
     }
-    else {
-      $cp = commerce_product_load_by_sku($node->nid);
-    }
 
-
-    if (isset($cp->is_new) || $cp->title != $node->title
+    if ($cp->title != $node->title
       || $node->field_appointment_price[$lang][0]['amount'] != $cp->commerce_price[$lang][0]['amount'])
     {
       $cp->title = $node->title;
@@ -105,9 +96,28 @@ function appointment_product_node_aftersave($node)  {
       );
       commerce_product_save($cp);
     }
-    $node->field_appointment_product[$lang][0]['product_id'] = $cp->product_id;
+    if ($node->field_appointment_product[$lang][0]['product_id'] != $cp->product_id) {
+      $node->field_appointment_product[$lang][0]['product_id'] = $cp->product_id;
+      node_save($node);
+    }
   }
 }
+
+
+
+/**
+ * Implements hook_node_insert().
+ * @see http://polso.info/how-create-drupal-commerce-products-programmatically
+ */
+function appointment_product_node_insert($node) {
+  appointment_product_create_related_product($node);
+}
+
+function appointment_product_node_update($node) {
+  dpm('update');
+  appointment_product_create_related_product($node);
+}
+
 
 /**
  * Implements hook_entity_update().
