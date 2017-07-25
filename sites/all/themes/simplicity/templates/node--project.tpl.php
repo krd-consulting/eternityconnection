@@ -166,13 +166,15 @@ $url = $protocol.$_SERVER['HTTP_HOST'].$node_url;
                 ?>
         </div>
 
-            <div>
+            <?php if (FALSE) : ?>
+	     <div>
                 <div class="project_button">
                     <a href="<?php print $project_url; ?>" target="_blank" class="button">
                         <?php print t("Visit the Project"); ?>
                     </a>
                 </div>
-            </div>
+             </div>
+	    <?php endif; ?>
 
     </div>
         <div class="col-md-4 project_info">
@@ -181,7 +183,7 @@ $url = $protocol.$_SERVER['HTTP_HOST'].$node_url;
                 <h3>
                     <span style="padding-top: 18px;" class="underline_title_top">
                         <?php
-                        print t("Project categories");
+                        print t("Featured In");
                         ?>
                     </span>
 

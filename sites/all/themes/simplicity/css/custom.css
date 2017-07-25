@@ -1,3 +1,10 @@
 /**
  * Override this file as intended. It will always be provided as blank by the theme.
  */
+
+
+.padded_fixed {
+	min-width: 85px;
+	padding-left: 5px;
+	display: inline-block;
+}
