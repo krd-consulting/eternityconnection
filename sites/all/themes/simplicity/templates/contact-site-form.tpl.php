@@ -95,13 +95,13 @@
             <p>
             <div style="margin-top:20px;" class="tlf_contacts">
                 <div class="contact_item">
-                    <h5><i class="fa fa fa-phone theme_color fa-1x"></i><span><?php print t(" Telephone:"); ?></span><span class="theme_color"> +1.403.461.7033</span></h5>
+                    <h5><i class="fa fa fa-phone theme_color fa-1x"></i><span class="padded_fixed"><?php print t(" Telephone:"); ?></span><span class="theme_color"> +1.403.461.7033</span></h5>
                 </div>
                 <div class="contact_item">
-                    <h5><i class="fa fa fa-envelope theme_color fa-1x"></i><span><?php print t(" Email:"); ?></span><span class="theme_color"> info at eternityconnection dot org</span></h5>
+                    <h5><i class="fa fa fa-envelope theme_color fa-1x"></i><span class="padded_fixed"><?php print t(" Email:"); ?></span><span class="theme_color"> info at eternityconnection dot org</span></h5>
                 </div>
                 <div class="contact_item">
-                    <h5><i class="fa fa fa-home theme_color fa-1x"></i><span><?php print t(" Address:"); ?></span><span class="theme_color"> <p style="display:inline-flex">59 Calling Horse Estates, <br>Calgary, Alberta T3Z 1H4 </p></span></h5>
+                    <h5><i class="fa fa fa-home theme_color fa-1x"></i><span class="padded_fixed"><?php print t(" Address:"); ?></span><span class="theme_color"> <p style="display:inline-flex">59 Calling Horse Estates, <br>Calgary, Alberta T3Z 1H4 </p></span></h5>
                 </div>
             </div>
             </p>
