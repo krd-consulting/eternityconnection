@@ -99,6 +99,76 @@ function ooo_conference_main_strongarm() {
   $strongarm = new stdClass();
   $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
   $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_attendeePW_webform';
+  $strongarm->value = 'eternity';
+  $export['bbb_content_type_attendeePW_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_dialNumber_webform';
+  $strongarm->value = '---';
+  $export['bbb_content_type_dialNumber_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_logoutURL_webform';
+  $strongarm->value = 'http://dev.eternityconnection.org';
+  $export['bbb_content_type_logoutURL_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_moderatorPW_webform';
+  $strongarm->value = '3ternity!';
+  $export['bbb_content_type_moderatorPW_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_moderator_required_webform';
+  $strongarm->value = 0;
+  $export['bbb_content_type_moderator_required_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_record_webform';
+  $strongarm->value = 0;
+  $export['bbb_content_type_record_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_show_links_webform';
+  $strongarm->value = 1;
+  $export['bbb_content_type_show_links_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_show_status_webform';
+  $strongarm->value = 1;
+  $export['bbb_content_type_show_status_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_webform';
+  $strongarm->value = 1;
+  $export['bbb_content_type_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
+  $strongarm->name = 'bbb_content_type_welcome_webform';
+  $strongarm->value = '';
+  $export['bbb_content_type_welcome_webform'] = $strongarm;
+
+  $strongarm = new stdClass();
+  $strongarm->disabled = FALSE; /* Edit this to true to make a default strongarm disabled initially */
+  $strongarm->api_version = 1;
   $strongarm->name = 'comment_anonymous_webform';
   $strongarm->value = 0;
   $export['comment_anonymous_webform'] = $strongarm;
