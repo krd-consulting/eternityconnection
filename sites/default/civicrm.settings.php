@@ -170,9 +170,11 @@ if (!defined('CIVICRM_LOGGING_DSN')) {
 
 global $civicrm_root;
 
-$civicrm_root = '/var/www/drupal/eternity/sites/all/modules/civicrm';
+//$civicrm_root = '/var/www/drupal/eternity/sites/all/modules/civicrm';
+$civicrm_root = '/home/vlad/projects/ec/sites/all/modules/civicrm';
 if (!defined('CIVICRM_TEMPLATE_COMPILEDIR')) {
-  define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/var/www/drupal/eternity/sites/default/files/civicrm/templates_c/');
+  //define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/var/www/drupal/eternity/sites/default/files/civicrm/templates_c/');
+  define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/home/vlad/projects/ec/sites/default/files/civicrm/templates_c/');
 }
 
 /**
@@ -208,7 +210,8 @@ if (!defined('CIVICRM_TEMPLATE_COMPILEDIR')) {
  *
  */
 if (!defined('CIVICRM_UF_BASEURL')) {
-  define( 'CIVICRM_UF_BASEURL'      , 'http://dev.eternityconnection.org/');
+  //define( 'CIVICRM_UF_BASEURL'      , 'http://dev.eternityconnection.org/');
+  define( 'CIVICRM_UF_BASEURL'      , 'http://ec/');
 }
 
 /**

@@ -1,31 +1,29 @@
-Jun 20 15:55:53  [info] $Fatal Error Details = Array
+Jul 06 08:58:40  [info] $Fatal Error Details = Array
 (
-    [message] => Cannot install this extension - curl is not installed!
+    [message] => Stripe.js token was not passed!  Report this message to the site administrator.
     [code] => 
 )
 
 
-Jun 20 15:55:53  [info] $backTrace = #0 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Error.php(373): CRM_Core_Error::backtrace("backTrace", TRUE)
-#1 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Utils/HttpClient.php(85): CRM_Core_Error::fatal("Cannot install this extension - curl is not installed!")
-#2 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Extension/Browser.php(254): CRM_Utils_HttpClient->fetch("https://civicrm.org/extdir/ver=4.7.16|cms=Drupal/single", "/var/www/drupal/eternity/sites/default/files/civicrm/ext/cache/extensions.jso...")
-#3 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Extension/Browser.php(193): CRM_Extension_Browser->grabRemoteJson()
-#4 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Extension/Browser.php(148): CRM_Extension_Browser->_discoverRemote()
-#5 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Utils/Check/Component/Env.php(594): CRM_Extension_Browser->getExtensions()
-#6 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Utils/Check/Component.php(54): CRM_Utils_Check_Component_Env->checkExtensions()
-#7 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Utils/Check.php(209): CRM_Utils_Check_Component->checkAll()
-#8 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Utils/Check.php(93): CRM_Utils_Check::checkAll()
-#9 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Page.php(218): CRM_Utils_Check->showPeriodicAlerts()
-#10 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Contact/Page/DashBoard.php(69): CRM_Core_Page->run()
-#11 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Invoke.php(310): CRM_Contact_Page_DashBoard->run((Array:1), NULL)
-#12 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Invoke.php(84): CRM_Core_Invoke::runItem((Array:13))
-#13 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Invoke.php(52): CRM_Core_Invoke::_invoke((Array:1))
-#14 /home/vlad/projects/ec/sites/all/modules/civicrm/drupal/civicrm.module(448): CRM_Core_Invoke::invoke((Array:1))
-#15 [internal function](): civicrm_invoke()
-#16 /home/vlad/projects/ec/includes/menu.inc(527): call_user_func_array("civicrm_invoke", (Array:0))
-#17 /home/vlad/projects/ec/index.php(21): menu_execute_active_handler()
-#18 {main}
-
-
-Jun 26 22:52:25  [info] Deprecated: Group=''. Name='cvv_backoffice_required'. Defaults should come from metadata
+Jul 06 08:58:40  [info] $backTrace = #0 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Error.php(373): CRM_Core_Error::backtrace("backTrace", TRUE)
+#1 /home/vlad/projects/ec/sites/default/files/civicrm/ext/com.drastikbydesign.stripe/CRM/Core/Payment/Stripe.php(266): CRM_Core_Error::fatal("Stripe.js token was not passed!  Report this message to the site administrator.")
+#2 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Payment.php(1036): CRM_Core_Payment_Stripe->doDirectPayment((Array:69), "contribute")
+#3 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Contribute/BAO/Contribution/Utils.php(169): CRM_Core_Payment->doPayment((Array:69))
+#4 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Contribute/Form/Contribution/Confirm.php(2294): CRM_Contribute_BAO_Contribution_Utils::processConfirm(Object(CRM_Contribute_Form_Contribution_Confirm), (Array:69), "2", "1", 1, NULL)
+#5 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Contribute/Form/Contribution/Confirm.php(716): CRM_Contribute_Form_Contribution_Confirm->processFormSubmission("2")
+#6 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Form.php(451): CRM_Contribute_Form_Contribution_Confirm->postProcess()
+#7 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/StateMachine.php(160): CRM_Core_Form->mainProcess()
+#8 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/QuickForm/Action/Next.php(61): CRM_Core_StateMachine->perform(Object(CRM_Contribute_Form_Contribution_Confirm), "next", "Next")
+#9 /home/vlad/projects/ec/sites/all/modules/civicrm/packages/HTML/QuickForm/Controller.php(203): CRM_Core_QuickForm_Action_Next->perform(Object(CRM_Contribute_Form_Contribution_Confirm), "next")
+#10 /home/vlad/projects/ec/sites/all/modules/civicrm/packages/HTML/QuickForm/Page.php(103): HTML_QuickForm_Controller->handle(Object(CRM_Contribute_Form_Contribution_Confirm), "next")
+#11 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Controller.php(351): HTML_QuickForm_Page->handle("next")
+#12 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Invoke.php(310): CRM_Core_Controller->run((Array:3), NULL)
+#13 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Invoke.php(84): CRM_Core_Invoke::runItem((Array:15))
+#14 /home/vlad/projects/ec/sites/all/modules/civicrm/CRM/Core/Invoke.php(52): CRM_Core_Invoke::_invoke((Array:3))
+#15 /home/vlad/projects/ec/sites/all/modules/civicrm/drupal/civicrm.module(448): CRM_Core_Invoke::invoke((Array:3))
+#16 [internal function](): civicrm_invoke("contribute", "transact")
+#17 /home/vlad/projects/ec/includes/menu.inc(527): call_user_func_array("civicrm_invoke", (Array:2))
+#18 /home/vlad/projects/ec/index.php(21): menu_execute_active_handler()
+#19 {main}
 
 

@@ -33,6 +33,7 @@ stylesheets[all][] = css/flexslider.css
 stylesheets[all][] = css/style.css
 stylesheets[all][] = css/colors.css
 stylesheets[all][] = css/custom.css
+stylesheets[all][] = css/civicrm_custom.css
 
 ; For information on choosing the desired method, please read the Drupal
 ; Bootstrap sub-theme "how-to" documentation:
@@ -41,11 +42,11 @@ stylesheets[all][] = css/custom.css
 ; ;----------------------------------
 ; ; METHOD 1: Bootstrap Source Files
 ; ;----------------------------------
-; 
+;
 ; ;;;;;;;;;;;;;;;;;;;;;
 ; ;; Scripts
 ; ;;;;;;;;;;;;;;;;;;;;;
-; 
+;
 ; scripts[] = 'bootstrap/js/affix.js'
 ; scripts[] = 'bootstrap/js/alert.js'
 ; scripts[] = 'bootstrap/js/button.js'

@@ -1,0 +1,90 @@
+diff --git a/includes/wf_crm_webform_base.inc b/includes/wf_crm_webform_base.inc
+index 55b2950..5960b3b 100644
+--- a/includes/wf_crm_webform_base.inc
++++ b/includes/wf_crm_webform_base.inc
+@@ -32,6 +32,8 @@ abstract class wf_crm_webform_base {
+   // tax integration
+   private $_tax_rate;
+ 
++  private $_civicrm_version;
++
+   /**
+    * Magic method to retrieve otherwise inaccessible properties
+    * @param $name
+@@ -69,6 +71,13 @@ abstract class wf_crm_webform_base {
+       case 'civicrm_version':
+         return CRM_Utils_System::version();
+ 
++      case 'civicrm_version':
++        if (!$this->_civicrm_version) {
++          $civicrm = system_get_info('module', 'civicrm');
++          $this->_civicrm_version = $civicrm['version'];
++        }
++        return $this->_civicrm_version;
++
+       default:
+         throw new Exception('Unknown property');
+     }
+diff --git a/includes/wf_crm_webform_postprocess.inc b/includes/wf_crm_webform_postprocess.inc
+index 9dad675..fe3c15e 100644
+--- a/includes/wf_crm_webform_postprocess.inc
++++ b/includes/wf_crm_webform_postprocess.inc
+@@ -1926,6 +1926,32 @@ class wf_crm_webform_postprocess extends wf_crm_webform_base {
+       $params['payment_processor'] = wf_crm_aval($params, 'payment_processor_id');
+     }
+ 
++    // Fix bug for testing.
++    if ($params['is_test'] == 1) {
++      $liveProcessorName = wf_civicrm_api('payment_processor', 'getvalue', array(
++        'id' => $params['payment_processor_id'],
++        'return' => 'name',
++      ));
++      // Lookup current domain for multisite support
++      static $domain = 0;
++      if (!$domain) {
++        $domain = wf_civicrm_api('domain', 'get', array('current_domain' => 1, 'return' => 'id'));
++        $domain = wf_crm_aval($domain, 'id', 1);
++      }
++      $params['payment_processor_id'] = wf_civicrm_api('payment_processor', 'getvalue', array(
++        'return' => 'id',
++        'name' => $liveProcessorName,
++        'is_test' => 1,
++        'domain_id' => $domain,
++      ));
++    }
++
++    // doPayment requries payment_processor and payment_processor_mode fields.
++    if ($this->civicrm_version >= '4.7') {
++      $params['payment_processor'] = $params['payment_processor_id'];
++
++    }
++
+     // Save this stuff for later
+     unset($params['soft'], $params['honor_contact_id'], $params['honor_type_id']);
+     return $params;
+diff --git a/js/webform_civicrm_payment.js b/js/webform_civicrm_payment.js
+index d1eaf44..a8ad53d 100644
+--- a/js/webform_civicrm_payment.js
++++ b/js/webform_civicrm_payment.js
+@@ -26,11 +26,7 @@ cj(function($) {
+         // When an express payment button is clicked, skip the billing fields and submit the form with a placeholder
+         var $expressButton = $('input[name$=_upload_express]', '#billing-payment-block');
+         if ($expressButton.length) {
+-          $expressButton.removeClass('crm-form-submit').click(function(e) {
+-            e.preventDefault();
+-            $('input[name=credit_card_number]', '#billing-payment-block').val('express');
+-            $(this).closest('form').find('input.webform-submit.button-primary').click();
+-          })
++            $('#billing-payment-block .description').hide();
+         }
+       });
+     }
+@@ -50,7 +46,7 @@ cj(function($) {
+ 
+   function tally() {
+     var total = 0;
+-    $('.line-item:visible', '#wf-crm-billing-items').each(function() {
++    $("#wf-crm-billing-items tr:not(#wf-crm-billing-total)").each(function() {
+       total += parseFloat($(this).data('amount'));
+     });
+     $('td+td', '#wf-crm-billing-total').html(CRM.formatMoney(total));

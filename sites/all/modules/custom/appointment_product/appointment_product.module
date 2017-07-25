@@ -96,7 +96,9 @@ function appointment_product_create_related_product($node)  {
       );
       commerce_product_save($cp);
     }
-    if ($node->field_appointment_product[$lang][0]['product_id'] != $cp->product_id) {
+    if (isset($node->field_appointment_product)
+      && $node->field_appointment_product[$lang][0]['product_id'] != $cp->product_id)
+    {
       $node->field_appointment_product[$lang][0]['product_id'] = $cp->product_id;
       node_save($node);
     }
@@ -110,27 +112,42 @@ function appointment_product_create_related_product($node)  {
  * @see http://polso.info/how-create-drupal-commerce-products-programmatically
  */
 function appointment_product_node_insert($node) {
-  appointment_product_create_related_product($node);
+  #appointment_product_create_related_product($node);
 }
 
-function appointment_product_node_update($node) {
-  dpm('update');
-  appointment_product_create_related_product($node);
+/**
+ * Implements hook_entity_update().
+ */
+function appointment_product_entity_insert($entity, $type) {
+  if ($type== 'node' && $entity->type == 'event_calendar') {
+    // @todo https://drupal.stackexchange.com/a/183029/44951
+    appointment_product_create_related_product($entity);
+  }
 }
-
 
 /**
  * Implements hook_entity_update().
  */
 function appointment_product_entity_update($entity, $type) {
+  if ($type== 'node' && $entity->type == 'event_calendar') {
+    // @todo https://drupal.stackexchange.com/a/183029/44951
+    appointment_product_create_related_product($entity);
+  }
+
   if ($type == 'commerce_product') {
     $node = node_load($entity->sku);
     // Sync price back to node.
-    $lang = $entity->language;
     if ($node->field_appointment_price[$lang][0]['amount'] != $entity->commerce_price[$lang][0]['amount'])
     {
+      $lang = $entity->language;
       $node->changed = time();
       $node->field_appointment_price[$lang][0]['amount'] = $entity->commerce_price[$lang][0]['amount'];
+      if (isset($node->field_appointment_product)
+        #&& $node->field_appointment_product[$lang][0]['product_id'] != $cp->product_id
+        )
+      {
+        $node->field_appointment_product[$lang][0]['product_id'] = $cp->product_id;
+      }
       node_save($node);
     }
   }
