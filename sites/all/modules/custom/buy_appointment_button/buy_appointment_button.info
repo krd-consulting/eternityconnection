@@ -1,0 +1,8 @@
+name = "Buy Appoitment Button"
+description = Implement ability to buy appointment using civiContributions and webforms.
+package = "Custom"
+project = buy_appointment_button
+version = "7.x-1.0"
+core = "7.x"
+dependencies[] = webform
+dependencies[] = webform_civicrm
