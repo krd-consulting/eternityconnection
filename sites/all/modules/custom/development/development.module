@@ -1,5 +1,7 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the Development feature.
  */
+
+include_once 'development.features.inc';
