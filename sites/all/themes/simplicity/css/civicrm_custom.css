@@ -676,14 +676,17 @@ input.crm-form-entityref {
 
 
 
+.crm-error,
 .crm-container .crm-error,
 .crm-container .crm-inline-error {
   background: #FBE3E4 none repeat scroll 0 0;
   border: none;
   color: #8A1F11;
 }
+.crm-error,
 .crm-container .crm-error {
   padding: 4px;
+  margin: 10px 0;
 }
 .crm-container .status.crm-ok {
   border-color: #B0D730;
@@ -3460,7 +3463,6 @@ span.crm-select-item-color {
 
 
 /* classes related to batch entry operation */
-/*
 .crm-container span.batch-edit,
 .crm-container span.batch-valid,
 .crm-container span.batch-invalid {
@@ -3488,7 +3490,6 @@ span.crm-select-item-color {
   margin-top: 10px !important;
 }
 
-*/
 
 /* grid div as table */
 /*
