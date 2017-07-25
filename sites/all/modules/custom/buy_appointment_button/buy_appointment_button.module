@@ -1,39 +1,72 @@
 <?php
 
 define ('BUY_APPOINTMENT_BUTTON_TEXT_LOGGED_IN', t('Buy Appointment'));
+define ('BUY_APPOINTMENT_BUTTON_TEXT_FREE', t('Book Free Appointment'));
 define ('BUY_APPOINTMENT_BUTTON_TEXT_ANONYMOUS', t('Log in to schedule appointment'));
 
 
 function buy_appointment_button_node_view($node, $view_mode, $langcode) {
   if ($node->type == 'event_calendar') {
-    $form = drupal_get_form('buy_appointment_button_form');
+    $form = drupal_get_form('buy_appointment_button_form', $node);
     $node->content['redirect_button'] = $form;
- }
+  }
 }
 
-function buy_appointment_button_form($form, &$form_submit) {
+
+function buy_appointment_button_form($form, &$form_submit, $app_node) {
   global $user;
+  $button_text = BUY_APPOINTMENT_BUTTON_TEXT_FREE;
+  if ($app_node->field_price[LANGUAGE_NONE][0]['value'] > 0) {
+    $button_text  = ($user->uid ? BUY_APPOINTMENT_BUTTON_TEXT_LOGGED_IN : BUY_APPOINTMENT_BUTTON_TEXT_ANONYMOUS);
+  }
+  $form['app_nid'] = array(
+    '#type' => 'hidden',
+    '#value' => $app_node->nid,
+  );
   $form['submit'] = array(
     '#type' => 'submit',
-    '#value' => ($user->uid ? BUY_APPOINTMENT_BUTTON_TEXT_LOGGED_IN : BUY_APPOINTMENT_BUTTON_TEXT_ANONYMOUS),
+    '#value' => $button_text,
   );
   return $form;
 }
 
+
 function buy_appointment_button_form_submit($form, &$form_state) {
   global $user;
-  if (arg(0) == 'node' && is_numeric(arg(1))) {
+  if (!empty($form_state['app_nid'])) {
+    $nid = $form_state['app_nid'];
+  }
+  elseif (arg(0) == 'node' && is_numeric(arg(1))) {
     $nid = arg(1);
+  }
+
+  if ($nid) {
     if ($user->uid) {
       // Logged in user.
       $webform = buy_appointment_button_create_webform($nid);
-      drupal_goto('node/' .  $webform->nid);
+      if (isset($webform->nid)) {
+        drupal_goto('node/' .  $webform->nid);
+      }
+      else {
+        drupal_set_message(t("Appointment Fee wasn't set and payment is not allowed."));
+      }
     }
     else {
       // Anonymous.
       // @todo Redirect to webform to avoid an extra step (clicking 'Buy' button at appointment node).
+      //       To do so we need to create webform before user logged in
+      //       or have special URL for webform creation.
       drupal_goto('user/login', array('query' => array('destination' => 'node/' . $nid)));
     }
+  }
+  else {
+    // This is rear case but it's possible if someone manually change HTML form
+    // in browser and submit it. Other cases are possible but I can't imagine that.
+    drupal_set_message(t("Missing information about appointment you want to book.
+      Site admins already notified about this issue and problem will be fixed soon.
+      Please try again later.")
+    );
+    // @todo send email to admin.
   }
 }
 
@@ -42,7 +75,6 @@ function buy_appointment_button_form_submit($form, &$form_state) {
 function buy_appointment_button_create_webform($nid) {
   global $user;
   $app_node = node_load($nid);
-  dpm($app_node->field_price[LANGUAGE_NONE][0]['value']);
 
   $node = new stdClass();
   $node->type = 'webform';

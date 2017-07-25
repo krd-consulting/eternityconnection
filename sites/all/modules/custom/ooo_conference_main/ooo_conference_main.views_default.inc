@@ -105,13 +105,6 @@ function ooo_conference_main_views_default_views() {
   $handler->display->display_options['sorts']['event_calendar_date_value']['id'] = 'event_calendar_date_value';
   $handler->display->display_options['sorts']['event_calendar_date_value']['table'] = 'field_data_event_calendar_date';
   $handler->display->display_options['sorts']['event_calendar_date_value']['field'] = 'event_calendar_date_value';
-  /* Filter criterion: Content: Published */
-  $handler->display->display_options['filters']['status']['id'] = 'status';
-  $handler->display->display_options['filters']['status']['table'] = 'node';
-  $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = 1;
-  $handler->display->display_options['filters']['status']['group'] = 0;
-  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
   /* Filter criterion: Content: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
@@ -119,12 +112,52 @@ function ooo_conference_main_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'event_calendar' => 'event_calendar',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Content: Published */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 'All';
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['status']['expose']['operator_id'] = '';
+  $handler->display->display_options['filters']['status']['expose']['label'] = 'Available';
+  $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
+  $handler->display->display_options['filters']['status']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    5 => 0,
+    7 => 0,
+    6 => 0,
+  );
+  /* Filter criterion: Content: Price (field_price) */
+  $handler->display->display_options['filters']['field_price_value']['id'] = 'field_price_value';
+  $handler->display->display_options['filters']['field_price_value']['table'] = 'field_data_field_price';
+  $handler->display->display_options['filters']['field_price_value']['field'] = 'field_price_value';
+  $handler->display->display_options['filters']['field_price_value']['group'] = 1;
+  $handler->display->display_options['filters']['field_price_value']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_price_value']['expose']['operator_id'] = 'field_price_value_op';
+  $handler->display->display_options['filters']['field_price_value']['expose']['label'] = 'Price';
+  $handler->display->display_options['filters']['field_price_value']['expose']['operator'] = 'field_price_value_op';
+  $handler->display->display_options['filters']['field_price_value']['expose']['identifier'] = 'field_price_value';
+  $handler->display->display_options['filters']['field_price_value']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    5 => 0,
+    7 => 0,
+    6 => 0,
+  );
+  $handler->display->display_options['filters']['field_price_value']['reduce_duplicates'] = TRUE;
   /* Filter criterion: User: Name */
   $handler->display->display_options['filters']['uid_1']['id'] = 'uid_1';
   $handler->display->display_options['filters']['uid_1']['table'] = 'users';
   $handler->display->display_options['filters']['uid_1']['field'] = 'uid';
   $handler->display->display_options['filters']['uid_1']['relationship'] = 'uid';
   $handler->display->display_options['filters']['uid_1']['value'] = '';
+  $handler->display->display_options['filters']['uid_1']['group'] = 1;
   $handler->display->display_options['filters']['uid_1']['exposed'] = TRUE;
   $handler->display->display_options['filters']['uid_1']['expose']['operator_id'] = 'uid_1_op';
   $handler->display->display_options['filters']['uid_1']['expose']['label'] = 'Provider';
