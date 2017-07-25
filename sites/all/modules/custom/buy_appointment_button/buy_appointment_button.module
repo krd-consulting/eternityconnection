@@ -28,8 +28,8 @@ function buy_appointment_button_confirmation_page($webform_node) {
   if (isset($webform_node->type) && $webform_node->type == 'webform') {
     $output = t("Confirmation message.") . '<br>';
     $output .= t("Your payment proceed successfully. Appointment was booked for you.");
-    $webform_node->status = 0;
-    node_save($webform_node);
+    #$webform_node->status = 0;
+    #node_save($webform_node);
     if ($webform_node->webform['components']['9']['form_key'] == 'appointment_node') {
       $app_node = node_load($webform_node->webform['components']['9']['value']);
       $app_node->status = 0;
