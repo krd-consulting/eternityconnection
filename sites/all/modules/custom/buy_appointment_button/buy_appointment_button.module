@@ -5,6 +5,20 @@ define ('BUY_APPOINTMENT_BUTTON_TEXT_FREE', t('Book Free Appointment'));
 define ('BUY_APPOINTMENT_BUTTON_TEXT_ANONYMOUS', t('Log in to schedule appointment'));
 
 
+function buy_appointment_button_views_pre_render(&$view) {
+  if ($view->name == 'appointments') {
+    foreach($view->result as $key => $result) {
+      $text = t('Booked');
+      if ($result->_field_data['nid']['entity']->status) {
+        $text = t('Available');
+      }
+      $view->result[$key]->node_title = '[' . $text . '] ' . $view->result[$key]->node_title;
+    }
+  }
+}
+
+
+
 function buy_appointment_button_preprocess_page(&$vars) {
   if (isset($vars['node'])) {
     $node = $vars['node'];
@@ -14,11 +28,11 @@ function buy_appointment_button_preprocess_page(&$vars) {
     }
     if ($app_node->type == 'event_calendar') {
       if ($app_node->status) {
-        $text = 'Available';
+        $text = t('Available');
         $background = '#22b24c';
       }
       else {
-        $text = 'Booked';
+        $text = t('Booked');
         $background = '#5e9cf1';
       }
       $vars['title_prefix']['status_tag']['#markup'] =
