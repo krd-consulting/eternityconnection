@@ -77,8 +77,12 @@ h1{
     padding-bottom: 40px;
 }
 
+body.not-front {
+  padding-top:90px;
+}
+
 .main-container{
-    padding-top:80px;
+  /*padding-top:80px;*/
     padding-bottom: 90px;
 }
 
