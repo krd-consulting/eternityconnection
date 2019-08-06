@@ -3,9 +3,9 @@ hidden = TRUE
 name = commerce_stripe_test
 description = Used during testing of commerce_stripe.
 
-; Information added by Drupal.org packaging script on 2016-11-06
-version = "7.x-3.0-alpha1"
+; Information added by Drupal.org packaging script on 2017-11-09
+version = "7.x-3.0-alpha3"
 core = "7.x"
 project = "commerce_stripe"
-datestamp = "1478466541"
+datestamp = "1510264699"
 

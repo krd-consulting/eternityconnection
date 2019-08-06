@@ -20,9 +20,9 @@ features[user_role][] = service-authentication
 features_exclude[dependencies][features] = features
 mtime = 1415685171
 
-; Information added by Drupal.org packaging script on 2016-02-03
-version = "7.x-1.x-dev"
+; Information added by Drupal.org packaging script on 2018-01-25
+version = "7.x-1.0"
 core = "7.x"
 project = "moodle_sso"
-datestamp = "1454472312"
+datestamp = "1516906991"
 

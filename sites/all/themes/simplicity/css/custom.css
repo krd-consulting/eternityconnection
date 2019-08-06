@@ -24,3 +24,11 @@
 .appointment-status-badge.available {
   background: #22b24c;
 }
+
+#loginbutton {
+    border-radius: 11px !important;
+    padding: 1px 15px !important;
+    position: absolute !important;
+    right: 50px !important;
+    top: -190px !important;
+}

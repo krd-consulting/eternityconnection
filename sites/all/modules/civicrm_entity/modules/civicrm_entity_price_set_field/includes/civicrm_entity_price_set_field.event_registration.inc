@@ -102,7 +102,7 @@ function civicrm_entity_price_set_field_display_form_event($form, &$form_state) 
           $form['message'] = array(
             '#type' => 'markup',
             '#message' => 'registration_end_date',
-            '#markup' => 'Registration closed on ' . $event->registration_start_date,
+            '#markup' => 'Registration closed on ' . $event->registration_end_date,
           );
           return $form;
         }
@@ -177,7 +177,10 @@ function civicrm_entity_price_set_field_display_form_event($form, &$form_state) 
         // Registration Form
         case 1:
           $default_values = array();
-          if (isset($form_state['values']['registration_form'])) {
+          if (isset($form_state['input']['registration_form'])) {
+            $default_values = $form_state['input']['registration_form'];
+          }
+          elseif (isset($form_state['values']['registration_form'])) {
             $default_values = $form_state['values']['registration_form'];
           }
           elseif (isset($form_state['storage']['registration_form'])) {
@@ -188,7 +191,7 @@ function civicrm_entity_price_set_field_display_form_event($form, &$form_state) 
             $contact = civicrm_entity_user_contact_get($user, array(), '', '', '');
             if ($contact) {
               $already_registered = _civicrm_entity_price_set_field_get_participant_count_for_event($event->id, $contact->id);
-              if (!empty($already_registered)) {
+              if (empty($event->allow_same_participant_emails) && !empty($already_registered)) {
                 drupal_set_message(t('You have already registered for this event.'), 'status', FALSE);
                 $form_state['main_registrant_already_registered'] = TRUE;
               }
@@ -303,13 +306,15 @@ function _civicrm_entity_price_set_field_setup_event_registration_form_fapi(&$fo
       }
     }
     else {
-      $form_state['contacts'][0] = array(new CivicrmEntity(array('is_new' => 1), 'civicrm_contact'));
+      $form_state['contacts'][0] = new CivicrmEntity(array('is_new' => 1), 'civicrm_contact');
     }
   }
   else {
-    $form_state['contacts'][0] = new CivicrmEntity(array('is_new' => 1), 'civicrm_contact');
-    if ($user->uid && empty($form_state['main_registrant_already_registered'])) {
-      $form_state['contacts'][0]->uid = $user->uid;
+    if(empty($form_state['contacts'][0]->id)) {
+      $form_state['contacts'][0] = new CivicrmEntity(array('is_new' => 1), 'civicrm_contact');
+      if ($user->uid && empty($form_state['main_registrant_already_registered'])) {
+        $form_state['contacts'][0]->uid = $user->uid;
+      }
     }
   }
 
@@ -362,6 +367,7 @@ function _civicrm_entity_price_set_field_setup_event_registration_form_fapi(&$fo
       $form['registration_form']['contacts'][$count]['heading'] = array(
         '#type' => 'markup',
         '#markup' => '<h2>' . 'Participant ' . ($count + 1) . '</h2>',
+        '#weight' => -10,
       );
     }
     if (!empty($form_state['price_set_data'][$count])) {
@@ -376,6 +382,7 @@ function _civicrm_entity_price_set_field_setup_event_registration_form_fapi(&$fo
           'civicrm-entity-price-set-field-participant-form',
         ),
       ),
+      '#weight' => -4,
     );
 
     if ($count == 0) {
@@ -482,6 +489,7 @@ function _civicrm_entity_price_set_field_setup_event_registration_form_fapi(&$fo
           'wrapper' => 'civicrm-price-set-field-event-registration',
           'callback' => 'civicrm_entity_price_set_field_event_registration_form_ajax_callback',
         ),
+        '#weight' => -3,
       );
     }
 
@@ -529,6 +537,35 @@ function _civicrm_entity_price_set_field_setup_event_registration_form_fapi(&$fo
         ),
       ),
     );
+
+    $payment_processor_options = array();
+    if (!empty($form_state['event']->payment_processor)) {
+      $pp_default = '';
+      if (is_array($form_state['event']->payment_processor)) {
+        foreach ($form_state['event']->payment_processor as $pp_delta => $pp_id) {
+          $pp = entity_load_single('civicrm_payment_processor', $pp_id);
+          $payment_processor_options[$pp_id] = $pp->name;
+          if (!empty($pp->is_default)) {
+            $pp_default = $pp_id;
+          }
+        }
+      }
+      else {
+        $pp = entity_load_single('civicrm_payment_processor', $form_state['event']->payment_processor);
+        $payment_processor_options[$form_state['event']->payment_processor] = $pp->name;
+        $pp_default = $form_state['event']->payment_processor;
+      }
+      $form['registration_form']['registration_cc_block']['payment_processor_selection'] = array(
+        '#title' => t('Payment method'),
+        '#type' => 'radios',
+        '#options' => $payment_processor_options,
+        '#default_value' => $pp_default,
+      );
+    }
+    else {
+      $form['registration_form']['registration_cc_block']['#access'] = FALSE;
+    }
+
     $form['registration_form']['registration_cc_block']['first_name_on_card'] = array(
       '#type' => 'textfield',
       '#title' => 'First Name',
@@ -661,7 +698,7 @@ function civicrm_entity_price_set_field_display_form_event_submit($form, &$form_
           if (!empty($dedupe_result['id'])) {
             // should we check here if the contact is already registered, and if so throw back a message?
             $contact_registrations_for_event = _civicrm_entity_price_set_field_get_participant_count_for_event($event->id, $dedupe_result['id']);
-            if ($contact_registrations_for_event) {
+            if (empty($event->allow_same_participant_emails) && $contact_registrations_for_event) {
               drupal_set_message('Participant ' . ($count + 1) . ' has already registered for this event.');
               $form_state['step'] = 1;
               $form_state['rebuild'] = TRUE;
@@ -759,7 +796,6 @@ function _civicrm_entity_price_set_field_process_event_registration(&$form_state
   }
 
   $line_items = array();
-
   foreach ($form_state['contacts'] as $count => $contact) {
     //_civicrm_entity_price_set_field_display_form_create_update_contact('other', $count, $form_state);
     $submitted_count = 0;
@@ -770,7 +806,7 @@ function _civicrm_entity_price_set_field_process_event_registration(&$form_state
       if ($profile_entity_type != 'contact') {
         continue;
       }
-      if ($submitted_count == 0 && !empty($form_state['first_profile_submitted'])) {
+      if ($submitted_count == 0 && !empty($form_state['first_profile_submitted']) && $count == 0) {
         continue;
       }
       // here we want to submit only the contact profiles first
@@ -877,13 +913,15 @@ function _civicrm_entity_price_set_field_process_event_registration(&$form_state
   }
 
   // trigger rule event with all the pertinent data here
-  $event_variables = array(
-    'event' => $form_state['event'],
-    'contacts' => $form_state['contacts'],
-    'participants' => $form_state['participants'],
-  );
+  if (module_exists('rules')) {
+    $event_variables = [
+      'event'        => $form_state['event'],
+      'contacts'     => $form_state['contacts'],
+      'participants' => $form_state['participants'],
+    ];
 
-  rules_invoke_event_by_args('civicrm_entity_price_set_field_event_registration', $event_variables);
+    rules_invoke_event_by_args('civicrm_entity_price_set_field_event_registration', $event_variables);
+  }
 }
 
 /**
@@ -912,6 +950,9 @@ function civicrm_entity_price_set_field_display_form_event_validate($form, $form
     }
     elseif (!is_numeric($form_state['values']['registration_form']['registration_cc_block']['cvv'])) {
       form_set_error('registration_form][registration_cc_block][cvv', 'CVV must be numeric.');
+    }
+    if (empty($form_state['values']['registration_form']['registration_cc_block']['payment_processor_selection'])) {
+      form_set_error('registration_form][registration_cc_block][payment_processor_selection', 'Payment method selection is required.');
     }
   }
   // price set field text widget validation
@@ -1017,9 +1058,10 @@ function _civicrm_entity_price_set_field_event_registration_remove_participant_s
  * @param $form_state
  * @return mixed
  */
-function civicrm_entity_price_set_field_event_registration_form_ajax_callback($form, &$form_state) {
+function civicrm_entity_price_set_field_event_registration_form_ajax_callback(&$form, &$form_state) {
   $commands = array();
-
+  drupal_alter('form', $form, $form_state, $form['#form_id']);
+  drupal_alter('form_' . $form['#form_id'], $form, $form_state);
   $commands[] = ajax_command_html('#civicrm-price-set-field-event-registration', render($form));
   $commands[] = ajax_command_prepend('#civicrm-price-set-field-event-registration', '<div id="messages">' . theme('status_messages') . '</div>');
   $commands[] = array(
@@ -1049,7 +1091,7 @@ function civicrm_entity_price_set_field_event_registration_form_register_as_anot
 
     $form_state['contacts'][0] = new CivicrmEntity(array('is_new' => 1), 'civicrm_contact');
     global $user;
-    if ($user->uid) {
+    if ($user->uid && empty($form_state['main_registrant_already_registered']) && empty($form_state['event']->allow_same_participant_emails)) {
       $form_state['contacts'][0]->uid = $user->uid;
     }
   }

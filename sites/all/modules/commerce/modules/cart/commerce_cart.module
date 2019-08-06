@@ -8,6 +8,9 @@
  * special considerations to associate it with a user and
  */
 
+// Define a constant for the default cart provider.
+define('COMMERCE_CART_DEFAULT_PROVIDER', 'session');
+
 // Define constants for the shopping cart refresh modes.
 define('COMMERCE_CART_REFRESH_ALWAYS', 'always');
 define('COMMERCE_CART_REFRESH_OWNER_ONLY', 'owner_only');
@@ -310,18 +313,23 @@ function commerce_cart_checkout_form_cancel_submit($form, &$form_state) {
 function commerce_cart_line_item_views_form_submit($form, &$form_state) {
   // Reset the status of the order to cart.
   $order = commerce_order_load($form_state['order']->order_id);
-  $form_state['order'] = commerce_order_status_update($order, 'cart', TRUE);
 
-  // Skip saving in the status update and manually save here to force a save
-  // even when the status doesn't actually change.
-  if (variable_get('commerce_order_auto_revision', TRUE)) {
-    $form_state['order']->revision = TRUE;
-    $form_state['order']->log = t('Customer updated the order via the shopping cart form.');
+  // Check order state for stale orders (cancelled, completed.)
+  $status = commerce_order_status_load($order->status);
+  if (in_array($status['state'], array('cart', 'checkout'))) {
+    $form_state['order'] = commerce_order_status_update($order, 'cart', TRUE);
+
+    // Skip saving in the status update and manually save here to force a save
+    // even when the status doesn't actually change.
+    if (variable_get('commerce_order_auto_revision', TRUE)) {
+      $form_state['order']->revision = TRUE;
+      $form_state['order']->log = t('Customer updated the order via the shopping cart form.');
+    }
+
+    commerce_order_save($form_state['order']);
+
+    drupal_set_message(t('Your shopping cart has been updated.'));
   }
-
-  commerce_order_save($form_state['order']);
-
-  drupal_set_message(t('Your shopping cart has been updated.'));
 }
 
 /**
@@ -357,6 +365,19 @@ function commerce_cart_form_commerce_order_settings_form_alter(&$form, &$form_st
     '#description' => t('Even if enabled the link will not appear on shopping cart order edit forms.'),
     '#default_value' => variable_get('commerce_order_apply_pricing_rules_link', TRUE),
     '#weight' => 10,
+  );
+
+  $cart_providers = array();
+  foreach (commerce_cart_get_providers() as $key => $cart_provider) {
+    $cart_providers[$key] = $cart_provider['title'];
+  }
+
+  $form['commerce_cart_provider'] = array(
+    '#title' => t('Cart provider'),
+    '#type' => 'select',
+    '#options' => $cart_providers,
+    '#default_value' => variable_get('commerce_cart_provider', COMMERCE_CART_DEFAULT_PROVIDER),
+    '#access' => count($cart_providers) > 1,
   );
 
   // Add a fieldset for settings pertaining to the shopping cart refresh.
@@ -651,9 +672,6 @@ function commerce_cart_block_view($delta) {
 
   // Prepare the display of the default Shopping Cart block.
   if ($delta == 'cart') {
-    // Default to an empty cart block message.
-    $content = theme('commerce_cart_empty_block');
-
     // First check to ensure there are products in the shopping cart.
     if ($order = commerce_cart_order_load($user->uid)) {
       $wrapper = entity_metadata_wrapper('commerce_order', $order);
@@ -669,6 +687,11 @@ function commerce_cart_block_view($delta) {
 
         $content = theme('commerce_cart_block', $variables);
       }
+    }
+
+    if (empty($content)) {
+      // Default to an empty cart block message.
+      $content = theme('commerce_cart_empty_block');
     }
 
     return array('subject' => t('Shopping cart'), 'content' => $content);
@@ -747,35 +770,37 @@ function commerce_cart_commerce_order_load($orders) {
     // Refresh only if this order object represents the latest revision of a
     // shopping cart order, it hasn't been refreshed already in this request
     // and it meets the criteria in the shopping cart refresh settings.
-    if (!isset($refreshed[$order->order_id]) &&
-      commerce_cart_order_is_cart($order) &&
-      commerce_order_is_latest_revision($order) &&
-      commerce_cart_order_can_refresh($order)) {
-      // Update the last cart refresh timestamp and record the order's current
-      // changed timestamp to detect if the order is actually updated.
-      $order->data['last_cart_refresh'] = REQUEST_TIME;
+    if (isset($refreshed[$order->order_id]) ||
+      commerce_entity_is_unchanged('commerce_order', $order) ||
+      !commerce_cart_order_is_cart($order) ||
+      !commerce_order_is_latest_revision($order) ||
+      !commerce_cart_order_can_refresh($order)) {
+      continue;
+    }
+    // Update the last cart refresh timestamp and record the order's current
+    // changed timestamp to detect if the order is actually updated.
+    $order->data['last_cart_refresh'] = REQUEST_TIME;
 
-      $unchanged_data = $order->data;
-      $last_changed = $order->changed;
+    $unchanged_data = $order->data;
+    $last_changed = $order->changed;
 
-      // Refresh the order and add its ID to the refreshed array.
-      $refreshed[$order->order_id] = TRUE;
-      commerce_cart_order_refresh($order);
+    // Refresh the order and add its ID to the refreshed array.
+    $refreshed[$order->order_id] = TRUE;
+    commerce_cart_order_refresh($order);
 
-      // If order wasn't updated during the refresh, we need to manually update
-      // the last cart refresh timestamp in the database.
-      if ($order->changed == $last_changed) {
-        db_update('commerce_order')
-          ->fields(array('data' => serialize($unchanged_data)))
-          ->condition('order_id', $order->order_id)
-          ->execute();
+    // If order wasn't updated during the refresh, we need to manually update
+    // the last cart refresh timestamp in the database.
+    if ($order->changed == $last_changed) {
+      db_update('commerce_order')
+        ->fields(array('data' => serialize($unchanged_data)))
+        ->condition('order_id', $order->order_id)
+        ->execute();
 
-        db_update('commerce_order_revision')
-          ->fields(array('data' => serialize($unchanged_data)))
-          ->condition('order_id', $order->order_id)
-          ->condition('revision_id', $order->revision_id)
-          ->execute();
-      }
+      db_update('commerce_order_revision')
+        ->fields(array('data' => serialize($unchanged_data)))
+        ->condition('order_id', $order->order_id)
+        ->condition('revision_id', $order->revision_id)
+        ->execute();
     }
   }
 }
@@ -1100,9 +1125,9 @@ function commerce_cart_order_refresh($order) {
       // current quantity and display URI information.
       commerce_product_line_item_populate($cloned_line_item, $product);
 
-      // Process the unit price through Rules so it reflects the user's actual
-      // current purchase price.
-      rules_invoke_event('commerce_product_calculate_sell_price', $cloned_line_item);
+      // Process the unit price through the sell price calculation callback
+      // so it reflects the user's actual current purchase price.
+      commerce_product_pricing_invoke($cloned_line_item);
     }
 
     // Allow other modules to alter line items on a shopping cart refresh.
@@ -1185,8 +1210,9 @@ function commerce_cart_get_properties($data = FALSE, array $options, $name) {
  *   An array of applicable cart order IDs or an empty array if none exist.
  */
 function commerce_cart_order_session_order_ids($completed = FALSE) {
-  $key = $completed ? 'commerce_cart_completed_orders' : 'commerce_cart_orders';
-  return empty($_SESSION[$key]) ? array() : $_SESSION[$key];
+  if ($cart_provider = commerce_cart_get_provider()) {
+    return $cart_provider->cartOrderIds($completed);
+  }
 }
 
 /**
@@ -1199,13 +1225,8 @@ function commerce_cart_order_session_order_ids($completed = FALSE) {
  *     completed orders array instead of the active cart orders array.
  */
 function commerce_cart_order_session_save($order_id, $completed = FALSE) {
-  $key = $completed ? 'commerce_cart_completed_orders' : 'commerce_cart_orders';
-
-  if (empty($_SESSION[$key])) {
-    $_SESSION[$key] = array($order_id);
-  }
-  elseif (!in_array($order_id, $_SESSION[$key])) {
-    $_SESSION[$key][] = $order_id;
+  if ($cart_provider = commerce_cart_get_provider()) {
+    $cart_provider->cartSave($order_id, $completed);
   }
 }
 
@@ -1224,16 +1245,11 @@ function commerce_cart_order_session_save($order_id, $completed = FALSE) {
  *     or if the specified order ID exists in the session.
  */
 function commerce_cart_order_session_exists($order_id = NULL, $completed = FALSE) {
-  $key = $completed ? 'commerce_cart_completed_orders' : 'commerce_cart_orders';
+  if ($cart_provider = commerce_cart_get_provider()) {
+    return $cart_provider->cartExists($order_id, $completed);
+  }
 
-  // If an order was specified, look for it in the array.
-  if (!empty($order_id)) {
-    return !empty($_SESSION[$key]) && in_array($order_id, $_SESSION[$key]);
-  }
-  else {
-    // Otherwise look for any value.
-    return !empty($_SESSION[$key]);
-  }
+  return FALSE;
 }
 
 /**
@@ -1247,15 +1263,8 @@ function commerce_cart_order_session_exists($order_id = NULL, $completed = FALSE
  *     completed orders array instead of the active cart orders array.
  */
 function commerce_cart_order_session_delete($order_id = NULL, $completed = FALSE) {
-  $key = $completed ? 'commerce_cart_completed_orders' : 'commerce_cart_orders';
-
-  if (!empty($_SESSION[$key])) {
-    if (!empty($order_id)) {
-      $_SESSION[$key] = array_diff($_SESSION[$key], array($order_id));
-    }
-    else {
-      unset($_SESSION[$key]);
-    }
+  if ($cart_provider = commerce_cart_get_provider()) {
+    $cart_provider->cartDelete($order_id, $completed);
   }
 }
 
@@ -1267,6 +1276,7 @@ function commerce_cart_order_session_delete($order_id = NULL, $completed = FALSE
  * @param $line_item
  *   An unsaved product line item to be added to the cart with the following data
  *   on the line item being used to determine how to add the product to the cart:
+ *   - $line_item->commerce_unit_price: a non-NULL default unit price.
  *   - $line_item->commerce_product: reference to the product to add to the cart.
  *   - $line_item->quantity: quantity of this product to add to the cart.
  *   - $line_item->data: data array that is saved with the line item if the line
@@ -1341,7 +1351,8 @@ function commerce_cart_product_add($uid, $line_item, $combine = TRUE) {
 
     // Allow other modules to specify what properties should be compared when
     // determining whether or not to combine line items.
-    drupal_alter('commerce_cart_product_comparison_properties', $comparison_properties, clone($line_item));
+    $line_item_clone = clone($line_item);
+    drupal_alter('commerce_cart_product_comparison_properties', $comparison_properties, $line_item_clone);
 
     // Loop over each line item on the order.
     foreach ($order_wrapper->commerce_line_items as $delta => $matching_line_item_wrapper) {
@@ -1479,7 +1490,7 @@ function commerce_cart_order_product_line_item_delete($order, $line_item_id, $sk
   rules_invoke_all('commerce_cart_product_remove', $order, $product, $line_item->quantity, $line_item);
 
   // Delete the actual line item.
-  commerce_line_item_delete($line_item->line_item_id);
+  commerce_line_item_delete($line_item->line_item_id, $skip_save);
 
   if (!$skip_save) {
     commerce_order_save($order);
@@ -1698,6 +1709,108 @@ function commerce_cart_forms($form_id, $args) {
 }
 
 /**
+ * Returns an array of products matching a set of attribute values.
+ *
+ * @param $products
+ *   An array of product objects.
+ * @param $form_state
+ *   The $form_state from an Add to Cart form.
+ */
+function _commerce_cart_matching_products($products, &$form_state) {
+  $matching_products = array();
+
+  // If the form state contains attribute data...
+  if (!empty($form_state['values']['attributes'])) {
+    $changed_attribute = NULL;
+    $attributes = (array) array_diff_key($form_state['values']['attributes'], array('product_select' => ''));
+    $unchanged_attributes = $form_state['values']['unchanged_attributes'];
+
+    // Get the changed attribute.
+    foreach ($attributes as $attribute_name => $attribute_value) {
+      // If this is the attribute widget that was changed...
+      if ($attribute_value != $unchanged_attributes[$attribute_name]) {
+        // Store the field name.
+        $changed_attribute = $attribute_name;
+
+        // Clear the input for the "Select a product" widget now if it
+        // exists on the form since we know an attribute was changed.
+        unset($form_state['input']['attributes']['product_select']);
+
+        // We found the changed attribute so we're done.
+        break;
+      }
+    }
+
+    // If we found a changed attribute and it's not already in the first
+    // position of the array.
+    if (!empty($changed_attribute) && array_search($changed_attribute, array_keys($attributes))) {
+      // Move the changed attribute to the first position of the array so it's
+      // handled first.
+      $attributes = array($changed_attribute => $attributes[$changed_attribute]) + $attributes;
+    }
+
+    // Create a list of all products associated with each attribute for
+    // filtering.
+    $attributes_products = array_fill_keys(array_keys($attributes), array());
+    foreach ($products as $product_id => $product) {
+      // Store which attributes this product is associated with.
+      foreach ($attributes as $attribute_name => $attribute_value) {
+        $product_attribute_items = field_get_items('commerce_product', $product, $attribute_name);
+        $product_attribute_value = reset($product_attribute_items[0]);
+
+        if ($product_attribute_value == $attribute_value) {
+          $attributes_products[$attribute_name][$product_id] = $product;
+        }
+      }
+    }
+
+    // Filter out products starting with those not associated with the changed
+    // attribute and proceeding with those not associated with other attributes
+    // in the order the attributes appear in the form.
+    $matching_products = array_shift($attributes_products);
+    foreach ($attributes_products as $attribute_name => $attribute_products) {
+      $filtered_products = array_intersect_key($matching_products, $attribute_products);
+
+      // If all products have been filtered out, use the set of products prior
+      // to filtering on the current attribute.
+      if (!empty($filtered_products)) {
+        $matching_products = $filtered_products;
+      }
+      else {
+        break;
+      }
+    }
+
+    // Only accept the first matching product and subsequent matching products
+    // with identical attribute values.
+    if (count($matching_products) > 1) {
+      $default_product = reset($matching_products);
+      unset($matching_products[key($matching_products)]);
+      $default_products[$default_product->product_id] = $default_product;
+
+      foreach ($matching_products as $matching_product_id => $matching_product) {
+        foreach ($attributes as $attribute_name => $attribute_value) {
+          $matching_product_attribute_items = field_get_items('commerce_product', $matching_product, $attribute_name);
+          $matching_product_attribute_value = reset($matching_product_attribute_items[0]);
+          $default_product_attribute_items = field_get_items('commerce_product', $default_product, $attribute_name);
+          $default_product_attribute_value = reset($default_product_attribute_items[0]);
+
+          if ($matching_product_attribute_value != $default_product_attribute_value) {
+            continue 2;
+          }
+        }
+
+        $default_products[$matching_product_id] = $matching_product;
+      }
+
+      $matching_products = $default_products;
+    }
+  }
+
+  return $matching_products;
+}
+
+/**
  * Builds an Add to Cart form for a set of products.
  *
  * @param $line_item
@@ -1717,6 +1830,8 @@ function commerce_cart_forms($form_id, $args) {
  *   - $line_item->data['context']['show_single_product_attributes']: a boolean
  *     indicating whether or not product attribute fields with single options
  *     should be shown on the Add to Cart form.
+ *   - $line_item->data['context']['button_text']: a string that overrides the
+ *     default Add to Cart button text for submitting the form.
  *   - $line_item->quantity: the default value for the quantity widget if
  *     included (determined by the $show_quantity parameter).
  *   - $line_item->commerce_product: the value of this field will be used as the
@@ -1771,6 +1886,9 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
   // from causing the AJAX refresh not to work.
   $form['#attributes']['class'][] = drupal_html_class(commerce_cart_add_to_cart_form_id($product_ids));
 
+  // Disable autocomplete on Add to Cart form elements.
+  $form['#attributes']['autocomplete'] = 'off';
+
   // Store the customer uid in the form so other modules can override with a
   // selection widget if necessary.
   $form['uid'] = array(
@@ -1813,17 +1931,7 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
       $same_type = TRUE;
       $type = '';
 
-      // Find the default product so we know how to set default options on the
-      // various Add to Cart form widgets and an array of any matching product
-      // based on attribute selections so we can add a selection widget.
-      $matching_products = array();
-      $default_product = NULL;
-      $attribute_names = array();
-      $unchanged_attributes = array();
-
       foreach ($products as $product_id => $product) {
-        $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
-
         // Store the first product type.
         if (empty($type)) {
           $type = $product->type;
@@ -1834,71 +1942,14 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
         if ($product->type != $type) {
           $same_type = FALSE;
         }
-
-        // If the form state contains a set of attribute data, use it to try
-        // and determine the default product.
-        $changed_attribute = NULL;
-
-        if (!empty($form_state['values']['attributes'])) {
-          $match = TRUE;
-
-          // Set an array of checked attributes for later comparison against the
-          // default matching product.
-          if (empty($attribute_names)) {
-            $attribute_names = (array) array_diff_key($form_state['values']['attributes'], array('product_select' => ''));
-            $unchanged_attributes = $form_state['values']['unchanged_attributes'];
-          }
-
-          foreach ($attribute_names as $key => $value) {
-            // If this is the attribute widget that was changed...
-            if ($value != $unchanged_attributes[$key]) {
-              // Store the field name.
-              $changed_attribute = $key;
-
-              // Clear the input for the "Select a product" widget now if it
-              // exists on the form since we know an attribute was changed.
-              unset($form_state['input']['attributes']['product_select']);
-            }
-
-            // If a field name has been stored and we've moved past it to
-            // compare the next attribute field...
-            if (!empty($changed_attribute) && $changed_attribute != $key) {
-              // Wipe subsequent values from the form state so the attribute
-              // widgets can use the default values from the new default product.
-              unset($form_state['input']['attributes'][$key]);
-
-              // Don't accept this as a matching product.
-              continue;
-            }
-
-            if ($product_wrapper->{$key}->raw() != $value) {
-              $match = FALSE;
-            }
-          }
-
-          // If the changed field name has already been stored, only accept the
-          // first matching product by ignoring the rest that would match. An
-          // exception is granted for additional matching products that share
-          // the exact same attribute values as the first.
-          if ($match && !empty($changed_attribute) && !empty($matching_products)) {
-            reset($matching_products);
-            $matching_product = $matching_products[key($matching_products)];
-            $matching_product_wrapper = entity_metadata_wrapper('commerce_product', $matching_product);
-
-            foreach ($attribute_names as $key => $value) {
-              if ($product_wrapper->{$key}->raw() != $matching_product_wrapper->{$key}->raw()) {
-                $match = FALSE;
-              }
-            }
-          }
-
-          if ($match) {
-            $matching_products[$product_id] = $product;
-          }
-        }
       }
 
-      // Set the default product now if it isn't already set.
+      // Find an array of matching products based on attribute selections so we
+      // can find the default product and add a selection widget if multiple
+      // matching products are found.
+      $matching_products = _commerce_cart_matching_products($products, $form_state);
+
+      // Set the default product.
       if (empty($matching_products)) {
         // If a product ID value was passed in, use that product if it exists.
         if (!empty($form_state['values']['product_id']) &&
@@ -1930,8 +1981,25 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
         }
       }
 
-      // Wrap the default product for later use.
-      $default_product_wrapper = entity_metadata_wrapper('commerce_product', $default_product);
+      // Remove any attribute input values from the form state that aren't
+      // associated with the default product so that attribute widgets can use
+      // the default values.
+      if (!empty($form_state['input']['attributes'])) {
+        foreach ($form_state['input']['attributes'] as $attribute_name => $attribute_value) {
+          $default_product_attribute_items = field_get_items('commerce_product', $default_product, $attribute_name);
+
+          if (!empty($default_product_attribute_items)) {
+            $default_product_attribute_value = reset($default_product_attribute_items[0]);
+
+            if ($default_product_attribute_value != $attribute_value) {
+              unset($form_state['input']['attributes'][$attribute_name]);
+            }
+          }
+          else {
+            unset($form_state['input']['attributes'][$attribute_name]);
+          }
+        }
+      }
 
       $form_state['default_product'] = $default_product;
 
@@ -1939,9 +2007,6 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
       if ($same_type) {
         // Loop through all the field instances on that product type.
         foreach (field_info_instances('commerce_product', $type) as $field_name => $instance) {
-          // A field qualifies if it is single value, required and uses a widget
-          // with a definite set of options. For the sake of simplicity, this is
-          // currently restricted to fields defined by the options module.
           $field = field_info_field($field_name);
 
           // If the instance is of a field type that is eligible to function as
@@ -2010,8 +2075,6 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
         foreach ($qualifying_fields as $field_name => $data) {
           // Build an options array of widget options used by referenced products.
           foreach ($products as $product_id => $product) {
-            $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
-
             // Only add options to the present array that appear on products that
             // match the default value of the previously added attribute widgets.
             foreach ($used_options as $used_field_name => $unused) {
@@ -2020,8 +2083,22 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
                 continue;
               }
 
-              if (isset($form['attributes'][$used_field_name]['#default_value'])) {
-                if ($product_wrapper->{$used_field_name}->raw() != $form['attributes'][$used_field_name]['#default_value']) {
+              // Don't apply this check if the previously used field we'd
+              // compare against was unset from the qualifying fields array,
+              // meaning that we only added NULL values to its used options
+              // array because it was an unused optional attribute field.
+              if (!isset($qualifying_fields[$used_field_name])) {
+                continue;
+              }
+
+              // However, if the form does include an element for the previous
+              // attribute field, ensure the current product's attribute field
+              // value matches the selected value on that element.
+              if (isset($form['attributes'][$used_field_name]) && array_key_exists('#default_value', $form['attributes'][$used_field_name])) {
+                $used_field_items = field_get_items('commerce_product', $product, $used_field_name);
+                $used_field_value = reset($used_field_items[0]);
+
+                if ($used_field_value != $form['attributes'][$used_field_name]['#default_value']) {
                   continue 2;
                 }
               }
@@ -2029,10 +2106,14 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
 
             // With our hard dependency on widgets provided by the Options
             // module, we can make assumptions about where the data is stored.
-            if ($product_wrapper->{$field_name}->raw() != NULL) {
+            $field_items = field_get_items('commerce_product', $product, $field_name);
+            $field_value = reset($field_items[0]);
+
+            if ($field_value != NULL) {
               $field_has_options[$field_name] = TRUE;
             }
-            $used_options[$field_name][] = $product_wrapper->{$field_name}->raw();
+
+            $used_options[$field_name][] = $field_value;
           }
 
           // If for some reason no options for this field are used, remove it
@@ -2041,11 +2122,14 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
             unset($qualifying_fields[$field_name]);
           }
           else {
+            $default_product_field_items = field_get_items('commerce_product', $default_product, $field_name);
+            $default_product_field_value = reset($default_product_field_items[0]);
+
             $form['attributes'][$field_name] = array(
               '#type' => $data['commerce_cart_settings']['attribute_widget'],
               '#title' => commerce_cart_attribute_widget_title($data['instance']),
               '#options' => array_intersect_key($data['options'], drupal_map_assoc($used_options[$field_name])),
-              '#default_value' => $default_product_wrapper->{$field_name}->raw(),
+              '#default_value' => $default_product_field_value,
               '#weight' => $data['instance']['widget']['weight'],
               '#ajax' => array(
                 'callback' => 'commerce_cart_add_to_cart_form_attributes_refresh',
@@ -2060,7 +2144,7 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
 
             $form['unchanged_attributes'][$field_name] = array(
               '#type' => 'value',
-              '#value' => $default_product_wrapper->{$field_name}->raw(),
+              '#value' => $default_product_field_value,
             );
           }
         }
@@ -2081,11 +2165,13 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
           // products that match the default attribute options.
           if (empty($matching_products)) {
             foreach ($products as $product_id => $product) {
-              $product_wrapper = entity_metadata_wrapper('commerce_product', $product);
               $match = TRUE;
 
               foreach (element_children($form['attributes']) as $field_name) {
-                if ($product_wrapper->{$field_name}->raw() != $form['attributes'][$field_name]['#default_value']) {
+                $product_field_items = field_get_items('commerce_product', $product, $field_name);
+                $product_field_value = reset($product_field_items[0]);
+
+                if ($product_field_value != $form['attributes'][$field_name]['#default_value']) {
                   $match = FALSE;
                 }
               }
@@ -2130,7 +2216,7 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
         }
       }
 
-      // If the products referenced were of different types or did not posess
+      // If the products referenced were of different types or did not possess
       // any qualifying attribute fields...
       if (!$same_type || empty($qualifying_fields)) {
         // For a single product form, just add the hidden product_id field.
@@ -2222,9 +2308,19 @@ function commerce_cart_add_to_cart_form($form, &$form_state, $line_item, $show_q
       );
     }
     else {
+      // If the context contains custom button text, filter it and attempt to
+      // translate it.
+      if (!empty($line_item->data['context']['button_text'])) {
+        $button_text = function_exists('locale') ? locale(filter_xss($line_item->data['context']['button_text'])) :
+          filter_xss($line_item->data['context']['button_text']);
+      }
+      else {
+        $button_text = t('Add to cart');
+      }
+
       $form['submit'] = array(
         '#type' => 'submit',
-        '#value' => t('Add to cart'),
+        '#value' => $button_text,
         '#weight' => 50,
       );
     }
@@ -2424,9 +2520,9 @@ function commerce_cart_add_to_cart_form_submit($form, &$form_state) {
     // Add field data to the line item.
     field_attach_submit('commerce_line_item', $line_item, $form['line_item_fields'], $form_state);
 
-    // Process the unit price through Rules so it reflects the user's actual
-    // purchase price.
-    rules_invoke_event('commerce_product_calculate_sell_price', $line_item);
+    // Process the unit price through the sell price calculation callback
+    // so it reflects the user's actual current purchase price.
+    commerce_product_pricing_invoke($line_item);
 
     // Only attempt an Add to Cart if the line item has a valid unit price.
     $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
@@ -2476,6 +2572,7 @@ function commerce_cart_field_formatter_info() {
       'description' => t('Display an Add to Cart form for the referenced product.'),
       'field types' => array('commerce_product_reference', 'entityreference'),
       'settings' => array(
+        'button_text' => t('Add to cart'),
         'show_quantity' => FALSE,
         'default_quantity' => 1,
         'combine' => TRUE,
@@ -2496,6 +2593,14 @@ function commerce_cart_field_formatter_settings_form($field, $instance, $view_mo
   $element = array();
 
   if ($display['type'] == 'commerce_cart_add_to_cart_form') {
+    $button_text = !empty($settings['button_text']) ? filter_xss($settings['button_text'], array()) : t('Add to cart');
+    $element['button_text'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Button text'),
+      '#default_value' => $button_text,
+      '#description' => t('Text to use for the Add to Cart button. Default: %default', array('%default' => 'Add to cart')),
+    );
+
     $element['show_quantity'] = array(
       '#type' => 'checkbox',
       '#title' => t('Display a textfield quantity widget on the add to cart form.'),
@@ -2565,7 +2670,13 @@ function commerce_cart_field_formatter_settings_summary($field, $instance, $view
   $summary = array();
 
   if ($display['type'] == 'commerce_cart_add_to_cart_form') {
+    $button_text = !empty($settings['button_text']) ? filter_xss($settings['button_text'], array()) : t('Add to cart');
+    $translated_instance = commerce_i18n_object('field_instance', $instance);
+    if (!empty($translated_instance['add_to_cart_form-button_text-' . $view_mode])) {
+      $button_text = $translated_instance['add_to_cart_form-button_text-' . $view_mode] . ' (' . t('translated') . ')';
+    }
     $summary = array(
+      t('Button text: !text', array('!text' => $button_text)),
       t('Quantity widget: !status', array('!status' => !empty($settings['show_quantity']) ? t('Enabled') : t('Disabled'))),
       t('Default quantity: @quantity', array('@quantity' => $settings['default_quantity'])),
       t('Combine like items: !status', array('!status' => !empty($settings['combine']) ? t('Enabled') : t('Disabled'))),
@@ -2608,6 +2719,7 @@ function commerce_cart_field_formatter_view($entity_type, $entity, $field, $inst
     if (!empty($products)) {
       $type = !empty($settings['line_item_type']) ? $settings['line_item_type'] : 'product';
       $line_item = commerce_product_line_item_new(commerce_product_reference_default_product($products), $settings['default_quantity'], 0, array(), $type);
+      $line_item->data['context']['button_text'] = !empty($settings['button_text']) ? filter_xss($settings['button_text'], array()) : t('Add to cart');;
       $line_item->data['context']['product_ids'] = array_keys($products);
       $line_item->data['context']['add_to_cart_combine'] = !empty($settings['combine']);
       $line_item->data['context']['show_single_product_attributes'] = !empty($settings['show_single_product_attributes']);
@@ -2687,6 +2799,21 @@ function commerce_cart_field_attach_view_alter(&$output, $context) {
           $arguments['line_item']->data['context']['product_ids'] = 'entity';
         }
 
+        // Translate button text.
+        $instance = field_info_instance($element['#entity_type'], $element['#field_name'], $element['#bundle']);
+        $translated_instance = commerce_i18n_object('field_instance', $instance);
+        $view_mode = $element['#view_mode'];
+        // Special case for full view mode.
+        if ($view_mode == 'full') {
+          $view_modes = field_view_mode_settings($element['#entity_type'], $element['#bundle']);
+          if (!empty($view_modes['full']) && !$view_modes['full']['custom_settings']) {
+            $view_mode = 'default';
+          }
+        }
+        if (!empty($translated_instance['add_to_cart_form-button_text-' . $view_mode])) {
+          $arguments['line_item']->data['context']['button_text'] = $translated_instance['add_to_cart_form-button_text-' . $view_mode];
+        }
+
         // Replace the array containing the arguments with the return value of
         // drupal_get_form(). It will be rendered when the rest of the object is
         // rendered for display.
@@ -2754,6 +2881,19 @@ function commerce_cart_preprocess_views_view(&$vars) {
  * Implements hook_i18n_string_list_TEXTGROUP_alter().
  */
 function commerce_cart_i18n_string_list_field_alter(&$strings, $type = NULL, $object = NULL) {
+  // Add to cart button text translatable strings.
+  $field = field_info_field($object['field_name']);
+  if (in_array($field['type'], array('commerce_product_reference', 'entityreference')) && !empty($object['display'])) {
+    foreach ($object['display'] as $display_name => $display) {
+      if (!empty($display['settings']['button_text'])) {
+        $strings['field'][$object['field_name']][$object['bundle']]['add_to_cart_form-button_text-' . $display_name] = array(
+          'string' => $display['settings']['button_text'],
+          'title' => t('Add to cart button text') . ' (view mode: ' . $display_name . ')',
+        );
+      }
+    }
+  }
+  // Attribute widget title translatable string.
   if (!isset($strings['field']) || !is_array($object) || !commerce_cart_field_instance_is_attribute($object)) {
     return;
   }
@@ -2763,4 +2903,50 @@ function commerce_cart_i18n_string_list_field_alter(&$strings, $type = NULL, $ob
       'title' => t('Attribute widget title'),
     );
   }
+}
+
+/**
+ * Implements hook_ctools_plugin_type().
+ */
+function commerce_cart_ctools_plugin_type() {
+  $plugins['cart_provider'] = array(
+    'classes' => array('class'),
+  );
+  return $plugins;
+}
+
+/**
+ * Implements hook_ctools_plugin_directory().
+ */
+function commerce_cart_ctools_plugin_directory($module, $plugin) {
+  if ($module == 'commerce_cart') {
+    return 'plugins/' . $plugin;
+  }
+}
+
+/**
+ * Returns the instantiated cart provider.
+ */
+function commerce_cart_get_provider($provider = NULL) {
+  ctools_include('plugins');
+  if (empty($provider)) {
+    $provider = variable_get('commerce_cart_provider', COMMERCE_CART_DEFAULT_PROVIDER);
+  }
+
+  // Return NULL if the class could not be found.
+  if (!$class = ctools_plugin_load_class('commerce_cart', 'cart_provider', $provider, 'class')) {
+    return NULL;
+  }
+
+  return new $class();
+}
+
+/**
+ * Returns the cart providers.
+ */
+function commerce_cart_get_providers() {
+  ctools_include('plugins');
+  $plugins = ctools_get_plugins('commerce_cart', 'cart_provider');
+  uasort($plugins, 'ctools_plugin_sort');
+  return $plugins;
 }

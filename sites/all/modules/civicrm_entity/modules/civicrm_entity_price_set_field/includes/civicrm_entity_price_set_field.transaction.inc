@@ -173,7 +173,12 @@ function _civicrm_entity_price_set_field_calculate_total($price_set_data, $entit
 function _civicrm_entity_price_set_field_run_cc_transaction($display, $price_set_data, $entity_type, $entity, $contacts, $form_state) {
   $civicrm_entity_prise_set_field_processor_types = civicrm_entity_price_set_field_get_processor_handler_info();
   if (!empty($entity->payment_processor)) {
-    $processor = entity_load_single('civicrm_payment_processor', $entity->payment_processor);
+    if (!empty($form_state['registration_cc_block']['payment_processor_selection'])) {
+      $processor = entity_load_single('civicrm_payment_processor', $form_state['registration_cc_block']['payment_processor_selection']);
+    }
+    else {
+      return FALSE;
+    }
     if (!empty($processor->payment_processor_type_id)) {
       $processor_type = entity_load_single('civicrm_payment_processor_type', $processor->payment_processor_type_id);
       foreach ($civicrm_entity_prise_set_field_processor_types as $id => $type) {
@@ -187,11 +192,13 @@ function _civicrm_entity_price_set_field_run_cc_transaction($display, $price_set
       if (!empty($result)) {
         // trigger rule event with all the pertinent data here
         if(!empty($result['contribution']->id)) {
-          $rule_variables = array(
-            'contribution' => $result['contribution'],
-          );
-          
-          rules_invoke_event_by_args('civicrm_entity_price_set_field_successful_cc_transaction', $rule_variables);
+          if (module_exists('rules')) {
+            $rule_variables = [
+              'contribution' => $result['contribution'],
+            ];
+
+            rules_invoke_event_by_args('civicrm_entity_price_set_field_successful_cc_transaction', $rule_variables);
+          }
         }
         return $result;
       }
@@ -222,7 +229,7 @@ function civicrm_entity_price_set_field_civicrm_entity_price_set_field_processor
       'callback' => 'civicrm_entity_price_set_field_transact_payment_processing',
     ),
     'paypal' => array(
-      'payment_processor_type' => 'Pay Pal',
+      'payment_processor_type' => 'PayPal',
       'callback' => 'civicrm_entity_price_set_field_transact_payment_processing',
     ),
     'iats' => array(

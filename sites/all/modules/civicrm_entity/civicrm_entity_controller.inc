@@ -43,7 +43,15 @@ class CivicrmEntityController extends EntityAPIController {
     // were passed. The $ids array is reduced as items are loaded from cache,
     // and we need to know if it's empty for this reason to avoid querying the
     // database when all requested entities are loaded from cache.
-    $passed_ids = !empty($ids) && !is_null($ids[0]) ? array_flip((array) $ids) : FALSE;
+
+    if(!empty($ids)) {
+      foreach ($ids as $index => $id) {
+        if (is_array($id)) {
+          $ids[$index] = !empty($id[0]) ? $id[0] : NULL;
+        }
+      }
+    }
+    $passed_ids = !empty($ids) && !is_null(reset($ids)) ? array_flip((array) $ids) : FALSE;
     // Try to load entities from the static cache, if the entity type supports
     // static caching.
     if ($this->cache && !$revision_id) {
@@ -160,6 +168,14 @@ class CivicrmEntityController extends EntityAPIController {
           unset($params[$key]);
         }
         if (substr($key, 0, 7) === 'custom_' && empty($entity->original->{$key}) && empty($value)) {
+          unset($params[$key]);
+        }
+        // handle differences between 'get' and 'create' api for contact reference custom fields
+        if (substr($key, 0, 7) === 'custom_' && substr($key, -3) === '_id') {
+          $customkey = substr($key, 0, strlen($key) - 3);
+          if (!is_numeric($params[$customkey]) && is_numeric($params[$key])) {
+            $params[$customkey] = $params[$key];
+          }
           unset($params[$key]);
         }
       }
@@ -310,13 +326,20 @@ class CivicrmEntityController extends EntityAPIController {
     $civicrm_entities = civicrm_api3($this->entityInfo['description'], 'get', $condition);
 
     // get what we get by the 'return' property in the API call
-    $condition['return'] = $return_fields['return'];
-    $civicrm_entities2 = civicrm_api3($this->entityInfo['description'], 'get', $condition);
+    if(!empty($return_fields['return'])) {
+      $condition['return'] = $return_fields['return'];
+      $civicrm_entities2 = civicrm_api3($this->entityInfo['description'], 'get', $condition);
+    }
 
     // merge the two together
     $new_civicrm_entities = array();
     foreach ($civicrm_entities['values'] as $id => $entity) {
-      $new_civicrm_entities[$id] = array_merge($entity, $civicrm_entities2['values'][$id]);
+      if(!empty($civicrm_entities2['values'][$id])) {
+        $new_civicrm_entities[$id] = array_merge($entity, $civicrm_entities2['values'][$id]);
+      }
+      else {
+        $new_civicrm_entities[$id] = $entity;
+      }
       // unset anything not in the return array (if you wanted to) but why?
       /*foreach($new_civicrm_entities[$id] as $key => $value){
         if(!in_array($key, $return_fields['return'])) {

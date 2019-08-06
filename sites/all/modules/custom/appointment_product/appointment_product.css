@@ -1,0 +1,112 @@
+
+#appointment-product-create-appointment .container-inline-date .date-padding {
+  float:none;
+}
+#appointment-product-create-appointment #edit-period .form-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+#appointment-product-create-appointment #edit-months .form-item,
+#appointment-product-create-appointment #edit-weeks .form-item,
+#appointment-product-create-appointment #edit-day-of-weeks .form-item {
+  padding: 0;
+  width: 120px;
+  text-align: center;
+  display: inline-block;
+  line-height: 18px;
+  margin: 0;
+  font-size: 14px;  
+}
+#appointment-product-create-appointment #edit-months .form-item input,
+#appointment-product-create-appointment #edit-weeks .form-item input,
+#appointment-product-create-appointment #edit-day-of-weeks .form-item input{
+  display: block;
+  margin: 0px auto;
+  float:none;
+}
+#appointment-product-create-appointment #edit-start {
+  width: 49%;
+  margin-right: 2%;
+  float: left;
+  height: 230px;
+}
+#appointment-product-create-appointment #edit-period {
+  width: 49%;
+  height: 230px;
+}
+#appointment-product-create-appointment #edit-options,
+#appointment-product-create-appointment .form-item-months {
+  display:none;
+}
+.view-item-appointments .calendar .views-field-edit-node,
+.view-item-appointments .calendar .views-field-delete-node {
+  display:inline; 
+  margin-right:10px;
+}
+.view-item-appointments .calendar .views-field-delete-node a{
+  color:#aa5555;
+}
+.calendar.monthview,
+.calendar.dayview,
+.calendar.weekview {
+  line-height: 14px;
+}
+#edit-uid-1-wrapper {
+  max-width: 300px;
+}
+.stripe.form-control.form-select {
+  width:auto;
+  display: inline-block;
+}
+.views-field-edit-quantity,
+.field-name-field-purchased-by,
+.field-name-field-appointment-node,
+.form-item-commerce-node-checkout-product,
+.hidden_input {
+  display:none;
+}
+.legenditem {
+  margin-top: 2px;
+  display: inline-block;
+}
+.legenditem,
+.calendar-calendar .month-view .full div.single-day div.monthview,
+.calendar-calendar .week-view .full div.single-day div.weekview,
+.calendar-calendar .day-view .full div.single-day div.dayview,
+.calendar-calendar .month-view .full td.single-day div.monthview,
+.calendar-calendar .week-view .full td.single-day div.weekview,
+.calendar-calendar .day-view .full td.single-day div.dayview {
+    background: #ffa;
+    border:1px solid #eef;
+    padding: 5px 8px;
+}
+.legenditem.booked,
+.calendar-calendar .month-view .full div.single-day div.monthview.booked,
+.calendar-calendar .week-view .full div.single-day div.weekview.booked,
+.calendar-calendar .day-view .full div.single-day div.dayview.booked,
+.calendar-calendar .month-view .full td.single-day div.monthview.booked,
+.calendar-calendar .week-view .full td.single-day div.weekview.booked,
+.calendar-calendar .day-view .full td.single-day div.dayview.booked {
+    background: #eef;
+}
+.legenditem.locked,
+.calendar-calendar .month-view .full div.single-day div.monthview.locked,
+.calendar-calendar .week-view .full div.single-day div.weekview.locked,
+.calendar-calendar .day-view .full div.single-day div.dayview.locked,
+.calendar-calendar .month-view .full td.single-day div.monthview.locked,
+.calendar-calendar .week-view .full td.single-day div.weekview.locked,
+.calendar-calendar .day-view .full td.single-day div.dayview.locked {
+    background: #fed;
+}
+.legenditem.canceled,
+.calendar-calendar .month-view .full div.single-day div.monthview.canceled,
+.calendar-calendar .week-view .full div.single-day div.weekview.canceled,
+.calendar-calendar .day-view .full div.single-day div.dayview.canceled,
+.calendar-calendar .month-view .full td.single-day div.monthview.canceled,
+.calendar-calendar .week-view .full td.single-day div.weekview.canceled,
+.calendar-calendar .day-view .full td.single-day div.dayview.canceled {
+    background: #fdd;
+}
+.views-exposed-form #edit-author-select {
+  max-height: 75px;
+}

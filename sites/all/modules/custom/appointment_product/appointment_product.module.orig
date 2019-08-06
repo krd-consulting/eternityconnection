@@ -1,0 +1,815 @@
+<?php
+
+
+function appointment_product_permission() {
+  return array(
+    'provider access' => array(
+      'title' => 'Permissions for providers',
+      'description' => 'Create appointments, view own calendar, moderate BBB meetings',
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function appointment_product_menu() {
+  $items['create_appointment'] = array(
+    'title' => 'Create appointment',
+    'access arguments' => array('provider access'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('appointment_product_create_appointment'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+
+function appointment_product_init() {
+  drupal_add_css(drupal_get_path('module', 'appointment_product') . '/appointment_product.css', array('group' => CSS_THEME, 'every_page' => TRUE, 'weight'=>-50));
+  drupal_add_js(drupal_get_path('module', 'appointment_product') . '/appointment_product.js', array('group' => JS_THEME, 'every_page' => TRUE, 'weight'=>-50));
+}
+
+
+function appointment_product_node_update($node) {
+  _appointment_product_assign_link($node);
+}
+function appointment_product_node_insert($node) {
+  _appointment_product_assign_link($node);
+}
+function _appointment_product_assign_link($node) {
+  if ($node->type == 'videomeeting' && isset($node->field_appointment_node['und'][0]['target_id'])) {
+    $app = node_load($node->field_appointment_node['und'][0]['target_id']);
+    if ($app && $app->field_status['und'][0]['value']==1) {
+      $app->field_video_meeting_node['und'][0]['target_id'] = $node->nid;
+      $app->field_status['und'][0]['value'] = 2;
+      node_save($app);
+    }
+    if ($app && $app->field_status['und'][0]['value']==2 && $node->status==1) {
+      $app->field_status['und'][0]['value'] = 3;
+      node_save($app);
+      //send emails to provider and buyer
+      $params = [
+        'app_title' => $app->title,
+        'nid' => $node->nid,
+      ];
+      $user2 = user_load($app->uid);
+      drupal_mail('appointment_product', 'appointment_purchased_provider', $user2->mail, user_preferred_language($user2), $params);
+      $attendeeuid = db_query('SELECT co.uid FROM commerce_order co
+        INNER JOIN commerce_line_item cli ON cli.order_id=co.order_id
+        INNER JOIN field_data_commerce_node_checkout_node cncn ON cncn.bundle=\'commerce_node_checkout\' and cncn.entity_id=cli.line_item_id
+        WHERE co.status=\'completed\' and cncn.commerce_node_checkout_node_target_id='.$node->nid)->fetchField();
+      $user3 = user_load($attendeeuid);
+      $params = [
+        'app_title' => $app->title,
+        'nid' => $node->nid,
+      ];
+      drupal_mail('appointment_product', 'appointment_purchased_buyer', $user3->mail, user_preferred_language($user3), $params);
+    }
+  }
+}
+
+function appointment_product_views_data() {
+  return array(
+    'node' => array(
+      'author_select' => array(
+        'group' => t('Content'),
+        'title' => t('Provider (select list)'),
+        'help' => t('Filter by provider, choosing from dropdown list.'),
+        'filter' => array('handler' => 'appointment_product_handler_filter_author_select'),
+        'real field' => 'uid',
+      ),
+    ),
+    'field_data_field_appointment_price' => array(
+      'price_select' => array(
+        'group' => t('Content'),
+        'title' => t('Price (select list)'),
+        'help' => t('Filter by price, choosing from dropdown list.'),
+        'filter' => array('handler' => 'appointment_product_handler_filter_price_select'),
+        'real field' => 'field_appointment_price_product_id',
+      ),
+    ),
+    'field_data_field_type' => array(
+      'meeting_type_select' => array(
+        'group' => t('Content'),
+        'title' => t('Meeting type (select list)'),
+        'help' => t('Filter by meeting type, choosing from dropdown list.'),
+        'filter' => array('handler' => 'appointment_product_handler_filter_type_select'),
+        'real field' => 'field_type_target_id',
+      )
+    )
+  );
+}
+
+class appointment_product_handler_filter_author_select extends views_handler_filter_in_operator {
+  /**
+   * Override parent get_value_options() function.
+   *
+   * @return
+   *   Return the stored values in $this->value_options if someone expects it.
+   */
+  function get_value_options() {
+    $users_list = entity_load('user');
+    $uids = [];
+    foreach(db_query('select distinct uid from {node} n where n.type=\'appointment\'') as $user) {
+      $uids[] = $user->uid;
+    }
+    foreach ($users_list as $user) {
+      if (in_array($user->uid,$uids)) {
+        $users[$user->uid] = $user->name;
+      }
+    }
+    // Sort by username.
+    natsort($users);
+    $this->value_options = $users;
+    return $users;
+  }
+}
+
+class appointment_product_handler_filter_price_select extends views_handler_filter_in_operator {
+  /**
+   * Override parent get_value_options() function.
+   *
+   * @return
+   *   Return the stored values in $this->value_options if someone expects it.
+   */
+  function get_value_options() {
+    $nodes = []; 
+    foreach(entity_load_multiple_by_name('commerce_product', [], array('type' => 'commerce_node_checkout')) as $node) {
+      $nodes[$node->product_id] = $node->title;
+    }
+    natsort($nodes);
+    $this->value_options = $nodes;
+    return $nodes;
+  }
+}
+
+class appointment_product_handler_filter_type_select extends views_handler_filter_in_operator {
+  /**
+   * Override parent get_value_options() function.
+   *
+   * @return
+   *   Return the stored values in $this->value_options if someone expects it.
+   */
+  function get_value_options() {
+    $nodes = []; 
+    foreach(entity_load_multiple_by_name('node', [], array('type' => 'meeting_type')) as $node) {
+      $nodes[$node->nid] = $node->title;
+    }
+    natsort($nodes);
+    $this->value_options = $nodes;
+    return $nodes;
+  }
+}
+
+
+function appointment_product_preprocess_calendar_item(&$vars) {
+  if (isset($vars['item']->entity) 
+      && isset($vars['item']->entity->field_status)
+      && isset($vars['item']->entity->field_status['und'])
+      && isset($vars['item']->entity->field_status['und'][0]['value'])
+    ) {
+      $colors = [
+        1 => 'available',
+        2 => 'locked',
+        3 => 'booked',
+        4 => 'canceled',
+      ];
+      $vars['item']->granularity = $colors[$vars['item']->entity->field_status['und'][0]['value']].' '.$vars['item']->granularity;
+    }
+}
+
+function appointment_product_node_load($nodes, $types) {
+    global $user;
+    
+    foreach ($nodes as $node) {
+    if (bbb_is_meeting_type($node->type)) {
+      $meeting = new stdClass();
+      $result = db_query("SELECT * FROM {bbb_meetings} WHERE nid = :nid", array(':nid' => $node->nid));
+      $meeting = $result->fetchObject();
+      if ($meeting) {
+        $meeting->running = bbb_api_isMeetingRunning(array('meetingID' => $meeting->meetingID));
+        // insert the recording option
+        $recording = ($meeting->record == 1) ? array('record' => 'true') : array();
+        $attend = array(
+              'fullName' => format_username($user),
+              'meetingID' => $meeting->meetingID,
+              'password' => $meeting->attendeePW,
+            );
+        $moderate = array(
+              'fullName' => format_username($user),
+              'meetingID' => $meeting->meetingID,
+              'password' => $meeting->moderatorPW,
+            );
+        $attend = array_merge($attend, $recording);
+        $moderate = array_merge($moderate, $recording);
+        
+        $layout = db_query("SELECT fdl.field_default_layout_value
+          FROM {field_data_field_default_layout} fdl
+          INNER JOIN {field_data_field_type} ft ON fdl.entity_id=ft.field_type_target_id and ft.bundle='appointment'
+          INNER JOIN {field_data_field_appointment_node} fan ON ft.entity_id=fan.field_appointment_node_target_id
+          WHERE fdl.bundle='meeting_type' and fan.entity_id = :nid", array(':nid' => $node->nid))->fetchField();
+        if ($layout!='' && $layout!='defaultlayout') {
+   
+        }
+        $meeting->url = array(
+          'attend' => bbb_api_join($attend),
+          'moderate' => bbb_api_join($moderate),
+        );
+        // Allow alteration for e.g. access control
+        // Just implement hook_bbb_meeting_alter(&$data) {} in your module
+        drupal_alter('bbb_meeting', $meeting);
+        $node->bbb = $meeting;
+      }
+    }
+  }
+  if (in_array('appointment',$types)) {
+    foreach($nodes as $nid=>$node) {
+      if ($node->type=='appointment') {
+        //check 'locked' appointments. 
+        if (@$node->field_status['und'][0]['value']==2 && isset($node->field_video_meeting_node['und'])
+           && isset($node->field_video_meeting_node['und'][0]['target_id']) && $node->field_video_meeting_node['und'][0]['target_id']>0) {
+          $node2 = node_load($node->field_video_meeting_node['und'][0]['target_id']);
+          if ($node2) {
+            if ($node2->created+1800<time()) {
+              //product in cart more then 30 minutes. Remove it from cart and remove node
+              $row = db_query('SELECT co.order_id, cli.line_item_id FROM commerce_order co
+                INNER JOIN commerce_line_item cli ON cli.order_id=co.order_id
+                INNER JOIN field_data_commerce_node_checkout_node cncn ON cncn.bundle=\'commerce_node_checkout\' and cncn.entity_id=cli.line_item_id
+                WHERE co.status=\'cart\' and cncn.commerce_node_checkout_node_target_id='.$node2->nid)->fetchAssoc();
+              if (isset($row['order_id'])) {
+                $order = commerce_order_load($row['order_id']);
+                if ($order) {
+                  node_delete($node2->nid);
+                  $nodes[$nid]->field_status['und'][0]['value'] = 1;
+                  $nodes[$nid]->field_video_meeting_node['und'][0]['target_id'] = 0;
+                  node_save($nodes[$nid]);
+                  commerce_cart_order_product_line_item_delete($order, $row['line_item_id']);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+function appointment_product_node_presave($node) {
+  if ($node->type == 'videomeeting' && isset($node->field_appointment_node['und'][0]['target_id'])) {
+    $app = node_load($node->field_appointment_node['und'][0]['target_id']);
+    $node->uid = $app->uid;
+    $node->bbb = new StdClass();
+    $node->bbb->record = 0;
+  }
+}
+function appointment_product_videomeeting_node_form_validate($form, &$form_state) {
+  if (isset($form_state['values']['field_appointment_node'])
+     && isset($form_state['values']['field_appointment_node']['und'][0]['target_id'])) {
+    $app = node_load($form_state['values']['field_appointment_node']['und'][0]['target_id']);
+    if ($app->field_status['und'][0]['value']!=1) {
+       form_set_error('field_appointment_node', 'Purchasement error. Appointment unavailable.');
+    }
+  }
+}
+
+function appointment_product_commerce_cart_product_remove($order, $product, $quantity, $line_item) {
+  if (isset($line_item->commerce_node_checkout_node) && isset($line_item->commerce_node_checkout_node['und'][0]['target_id'])) {
+    $node = node_load($line_item->commerce_node_checkout_node['und'][0]['target_id']);
+    if (isset($node->field_appointment_node['und'][0]['target_id'])) {
+      $app = node_load($node->field_appointment_node['und'][0]['target_id']);
+      if ($app && $app->field_status['und'][0]['value']==2) {
+        $count = db_query('SELECT count(entity_id) FROM field_data_field_appointment_node WHERE field_appointment_node_target_id='.$app->nid)->fetchField();
+        if ($count==1) {
+          $app->field_video_meeting_node['und'][0]['target_id'] = 0;
+          $app->field_status['und'][0]['value'] = 1;
+          node_save($app);
+        }
+      }
+    }
+    if ($node && isset($node->nid)) {
+      node_delete($node->nid);
+    }
+  };
+}
+
+function appointment_product_form_alter(&$form, &$form_state, $form_id) {
+  if ('commerce_checkout_form_checkout' == $form_id && isset($form['customer_profile_billing']['commerce_customer_address']['und'][0]['#address'])) {
+    if (civicrm_initialize()) {
+      global $user;
+      $params = array('email' => $user->mail, 'version' => 3, 'sequential' => 0);
+      $result = civicrm_api3('Contact', 'get', $params);
+      if (is_array($result) && isset($result['values']) && is_array($result['values'])) {
+        $contact = array_pop($result['values']);
+        if (is_array($contact)) {
+          if (isset($contact['country']) && $contact['country']!='' && isset($form['customer_profile_billing']['commerce_customer_address']['und'][0]['country']['#options'])) {
+            $countries = $form['customer_profile_billing']['commerce_customer_address']['und'][0]['country']['#options'];
+            if (is_array($countries)) {
+              $countries = array_flip($countries);
+              if (isset($countries[$contact['country']])) {
+                $form['customer_profile_billing']['commerce_customer_address']['und'][0]['#address']['country'] = $countries[$contact['country']];
+                if (isset($contact['state_province'])) {
+                  $form['customer_profile_billing']['commerce_customer_address']['und'][0]['#address']['administrative_area'] = $contact['state_province'];
+                }
+              }
+            }
+          }
+          if (isset($contact['display_name'])) {
+            $form['customer_profile_billing']['commerce_customer_address']['und'][0]['#address']['name_line'] = $contact['display_name'];
+          }
+          if (isset($contact['street_address'])) {
+            $form['customer_profile_billing']['commerce_customer_address']['und'][0]['#address']['thoroughfare'] = $contact['street_address'];
+          }
+          if (isset($contact['supplemental_address_1'])) {
+            $form['customer_profile_billing']['commerce_customer_address']['und'][0]['#address']['premise'] = $contact['supplemental_address_1'];
+          }
+          if (isset($contact['city'])) {
+            $form['customer_profile_billing']['commerce_customer_address']['und'][0]['#address']['locality'] = $contact['city'];
+          }
+          if (isset($contact['postal_code'])) {
+            $form['customer_profile_billing']['commerce_customer_address']['und'][0]['#address']['postal_code'] = $contact['postal_code'];
+          }
+          //@todo: maybe there need another contacts binding
+        }
+      }
+    }
+  }
+  if ('videomeeting_node_form' == $form_id) {
+    $pagetitle = 'Purchase appointment.';
+    $app_nid = @$_GET['to'];
+    if ($app_nid>0) {
+      $app = node_load($app_nid);
+      if ($app) {
+        if ($form['title']['#default_value']=='') {
+          $form['title']['#default_value'] = 'Meeting for '. $app->title;
+        }
+        global $user;
+        $pagetitle = 'Purchase '.$app->title;
+        $form['title']['#attributes'] = ['class'=>['hidden_input']];
+        $form['actions']['submit']['#value'] = 'Add to cart';
+        $form['field_purchased_by']['und'][0]['value']['#default_value'] = $user->uid;
+        $form['field_appointment_node']['und'][0]['target_id']['#default_value'] = $app->title.' ('.$app->nid.')';
+        $form['field_appointment_node']['und'][0]['target_id']['#entity'] = $app;
+        $form['#validate'][] = 'appointment_product_videomeeting_node_form_validate';
+        if ($app->field_status['und'][0]['value']!=1) {
+          $allowed_values = list_allowed_values(field_info_field('field_status'));
+          $message = 'Appointment cannot be purchased because it\'s already '.strtolower($allowed_values[$app->field_status['und'][0]['value']]).'. ';
+          if ($app->field_status['und'][0]['value']==2) {
+            $message .= 'You can try again in 1 hour.';
+          }
+          drupal_set_message($message, 'error');
+        }
+      } else {
+        drupal_set_message('Unknown appointment specified', 'error');
+      } 
+    } else {
+      drupal_set_message('No appointment specified', 'error');
+    }
+    drupal_set_title($pagetitle);
+    drupal_set_breadcrumb([l('Home', '')]);
+  }
+  if ('commerce_checkout_form_checkout' == $form_id) {
+    
+  }
+}
+
+function appointment_product_create_appointment() {
+  $form = array();
+  $form['type'] = array(
+    '#type' => 'fieldset',     
+    '#title' => 'Type and Price',
+  );
+  $types = [];
+  $result = db_query('SELECT n.title, n.nid, fdp.field_default_price_product_id
+    from node n 
+    inner join field_data_field_default_price fdp ON fdp.entity_id=n.nid and fdp.bundle=\'meeting_type\'
+    where n.type=\'meeting_type\' ORDER BY n.title');
+  $add_js = '<script type="text/javascript"> var fdp_meeting_types = {';
+  $add_js_items = [];
+  foreach ($result as $row) {
+    $types[$row->nid] = $row->title;
+    $add_js_items[] = $row->nid.':'.$row->field_default_price_product_id;
+  }    
+  $add_js .= implode(',', $add_js_items).'};
+  jQuery(document).ready(function() {
+    if (jQuery(\'div.form-item-type select\').length>0) {
+      jQuery(\'div.form-item-type select\').change(function() {
+        var val = jQuery(\'div.form-item-type select\').val();
+        jQuery(\'div.form-item-price select\').val(fdp_meeting_types[val]);
+        jQuery(\'input[name=price2]\').val(fdp_meeting_types[val]);
+      });
+    }
+    
+  });
+  </script>';
+  $form['type']['type'] = array(
+    '#type' => 'select',     
+    '#title' => 'Type',
+    '#required' => TRUE,
+    '#options' => $types,
+    '#suffix' => $add_js
+  );
+  $types = [];
+  $result = db_query('SELECT n.title, n.product_id from commerce_product n where n.type=\'commerce_node_checkout\' ORDER BY n.title');
+  foreach ($result as $row) {
+    $types[$row->product_id] = $row->title;
+  }    
+  $form['type']['price2'] = array(
+    '#type' => 'hidden',     
+    '#title' => 'Price2',
+    '#required' => TRUE,
+  );
+  $form['type']['price'] = array(
+    '#type' => 'select',     
+    '#title' => 'Price',
+    '#disabled' => TRUE,
+    '#required' => TRUE,
+    '#options' => $types,
+  );
+  $form['start'] = array(
+    '#type' => 'fieldset',     
+    '#title' => 'Start',
+    '#description' => 'Select start date and time of appointment',
+  );
+  $form['start']['startdatetime'] = array(
+    '#type' => 'date_popup',
+    '#date_format' => 'd/m/Y H:i',
+    '#required' => TRUE,
+  );
+  $form['period'] = array(
+    '#type' => 'fieldset',     
+    '#title' => 'Duration',
+    '#description' => 'Select duration of appointment',
+  );
+  $form['period']['hours'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Hours',
+    '#default_value' => '00',
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#required' => TRUE,
+  );
+  $form['period']['minutes'] = array(
+    '#type' => 'textfield',
+    '#title' => 'Minutes',
+    '#default_value' => '00',
+    '#size' => 2,
+    '#maxlength' => 2,
+    '#required' => TRUE,
+  );
+  $form['bulk'] = array(
+    '#type' => 'fieldset',     
+    '#title' => 'Bulk appointments',
+    '#description' => 'Click checkbox for bulk creation and select rules',
+  );
+  $form['bulk']['is_bulk'] = array(
+    '#type' => 'checkbox',
+    '#title' => 'Bulk appointments',
+    '#default_value' => '0',
+  );
+  $form['bulk']['options'] = array(
+    '#type' => 'fieldset',     
+  );
+  $form['bulk']['options'] = array(
+    '#type' => 'fieldset',     
+  );
+  $form['bulk']['options']['endtime'] = array(
+    '#type' => 'date_popup',    
+    '#title' => 'Fill till the \'Time\' (from \'Start\' time: <span class="ap_start_time"></span>)',
+    '#date_format' => 'H:i',
+  );
+  $form['bulk']['options']['day_of_weeks'] = array(
+    '#type' => 'checkboxes',
+    '#options' => [1=>'Monday', 2=>'Tuesday', 3=>'Wednesday', 4=>'Thursday', 5=>'Friday', 6=>'Saturday', 7=>'Sunday'],
+    '#default_value' => ['1','2','3','4','5','6','7'],
+    '#title' => 'Fill days of week',
+  );
+  $form['bulk']['options']['weeks_or_months'] = array(
+    '#type' => 'select',
+    '#options' => ['Weeks', 'Months'],
+    '#default_value' => ['0'],
+    '#title' => 'Fill by months or by weeks?',
+  );
+  
+  $dt1 = new DateTime("now", new DateTimeZone(drupal_get_user_timezone()));
+  drupal_add_js(['ap'=>['usertimezoneoffset'=>drupal_get_user_timezone()]],'setting');
+  
+  $dates = [1=>'<span>Week 1<br/>'.date('d.m.y').' - '.date('d.m.y', strtotime('+'.(7-date('N')).' days')).'</span>'];
+  if (isset($_POST) && isset($_POST['is_bulk']) && $_POST['is_bulk']==1 && isset($_POST['weeks']) && is_array($_POST['weeks']) && count($_POST['weeks'])>1) {
+    $time1 = strtotime('+'.(8-date('N')).' days');
+    $time2 = $time1+518400;
+    $max = 2;
+    foreach($_POST['weeks'] as $key=>$val) {
+      $max = $key;
+    }
+    for($key=2;$key<=$max;$key++) {
+      $dates[$key] = '<span>Week '.$key.'<br/>'.date('d.m.y',($time1+($key-2)*604800)).' - '.date('d.m.y', ($time2+($key-2)*604800)).'</span>';
+    }
+  }
+  drupal_add_js(['ap'=>['startweektime'=>(strtotime('+'.(8-date('N')).' days')+(((float)$dt1->format('O'))*36))]],'setting');
+  $form['bulk']['options']['weeks'] = array(
+    '#type' => 'checkboxes',
+    '#options' => $dates,
+    '#default_value' => ['1'],
+    '#title' => 'Fill Weeks <a href="#" class="week_change_1">-5 week</a> | <a href="#" class="week_change_2">-1 week</a> | <a href="#" class="week_change_3">+1 week</a> | <a href="#" class="week_change_4">+5 week</a>',
+  );
+  $months = [date('F',strtotime('01-'.sprintf("%'.02d",12).'-2017'))];
+  for($i=1;$i<=11;$i++) {
+    $months[] = date('F',strtotime('01-'.sprintf("%'.02d",$i).'-2017'));
+  }
+  drupal_add_js(['ap'=>['months_names'=>$months]],'setting');
+  $months = [1=>'<span>Month 1<br/>'.date('F Y').'</span>'];
+  if (isset($_POST) && isset($_POST['is_bulk']) && $_POST['is_bulk']==1 && isset($_POST['months']) && is_array($_POST['months']) && count($_POST['months'])>1) {
+    $max = 2;
+    foreach($_POST['months'] as $key=>$val) {
+      $max = $key;
+    }
+    for($key=2;$key<=$max;$key++) {
+        $months[$key] = '<span>Month '.$key.'<br/>'.date('F Y',strtotime('+ '.($key-1).' months')).'</span>';
+    }
+  }
+  drupal_add_js(['ap'=>['startmonthtime'=>(date('n')<12?date('n')-1:0)]],'setting');
+  drupal_add_js(['ap'=>['startyeartime'=>date('Y')]],'setting');
+  $form['bulk']['options']['months'] = array(
+    '#type' => 'checkboxes',
+    '#options' => $months,
+    '#default_value' => ['1'],
+    '#title' => 'Fill Months <a href="#" class="week_change_5">-5 month</a> | <a href="#" class="week_change_6">-1 month</a> | <a href="#" class="week_change_7">+1 month</a> | <a href="#" class="week_change_8">+5 month</a>',
+  );
+
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Create appointment',
+//    '#submit' => array('appointment_product_create_appointment_submit'),
+  );
+  return $form;
+}
+
+function appointment_product_create_appointment_validate($form, &$form_state) {
+  if (isset($form_state['values'])) {
+    if ($form_state['values']['minutes']==0 && $form_state['values']['hours']==0) {
+      form_set_error('minutes', 'Duration must be more than 0');
+    }
+    if ($form_state['values']['is_bulk']==1 && $form_state['values']['startdatetime']!='' && $form_state['values']['endtime']!='') {
+      $t1 = explode(' ',$form_state['values']['startdatetime']);
+      $t1 = explode(':',$t1[1]);
+      $t2 = explode(':',$form_state['values']['endtime']);
+      if ($t2[0]<$t1[0] || ($t2[0]==$t1[0] && $t2[1]<=$t1[1])) {
+        form_set_error('endtime', 'Endtime must be more than starttime');
+      }
+    }
+    if ($form_state['values']['is_bulk']==1 && is_array($form_state['values']['day_of_weeks'])) {
+      $no_weeks = true;
+      foreach($form_state['values']['day_of_weeks'] as $day_of_week) {
+        if ($day_of_week>0) {
+          $no_weeks = false;
+        }
+      }
+      if ($no_weeks) {
+        form_set_error('day_of_weeks', 'You must selected at least one day of week');
+      }
+    }
+    if ($form_state['values']['is_bulk']==1 && $form_state['values']['weeks_or_months']==0 && is_array($form_state['values']['weeks'])) {
+      $no_weeks = true;
+      foreach($form_state['values']['weeks'] as $week) {
+        if ($week>0) {
+          $no_weeks = false;
+        }
+      }
+      if ($no_weeks) {
+        form_set_error('weeks', 'You must selected at least one week');
+      }
+    }
+    if ($form_state['values']['is_bulk']==1 && $form_state['values']['weeks_or_months']==1 && is_array($form_state['values']['months'])) {
+      $no_months = true;
+      foreach($form_state['values']['months'] as $month) {
+        if ($month>0) {
+          $no_months = false;
+        }
+      }
+      if ($no_months) {
+        form_set_error('months', 'You must selected at least one month');
+      }
+    }
+    if ($form_state['values']['is_bulk']==1 && $form_state['values']['endtime']==null) {
+      form_set_error('endtime', 'Endtime is required for bulk operation');
+    }
+  }
+}
+
+function appointment_product_create_appointment_method($values) {
+  global $user;
+  $date1_s = $date1 = $values['startdatetime'];
+  $dt1 = new DateTime("now", new DateTimeZone(drupal_get_user_timezone()));
+  $offset = ((integer)$dt1->format('O'))*36;
+  $time1 = strtotime($date1);
+  $time2 = $time1+(integer)$values['hours']*3600+(integer)$values['minutes']*60;
+  $date2_s = date('Y-m-d H:i', $time2);
+  $date1 = date('Y-m-d H:i', $time1-$offset);
+  $date2 = date('Y-m-d H:i', $time2-$offset);
+
+  $result = db_query('SELECT n.nid, n.title, st.field_date_and_time_value, st.field_date_and_time_value2 from node n 
+    INNER JOIN field_data_field_date_and_time st ON st.entity_id=n.nid and st.bundle=\'appointment\'
+    where n.type=\'appointment\' and n.uid=:userid and 
+      ( (UNIX_TIMESTAMP(st.field_date_and_time_value)>UNIX_TIMESTAMP(:time1) and UNIX_TIMESTAMP(st.field_date_and_time_value)<UNIX_TIMESTAMP(:time2))
+       or (UNIX_TIMESTAMP(st.field_date_and_time_value2)>UNIX_TIMESTAMP(:time1) and UNIX_TIMESTAMP(st.field_date_and_time_value2)<UNIX_TIMESTAMP(:time2))
+       or (UNIX_TIMESTAMP(st.field_date_and_time_value2)>UNIX_TIMESTAMP(:time1) and UNIX_TIMESTAMP(st.field_date_and_time_value)<=UNIX_TIMESTAMP(:time1)))',
+       [':userid'=>$user->uid, ':time1'=>$date1 , ':time2'=>$date2])->fetchObject();
+  if ($result) {
+    $result->field_date_and_time_value = date('Y-m-d H:i', strtotime($result->field_date_and_time_value)+$offset);
+    $result->field_date_and_time_value2 = date('Y-m-d H:i', strtotime($result->field_date_and_time_value2)+$offset);
+    drupal_set_message( t("You cannot create new appointment time between {$date1_s} and {$date2_s} because it intersect with time you already created: '!title' between {$result->field_date_and_time_value} and {$result->field_date_and_time_value2}", 
+      ['!title' => $result->title]));
+    return false;
+  }
+  $new_appointment = new StdClass();
+  $new_appointment->uid = $user->uid;
+  $new_appointment->is_new = true;
+  $new_appointment->type = 'appointment';
+  $new_appointment->status = 1;
+  $new_appointment->language = 'und';
+  $new_appointment->title = $user->name.'\'s appointment '.$date1_s;
+  $new_appointment->field_date_and_time = array ('und' => array ( 0 => array (
+    'value' => $date1,
+    'value2' => $date2,
+    'timezone' => drupal_get_user_timezone(),
+    'timezone_db' => 'UTC',
+    'date_type' => 'datetime',
+  )));
+  $new_appointment->field_type = array ( 'und' => array ( 0 => array ( 'target_id' => $values['type'])));
+  $new_appointment->field_appointment_price = array ( 'und' => array ( 0 => array ( 'product_id' => $values['price2'])));
+  $new_appointment->field_status = array ( 'und' => array ( 0 => array ( 'value' => '1')));
+  $new_appointment->bbb = new StdClass();
+  $new_appointment->bbb->record = 0;
+  node_save($new_appointment);
+  $text_message = t("New appointment time between {$date1_s} and {$date2_s} was created.");
+  drupal_set_message($text_message);
+  
+  $old_date = '';
+  $allowed_values = list_allowed_values(field_info_field('field_status'));
+  $d = new DateTimeZone(drupal_get_user_timezone());
+  $dt1 = new DateTime("now");
+  $odffset = $d->getOffset($dt1);
+  $app_list = '';
+  foreach(db_query('
+  SELECT nid from node n 
+      inner join field_data_field_date_and_time fdt on fdt.bundle=\'appointment\' and fdt.entity_id=n.nid
+     where uid='.$user->uid.' and n.type=\'appointment\' and UNIX_TIMESTAMP(fdt.field_date_and_time_value)>UNIX_TIMESTAMP(CURRENT_TIMESTAMP) ORDER BY UNIX_TIMESTAMP(fdt.field_date_and_time_value) ASC') as $app) {
+    $nodeapp = node_load($app->nid);    
+    $date = date('d-m-Y', strtotime($nodeapp->field_date_and_time['und'][0]['value'])+$odffset);
+    if ($date!=$old_date) {
+      $app_list .= '
+      <br/><br/><b>'.$date.'</b>';
+      $old_date = $date;
+    }
+    $app_list .= '
+    <br/>'.date('H:i', strtotime($nodeapp->field_date_and_time['und'][0]['value'])+$odffset).' - ';
+    $app_list .= date('H:i', strtotime($nodeapp->field_date_and_time['und'][0]['value2'])+$odffset);
+    $app_list .= ', '.$nodeapp->title.' ('.$allowed_values[$nodeapp->field_status['und'][0]['value']].')<br/>';
+  }
+  $params = [
+    'date1' => $date1_s,
+    'date2' => $date2_s,
+    'appointments_list' => $app_list,
+  ];
+  drupal_mail('appointment_product', 'appointment_created', $user->mail, user_preferred_language($user), $params);
+  return $new_appointment;
+}
+
+function appointment_product_mail ($key, &$message, $params) {
+  switch ($key) {
+    case 'appointment_created':
+      // Set headers etc
+      // $message['to'] = 'foo@bar.com';
+      $message['subject'] = t('New Appointment was created for you');
+      $message['body'][] = $text_message = t('Hello!').'<br/>'.t("New appointment time between {$params['date1']} and {$params['date2']} was created.").'<br/>'.t('You list of appointments:').'<br/>'.$params['appointments_list'];
+      break;
+    case 'appointment_purchased_provider':
+      // Set headers etc
+      // $message['to'] = 'foo@bar.com';
+      $message['subject'] = t('Your appointment was purchased');
+      $message['body'][] = t('Hello!').'<br/>'.t('Your appointments was purchased: ').$params['app_title'].'
+      <br/>'.t('You can visit video meeting and moderate it on this page: ').'<a href="/node/'.$params['nid'].'/meeting/moderate">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/moderate</a><br/>';
+      break;
+    case 'appointment_purchased_buyer':
+      // Set headers etc
+      // $message['to'] = 'foo@bar.com';
+      $message['subject'] = t('You purchased an appointment');
+      $message['body'][] =       $text_message = t('Hello!').'<br/>'.t('You just purchased appointment to video meeting: ').$params['app_title'].'
+      <br/>'.t('You can attend meeting on this page: ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/>';
+      break;
+  }
+}
+
+function appointment_product_create_appointment_submit($form, &$form_state) {
+  if (isset($form_state['values'])) {
+    if ($form_state['values']['is_bulk']==0) {
+      appointment_product_create_appointment_method($form_state['values']);
+    }
+    if ($form_state['values']['is_bulk']==1) {
+      $values = $form_state['values'];
+      $date1 = $form_state['values']['startdatetime'];
+      $time1 = strtotime($date1);
+      $day_of_weeks = $form_state['values']['day_of_weeks'];
+      $weeks = $form_state['values']['weeks'];
+      $months = $form_state['values']['months'];
+      $weeks_or_months = $form_state['values']['weeks_or_months'];
+      $is_weeks = ($weeks_or_months==0);
+      $arr = ($is_weeks?$weeks:$months);
+      $max = 1;
+      foreach($arr as $key=>$val) {
+        $max = $key;
+      }      
+      $time2 = strtotime('+ '.$max.($form_state['values']['weeks_or_months']==0?' weeks':' months'));
+      if ($is_weeks) {
+        $time2 += (7-(integer)date('N'))*86400;
+      } else {
+        $time2 += ((integer)date('t',$time2)-(integer)date('d',$time2))*86400;
+      }
+      $current_time = $time1;
+      $starttime = date('H:i', $time1);
+      $endtime = $form_state['values']['endtime'];
+      $length = (integer)$form_state['values']['hours']*3600+(integer)$form_state['values']['minutes']*60;
+      $current_week = date('N',$current_time)==1?0:1;
+      $current_months = date('d',$current_time)==1?0:1;
+      while($current_time<=$time2) {
+        $day_of_week = date('N',$current_time);
+        $day_of_month = date('d',$current_time);
+        $current_date = date('Y-m-d',$current_time);
+        if ($day_of_week==1) {
+          $current_week++;
+        }
+        if ($day_of_month==1) {
+          $current_months++;
+        }
+        if (isset($day_of_weeks[$day_of_week]) && $day_of_weeks[$day_of_week]>0) {
+          if ($is_weeks?(isset($weeks[$current_week]) && $weeks[$current_week]>0):(isset($months[$current_months]) && $months[$current_months]>0)) {
+            $currentstarttime = $time3 = strtotime($current_date.' '.$starttime);
+            $time4 = strtotime($current_date.' '.$endtime);
+            while ($currentstarttime<$time4) {
+              $values['startdatetime'] = date('Y-m-d H:i', $currentstarttime);
+              appointment_product_create_appointment_method($values);
+              $currentstarttime += $length;
+            }
+          }
+        }
+        $current_time += 86400;
+      }
+    }
+  }
+}
+
+function appointment_product_calendar_links_alter(&$calendar_links) {
+  $calendar_links['appointments']['actions'][] = array('title' => t('Add Appointment'), 'path' => 'create_appointment');
+  $calendar_links['appointments/month']['actions'][] = array('title' => t('Add Appointment'), 'path' => 'create_appointment');
+  $calendar_links['appointments/my-month']['actions'][] = array('title' => t('Add Appointment'), 'path' => 'create_appointment');
+  $calendar_links['appointments/week']['actions'][] = array('title' => t('Add Appointment'), 'path' => 'create_appointment');
+  $calendar_links['appointments/day']['actions'][] = array('title' => t('Add Appointment'), 'path' => 'create_appointment');
+  $calendar_links['appointments/year']['actions'][] = array('title' => t('Add Appointment'), 'path' => 'create_appointment');
+}
+
+function appointment_product_theme($existing, $type, $theme, $path) {
+  $theme = array();
+  $theme['node__appointment'] = array(
+    'render element' => 'content',
+    'base hook' => 'node',
+    'template' => 'node--appointment',
+    'path' => drupal_get_path('module', 'appointment_product') . '/templates',
+  );
+  return $theme;
+}
+
+function _appointment_product_get_allow_attend_button($node) {
+  global $user;
+  $allow_attend_button = false;
+  $attendeeuid = db_query('SELECT co.uid FROM commerce_order co
+    INNER JOIN commerce_line_item cli ON cli.order_id=co.order_id
+    INNER JOIN field_data_commerce_node_checkout_node cncn ON cncn.bundle=\'commerce_node_checkout\' and cncn.entity_id=cli.line_item_id
+    WHERE co.status=\'completed\' and cncn.commerce_node_checkout_node_target_id='.$node->nid)->fetchField();
+  
+  if ($attendeeuid==$user->uid) {
+    $allow_attend_button = true;
+  }
+  return $allow_attend_button;
+}
+
+function appointment_product_preprocess_page(&$vars) {
+  if (isset($vars['node'])) {
+    $node = $vars['node'];
+    if($node->type == 'videomeeting') {
+      $allow_attend_button = _appointment_product_get_allow_attend_button($node);
+      if (!$allow_attend_button) {
+        if (isset($vars['tabs']['#primary']) && is_array($vars['tabs']['#primary'])) {
+          foreach ($vars['tabs']['#primary'] as $key => $tab) {
+            if ($tab['#link']['page_callback']=='bbb_meeting_attend') {
+              unset($vars['tabs']['#primary'][$key]);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+function appointment_product_bbb_meeting($meeting) {
+}

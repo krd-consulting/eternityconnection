@@ -4,12 +4,10 @@ core = 7.x
 package = CiviCRM
 dependencies[] = civicrm (>=4.4)
 dependencies[] = webform (>=4.12)
-dependencies[] = libraries
 dependencies[] = options_element
 
-; Information added by Drupal.org packaging script on 2017-07-06
-version = "7.x-4.18+8-dev"
+; Information added by Drupal.org packaging script on 2019-02-01
+version = "7.x-4.26"
 core = "7.x"
 project = "webform_civicrm"
-datestamp = "1499312651"
-
+datestamp = "1549046896"

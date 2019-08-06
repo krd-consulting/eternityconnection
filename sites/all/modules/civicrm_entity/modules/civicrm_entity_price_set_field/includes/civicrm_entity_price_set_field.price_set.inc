@@ -24,8 +24,12 @@ function _civicrm_entity_price_set_field_setup_price_set_fapi(&$form, &$form_sta
           'civicrm-price-set-' . $data['price_set']->id,
         ),
       ),
+      '#weight' => -5,
     );
     foreach ($data['price_fields'] as $pf_id => $price_field) {
+      if (empty($price_field['pf_entity']->is_active)) {
+        continue;
+      }
       if (!empty($price_field['pf_entity']->active_on)) {
         if (time() < strtotime($price_field['pf_entity']->active_on)) {
           continue;
@@ -61,6 +65,7 @@ function _civicrm_entity_price_set_field_setup_price_set_fapi(&$form, &$form_sta
         $form[$parent]['contacts'][$count]['price_set'][$pf_id]['price_field_values']['#type'] = 'textfield';
         $form[$parent]['contacts'][$count]['price_set'][$pf_id]['price_field_values']['#size'] = 7;
         $form[$parent]['contacts'][$count]['price_set'][$pf_id]['price_field_values']['#maxlength'] = 5;
+        $default_value = '';
       }
       else {
         switch ($price_field['pf_entity']->html_type) {
@@ -80,7 +85,16 @@ function _civicrm_entity_price_set_field_setup_price_set_fapi(&$form, &$form_sta
         }
         $options = array();
         foreach ($price_field['price_field_values'] as $id => $price_field_value) {
-          $options[$id] = $price_field_value->label . ' $' . $price_field_value->amount;
+          if (empty($price_field_value->is_active)) {
+            continue;
+          }
+          if (is_numeric($price_field_value->amount)) {
+            $amount = number_format($price_field_value->amount, 2);
+          }
+          else {
+            $amount = $price_field_value->amount;
+          }
+          $options[$id] = $price_field_value->label . ' $' . $amount;
           if (!empty($price_field_value->is_default)) {
             if (is_array($default_value)) {
               $default_value[$id] = $id;
@@ -94,6 +108,9 @@ function _civicrm_entity_price_set_field_setup_price_set_fapi(&$form, &$form_sta
       }
       if (empty($default_values['contacts'][$count]['price_set'][$pf_id]['price_field_values'])) {
         $form[$parent]['contacts'][$count]['price_set'][$pf_id]['price_field_values']['#default_value'] = $default_value;
+        if($price_field['pf_entity']->html_type == 'Radio' && empty($default_value)) {
+          $form[$parent]['contacts'][$count]['price_set'][$pf_id]['price_field_values']['#default_value'] = array();
+        }
       }
       else {
         $form[$parent]['contacts'][$count]['price_set'][$pf_id]['price_field_values']['#default_value'] = $default_values['contacts'][$count]['price_set'][$pf_id]['price_field_values'];

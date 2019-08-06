@@ -3,8 +3,14 @@ cj(function($) {
   'use strict';
   var
     setting = Drupal.settings.webform_civicrm,
-    $contributionAmount = $('.civicrm-enabled[name*="[civicrm_1_contribution_1_contribution_total_amount]"]'),
     $processorFields = $('.civicrm-enabled[name$="civicrm_1_contribution_1_contribution_payment_processor_id]"]');
+
+  $(document).ajaxStart(function() {
+    $('#billing-payment-block').closest('form').block();
+  })
+  .ajaxStop(function() {
+    $('#billing-payment-block').closest('form').unblock();
+  });
 
   function getPaymentProcessor() {
     if (!$processorFields.length) {
@@ -26,7 +32,11 @@ cj(function($) {
         // When an express payment button is clicked, skip the billing fields and submit the form with a placeholder
         var $expressButton = $('input[name$=_upload_express]', '#billing-payment-block');
         if ($expressButton.length) {
-            $('#billing-payment-block .description').hide();
+          $expressButton.removeClass('crm-form-submit').click(function(e) {
+            e.preventDefault();
+            $('input[name=credit_card_number]', '#billing-payment-block').val('express');
+            $(this).closest('form').find('input.webform-submit.button-primary').click();
+          })
         }
       });
     }
@@ -46,7 +56,7 @@ cj(function($) {
 
   function tally() {
     var total = 0;
-    $("#wf-crm-billing-items tr:not(#wf-crm-billing-total)").each(function() {
+    $('.line-item:visible', '#wf-crm-billing-items').each(function() {
       total += parseFloat($(this).data('amount'));
     });
     $('td+td', '#wf-crm-billing-total').html(CRM.formatMoney(total));
@@ -93,19 +103,21 @@ cj(function($) {
     return total < 0 ? 0 : total;
   }
 
-  function calculateContributionAmount() {
-    var amount = getFieldAmount('civicrm_1_contribution_1_contribution_total_amount');
-    var label = $contributionAmount.closest('div.webform-component').find('label').html() || Drupal.t('Contribution');
-    updateLineItem('civicrm_1_contribution_1', amount, label);
+  function calculateLineItemAmount() {
+    var fieldKey = $(this).data('civicrmFieldKey'),
+      amount = getFieldAmount(fieldKey),
+      label = $(this).closest('div.webform-component').find('label').text() || Drupal.t('Contribution'),
+      lineKey = fieldKey.split('_').slice(0, 4).join('_');
+    updateLineItem(lineKey, amount, label);
   }
 
-  if ($contributionAmount.length) {
-    calculateContributionAmount();
-    $contributionAmount.on('change keyup', calculateContributionAmount);
-    // Also use Drupal's jQuery to listen to this event, for compatibility with other modules
-    jQuery($contributionAmount[0]).change(calculateContributionAmount);
-  }
-  else {
-    tally();
-  }
+  $('.civicrm-enabled.contribution-line-item')
+    .each(calculateLineItemAmount)
+    .on('change keyup', calculateLineItemAmount)
+    .each(function() {
+      // Also use Drupal's jQuery to listen to this event, for compatibility with other modules
+      jQuery(this).change(calculateLineItemAmount);
+    });
+
+  tally();
 });

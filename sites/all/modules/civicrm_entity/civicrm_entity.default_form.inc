@@ -70,9 +70,9 @@ function civicrm_entity_form($form, &$form_state, $entity, $op, $entity_type) {
               case 'select':
                 $form[$name]['#type'] = 'select';
                 $form[$name]['#options'] = !empty($entity_form[$name]['#required']) ? _civicrm_entity_get_entities_list($info['widget']['entity']) : array(NULL => 'None') + _civicrm_entity_get_entities_list($info['widget']['entity']);
-                if ($info['widget']['entity'] == 'Event') {
+                /*if ($info['widget']['entity'] == 'Event') {
                   array_shift($form[$name]['#options']);
-                }
+                }*/
                 break;
               default:
                 $form[$name]['#type'] = 'textfield';
@@ -236,6 +236,13 @@ function civicrm_entity_form($form, &$form_state, $entity, $op, $entity_type) {
             }
           }
 
+          // case special handling
+          if ($entity_type == 'civicrm_case') {
+            if($name == 'creator_id') {
+              unset($creator_id);
+            }
+          }
+
           // make sure to disable id field, and any custom field with is_view = 1
           if ($name == 'id' || !empty($info['is_view'])) {
             $form[$name]['#disabled'] = TRUE;
@@ -316,6 +323,20 @@ function civicrm_entity_form($form, &$form_state, $entity, $op, $entity_type) {
 function civicrm_entity_form_validate(&$form, &$form_state) {
   $entity = $form['#entity'];
   $entity_type = $form['#entity_type'];
+
+  // unset form and entity values if civicrm properties are hidden from the form by display suite
+  if (module_exists('ds_forms')) {
+    if ($ds_form = ds_build_load($form, $form['#form_id'])) {
+      if ($layout = ds_get_layout($ds_form->entity_type, $ds_form->bundle, 'form', FALSE)) {
+        foreach ($layout['settings']['fields'] as $field_name => $visibility) {
+          if ($field_name != 'id' && $visibility == 'hidden' && strpos($field_name, 'field_') !== 0) {
+            unset($form_state['values'][$field_name]);
+            unset($entity->{$field_name});
+          }
+        }
+      }
+    }
+  }
 
   foreach ($form_state['values'] as $key => $value) {
     if (!is_array($value)) {
@@ -403,6 +424,19 @@ function civicrm_entity_form_submit(&$form, &$form_state) {
     'version' => 3,
     'action' => 'create',
   ));
+  // unset form and entity values if civicrm properties are hidden from the form by display suite
+  if (module_exists('ds_forms')) {
+    if ($ds_form = ds_build_load($form, $form['#form_id'])) {
+      if ($layout = ds_get_layout($ds_form->entity_type, $ds_form->bundle, 'form', FALSE)) {
+        foreach ($layout['settings']['fields'] as $field_name => $visibility) {
+          if ($field_name != 'id' && $visibility == 'hidden' && strpos($field_name, 'field_') !== 0) {
+            unset($form_state['values'][$field_name]);
+            unset($entity->{$field_name});
+          }
+        }
+      }
+    }
+  }
 
   foreach ($form_state['values'] as $key => $value) {
     //need to convert checkbox values to a consumable format for checkboxes custom fields
@@ -444,6 +478,9 @@ function civicrm_entity_form_submit(&$form, &$form_state) {
     $entity->created = time();
   }
   $entity->changed = time();
+  if($entity_type == 'civicrm_case') {
+    unset($entity->creator_id);
+  }
 
   $wrapper = entity_metadata_wrapper($entity_type, $entity);
   //field_attach_submit($entity_type, $entity, $form, $form_state);
@@ -481,6 +518,11 @@ function civicrm_entity_form_submit(&$form, &$form_state) {
       }
       // this will create the civicrm entity reference fields entities
       field_attach_submit($entity_type, $entity, $form, $form_state);
+    }
+    // if no civicrm entity reference fields, then handle "normally"
+    else {
+      field_attach_submit($entity_type, $entity, $form, $form_state);
+      $wrapper->save();
     }
   }
   // is update, handle "normally"

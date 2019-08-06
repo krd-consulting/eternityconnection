@@ -17,9 +17,8 @@ features[rules_config][] = rules_relationship_de_activated_
 features[rules_config][] = rules_relationship_deleted
 features[user_role][] = Case Managers
 
-; Information added by Drupal.org packaging script on 2017-05-04
-version = "7.x-2.0-beta8"
+; Information added by Drupal.org packaging script on 2018-12-03
+version = "7.x-2.2"
 core = "7.x"
 project = "civicrm_entity"
-datestamp = "1493935088"
-
+datestamp = "1543856285"

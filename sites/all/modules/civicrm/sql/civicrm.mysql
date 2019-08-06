@@ -3519,7 +3519,7 @@ CREATE TABLE `civicrm_case` (
 
 
      `id` int unsigned NOT NULL AUTO_INCREMENT  COMMENT 'Unique Case ID',
-     `case_type_id` int unsigned    COMMENT 'FK to civicrm_case_type.id',
+     `case_type_id` int unsigned NOT NULL   COMMENT 'FK to civicrm_case_type.id',
      `subject` varchar(128)    COMMENT 'Short name of the case.',
      `start_date` date    COMMENT 'Date on which given case starts.',
      `end_date` date    COMMENT 'Date on which given case ends.',
@@ -3536,7 +3536,7 @@ CREATE TABLE `civicrm_case` (
         is_deleted
   )
   
-,          CONSTRAINT FK_civicrm_case_case_type_id FOREIGN KEY (`case_type_id`) REFERENCES `civicrm_case_type`(`id`) ON DELETE SET NULL  
+,          CONSTRAINT FK_civicrm_case_case_type_id FOREIGN KEY (`case_type_id`) REFERENCES `civicrm_case_type`(`id`)   
 )  ENGINE=InnoDB DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci  ;
 
 -- /*******************************************************
@@ -4130,7 +4130,9 @@ CREATE TABLE `civicrm_financial_trxn` (
      `status_id` int unsigned    COMMENT 'pseudo FK to civicrm_option_value of contribution_status_id option_group',
      `payment_processor_id` int unsigned    COMMENT 'Payment Processor for this financial transaction',
      `payment_instrument_id` int unsigned    COMMENT 'FK to payment_instrument option group values',
-     `check_number` varchar(255)    COMMENT 'Check number' 
+     `card_type` int unsigned    COMMENT 'FK to accept_creditcard option group values',
+     `check_number` varchar(255)    COMMENT 'Check number',
+     `pan_truncation` int unsigned    COMMENT 'Last 4 digits of credit card' 
 ,
     PRIMARY KEY ( `id` )
  
