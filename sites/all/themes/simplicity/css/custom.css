@@ -32,3 +32,59 @@
     right: 50px !important;
     top: -190px !important;
 }
+
+/* User Profile*/
+#user-info-container {
+	display: flex;
+}
+
+#user-info-container .user-picture {
+	margin-right: 1em;
+}
+
+#user-info-container .user-picture img {
+	object-fit: cover;
+	border-radius: 50%;
+	height: 220px;
+	width: 220px;
+}
+
+#user-info-container .user-picture .placeholder {
+	height: 200px;
+	width: 200px;
+	display: inline-block;
+	border-radius: 50%;
+	background-color: orange;
+	text-align: center;
+	line-height: 200px;
+	color: white;
+	font-size: 4em;
+	font-family: 'Ubuntu Condensed';
+}
+
+#user-info-container #user-info {
+	flex-grow: 1; 
+}
+
+#user-contact-info-container #crm-container > div {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#user-contact-info-container #crm-container > div > div {
+	width: 50%;
+}
+
+#user-contact-info-container .crm-section {
+	padding-bottom: 1em;
+}
+
+#user-contact-info-container .crm-section .label {
+	padding: 0px;
+}
+
+@media screen and (max-width: 600px) {
+  #user-contact-info-container #crm-container > div > div {
+    width: 100%;
+  }
+}
