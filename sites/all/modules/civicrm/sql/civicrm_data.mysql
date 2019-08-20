@@ -1,7 +1,7 @@
 -- +--------------------------------------------------------------------+
--- | CiviCRM version 4.7                                                |
+-- | CiviCRM version 5                                                  |
 -- +--------------------------------------------------------------------+
--- | Copyright CiviCRM LLC (c) 2004-2017                                |
+-- | Copyright CiviCRM LLC (c) 2004-2019                                |
 -- +--------------------------------------------------------------------+
 -- | This file is a part of CiviCRM.                                    |
 -- |                                                                    |
@@ -144,7 +144,7 @@ INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1100", "Iceland", "IS", "1", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1101", "India", "IN", "4", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1102", "Indonesia", "ID", "4", "0");
-INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1103", "Iran, Islamic Republic Of", "IR", "3", "0");
+INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1103", "Iran, Islamic Republic of", "IR", "3", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1104", "Iraq", "IQ", "3", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1105", "Ireland", "IE", "1", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1106", "Israel", "IL", "3", "0");
@@ -169,7 +169,7 @@ INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1125", "Lithuania", "LT", "1", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1126", "Luxembourg", "LU", "1", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1127", "Macao", "MO", "4", "0");
-INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1128", "Macedonia, Republic Of", "MK", "1", "0");
+INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1128", "Macedonia, Republic of", "MK", "1", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1129", "Madagascar", "MG", "5", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1130", "Malawi", "MW", "5", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1131", "Malaysia", "MY", "4", "0");
@@ -243,7 +243,7 @@ INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1200", "Sudan", "SD", "3", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1201", "Suriname", "SR", "2", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1202", "Svalbard and Jan Mayen", "SJ", "1", "0");
-INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1203", "Swaziland", "SZ", "5", "0");
+INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1203", "Eswatini", "SZ", "5", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1204", "Sweden", "SE", "1", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1205", "Switzerland", "CH", "1", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1206", "Syrian Arab Republic", "SY", "3", "0");
@@ -295,9 +295,9 @@ INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1252", "Saint Barthélemy", "BL", "2", "0");
 INSERT INTO civicrm_country (id, name,iso_code,region_id,is_province_abbreviated) VALUES("1253", "Saint Martin (French part)", "MF", "2", "0");
 -- +--------------------------------------------------------------------+
--- | CiviCRM version 4.7                                                |
+-- | CiviCRM version 5                                                  |
 -- +--------------------------------------------------------------------+
--- | Copyright CiviCRM LLC (c) 2004-2017                                |
+-- | Copyright CiviCRM LLC (c) 2004-2019                                |
 -- +--------------------------------------------------------------------+
 -- | This file is a part of CiviCRM.                                    |
 -- |                                                                    |
@@ -577,8 +577,8 @@ INSERT INTO civicrm_state_province (id, country_id, abbreviation, name) VALUES
 (1627, 1010, "T", "Tucuman"),
 (1628, 1014, "1", "Burgenland"),
 (1629, 1014, "2", "Kärnten"),
-(1630, 1014, "3", "Niederosterreich"),
-(1631, 1014, "4", "Oberosterreich"),
+(1630, 1014, "3", "Niederösterreich"),
+(1631, 1014, "4", "Oberösterreich"),
 (1632, 1014, "5", "Salzburg"),
 (1633, 1014, "6", "Steiermark"),
 (1634, 1014, "7", "Tirol"),
@@ -797,7 +797,7 @@ INSERT INTO civicrm_state_province (id, country_id, abbreviation, name) VALUES
 (1847, 1033, "10", "Kyustendil"),
 (1848, 1033, "11", "Lovech"),
 (1849, 1033, "12", "Montana"),
-(1850, 1033, "13", "Pazardzik"),
+(1850, 1033, "13", "Pazardzhik"),
 (1851, 1033, "14", "Pernik"),
 (1852, 1033, "15", "Pleven"),
 (1853, 1033, "16", "Plovdiv"),
@@ -1168,7 +1168,7 @@ INSERT INTO civicrm_state_province (id, country_id, abbreviation, name) VALUES
 (2237, 1058, "US", "Ústecký kraj"),
 (2238, 1058, "VY", "Vysočina"),
 (2239, 1058, "ZL", "Zlínský kraj"),
-(2240, 1082, "BW", "Baden-Wuerttemberg"),
+(2240, 1082, "BW", "Baden-Württemberg"),
 (2241, 1082, "BY", "Bayern"),
 (2242, 1082, "HB", "Bremen"),
 (2243, 1082, "HH", "Hamburg"),
@@ -1178,12 +1178,12 @@ INSERT INTO civicrm_state_province (id, country_id, abbreviation, name) VALUES
 (2247, 1082, "RP", "Rheinland-Pfalz"),
 (2248, 1082, "SL", "Saarland"),
 (2249, 1082, "SH", "Schleswig-Holstein"),
-(2250, 1082, "BR", "Berlin"),
+(2250, 1082, "BE", "Berlin"),
 (2251, 1082, "BB", "Brandenburg"),
 (2252, 1082, "MV", "Mecklenburg-Vorpommern"),
 (2253, 1082, "SN", "Sachsen"),
 (2254, 1082, "ST", "Sachsen-Anhalt"),
-(2255, 1082, "TH", "Thueringen"),
+(2255, 1082, "TH", "Thüringen"),
 (2256, 1060, "AS", "Ali Sabiah"),
 (2257, 1060, "DI", "Dikhil"),
 (2258, 1060, "DJ", "Djibouti"),
@@ -2924,44 +2924,44 @@ INSERT INTO civicrm_state_province (id, country_id, abbreviation, name) VALUES
 (4172, 1176, "B", "Bucuresti"),
 (4173, 1176, "AB", "Alba"),
 (4174, 1176, "AR", "Arad"),
-(4175, 1176, "AG", "Arges"),
-(4176, 1176, "BC", "Bacau"),
+(4175, 1176, "AG", "Argeș"),
+(4176, 1176, "BC", "Bacău"),
 (4177, 1176, "BH", "Bihor"),
-(4178, 1176, "BN", "Bistrita-Nasaud"),
-(4179, 1176, "BT", "Boto\'ani"),
-(4180, 1176, "BV", "Bra\'ov"),
-(4181, 1176, "BR", "Braila"),
-(4182, 1176, "BZ", "Buzau"),
-(4183, 1176, "CS", "Caras-Severin"),
-(4184, 1176, "CL", "Ca la ras\'i"),
+(4178, 1176, "BN", "Bistrița-Năsăud"),
+(4179, 1176, "BT", "Botoșani"),
+(4180, 1176, "BV", "Brașov"),
+(4181, 1176, "BR", "Brăila"),
+(4182, 1176, "BZ", "Buzău"),
+(4183, 1176, "CS", "Caraș-Severin"),
+(4184, 1176, "CL", "Călărași"),
 (4185, 1176, "CJ", "Cluj"),
-(4186, 1176, "CT", "Constant\'a"),
+(4186, 1176, "CT", "Constanța"),
 (4187, 1176, "CV", "Covasna"),
-(4188, 1176, "DB", "Dambovit\'a"),
+(4188, 1176, "DB", "Dâmbovița"),
 (4189, 1176, "DJ", "Dolj"),
-(4190, 1176, "GL", "Galat\'i"),
+(4190, 1176, "GL", "Galați"),
 (4191, 1176, "GR", "Giurgiu"),
 (4192, 1176, "GJ", "Gorj"),
 (4193, 1176, "HR", "Harghita"),
 (4194, 1176, "HD", "Hunedoara"),
-(4195, 1176, "IL", "Ialomit\'a"),
-(4196, 1176, "IS", "Ias\'i"),
+(4195, 1176, "IL", "Ialomița"),
+(4196, 1176, "IS", "Iași"),
 (4197, 1176, "IF", "Ilfov"),
-(4198, 1176, "MM", "Maramures"),
-(4199, 1176, "MH", "Mehedint\'i"),
-(4200, 1176, "MS", "Mures"),
-(4201, 1176, "NT", "Neamt"),
+(4198, 1176, "MM", "Maramureș"),
+(4199, 1176, "MH", "Mehedinți"),
+(4200, 1176, "MS", "Mureș"),
+(4201, 1176, "NT", "Neamț"),
 (4202, 1176, "OT", "Olt"),
 (4203, 1176, "PH", "Prahova"),
 (4204, 1176, "SM", "Satu Mare"),
-(4205, 1176, "SJ", "Sa laj"),
+(4205, 1176, "SJ", "Sălaj"),
 (4206, 1176, "SB", "Sibiu"),
 (4207, 1176, "SV", "Suceava"),
 (4208, 1176, "TR", "Teleorman"),
-(4209, 1176, "TM", "Timis"),
+(4209, 1176, "TM", "Timiș"),
 (4210, 1176, "TL", "Tulcea"),
 (4211, 1176, "VS", "Vaslui"),
-(4212, 1176, "VL", "Valcea"),
+(4212, 1176, "VL", "Vâlcea"),
 (4213, 1176, "VN", "Vrancea"),
 (4214, 1177, "AD", "Adygeya, Respublika"),
 (4215, 1177, "AL", "Altay, Respublika"),
@@ -4373,11 +4373,57 @@ INSERT INTO civicrm_state_province (id, country_id, abbreviation, name) VALUES
 (NULL, 1181, "N", "Nevis"),
 (NULL, 1190, "E", "Eastern"),
 (NULL, 1190, "N", "Northern"),
-(NULL, 1190, "S", "Southern");
+(NULL, 1190, "S", "Southern"),
+
+-- CRM-21234 Missing subdivisions of Tajikistan.
+(NULL, 1209, "DU", "Dushanbe"),
+(NULL, 1209, "RA", "Nohiyahoi Tobei Jumhurí"),
+
+-- CRM-21268 Missing French overseas departments.
+(NULL, 1076, "WF", "Wallis-et-Futuna"),
+(NULL, 1076, "NC", "Nouvelle-Calédonie"),
+
+-- CRM-21532 Add French state/departments
+(NULL, 1076, "52", "Haute-Marne"),
+
+-- Add states for: Barbados and Antigua and Barbuda
+(NULL, 1009, "03", "Saint George"),
+(NULL, 1009, "04", "Saint John"),
+(NULL, 1009, "05", "Saint Mary"),
+(NULL, 1009, "06", "Saint Paul"),
+(NULL, 1009, "07", "Saint Peter"),
+(NULL, 1009, "08", "Saint Philip"),
+(NULL, 1009, "10", "Barbuda"),
+(NULL, 1009, "11", "Redonda"),
+(NULL, 1018, "01", "Christ Church"),
+(NULL, 1018, "02", "Saint Andrew"),
+(NULL, 1018, "03", "Saint George"),
+(NULL, 1018, "04", "Saint James"),
+(NULL, 1018, "05", "Saint John"),
+(NULL, 1018, "06", "Saint Joseph"),
+(NULL, 1018, "07", "Saint Lucy"),
+(NULL, 1018, "08", "Saint Michael"),
+(NULL, 1018, "09", "Saint Peter"),
+(NULL, 1018, "10", "Saint Philip"),
+(NULL, 1018, "11", "Saint Thomas"),
+
+-- CRM-21837 - Missing states for Gabon
+(NULL, 1080, "01", "Estuaire"),
+(NULL, 1080, "02", "Haut-Ogooué"),
+(NULL, 1080, "03", "Moyen-Ogooué"),
+(NULL, 1080, "04", "Ngounié"),
+(NULL, 1080, "05", "Nyanga"),
+(NULL, 1080, "06", "Ogooué-Ivindo"),
+(NULL, 1080, "07", "Ogooué-Lolo"),
+(NULL, 1080, "08", "Ogooué-Maritime"),
+(NULL, 1080, "09", "Woleu-Ntem"),
+
+-- dev/Core#131 Missing UK State
+(NULL, 1226, "MON", "Monmouthshire");
 -- +--------------------------------------------------------------------+
--- | CiviCRM version 4.7                                                |
+-- | CiviCRM version 5                                                  |
 -- +--------------------------------------------------------------------+
--- | Copyright CiviCRM LLC (c) 2004-2017                                |
+-- | Copyright CiviCRM LLC (c) 2004-2019                                |
 -- +--------------------------------------------------------------------+
 -- | This file is a part of CiviCRM.                                    |
 -- |                                                                    |
@@ -4549,7 +4595,7 @@ INSERT INTO civicrm_currency (id, name, symbol, numeric_code, full_name) VALUES
 (145, "STD", NULL, "678", "São Tome and Principe Dobra"),
 (146, "SVC",  "$", "222", "El Salvador Colon"),
 (147, "SYP",  "£", "760", "Syrian Pound"),
-(148, "SZL", NULL, "748", "Swaziland Lilangeni"),
+(148, "SZL", NULL, "748", "Eswatini Lilangeni"),
 (149, "TJS", NULL, "972", "Tajik Somoni"),
 (150, "TMM", NULL, "795", "Turkmenistan Manat"),
 (151, "TND", NULL, "788", "Tunisian Dinar"),
@@ -4587,11 +4633,10 @@ INSERT INTO civicrm_currency (id, name, symbol, numeric_code, full_name) VALUES
 (183, "YER",  "﷼", "886", "Yemeni Rial"),
 (184, "ZMK", NULL, "894", "Zambian Kwacha"),
 (185, "ZWD", "Z$", "716", "Zimbabwe Dollar");
-
 -- +--------------------------------------------------------------------+
--- | CiviCRM version 4.7                                                |
+-- | CiviCRM version 5                                                  |
 -- +--------------------------------------------------------------------+
--- | Copyright CiviCRM LLC (c) 2004-2017                                |
+-- | Copyright CiviCRM LLC (c) 2004-2019                                |
 -- +--------------------------------------------------------------------+
 -- | This file is a part of CiviCRM.                                    |
 -- |                                                                    |
@@ -4789,7 +4834,11 @@ VALUES
    ('msg_mode'                      , 'Message Mode'                       , NULL, 1, 1, 0),
    ('contact_date_reminder_options' , 'Contact Date Reminder Options'      , NULL, 1, 1, 1),
    ('wysiwyg_presets'               , 'WYSIWYG Editor Presets'             , NULL, 1, 1, 0),
-   ('relative_date_filters'         , 'Relative Date Filters'              , NULL, 1, 1, 0);
+   ('relative_date_filters'         , 'Relative Date Filters'              , NULL, 1, 1, 0),
+   ('pledge_status'                 , 'Pledge Status'                      , NULL, 1, 1, 1),
+   ('contribution_recur_status'     , 'Recurring Contribution Status'      , NULL, 1, 1, 1),
+   ('environment'                   , 'Environment'                        , NULL, 1, 1, 0),
+   ('activity_default_assignee'     , 'Activity default assignee'          , NULL, 1, 1, 0);
 
 SELECT @option_group_id_pcm            := max(id) from civicrm_option_group where name = 'preferred_communication_method';
 SELECT @option_group_id_act            := max(id) from civicrm_option_group where name = 'activity_type';
@@ -4869,6 +4918,10 @@ SELECT @option_group_id_msg_mode := max(id) from civicrm_option_group where name
 SELECT @option_group_id_contactDateMode := max(id) from civicrm_option_group where name = 'contact_date_reminder_options';
 SELECT @option_group_id_date_filter    := max(id) from civicrm_option_group where name = 'relative_date_filters';
 SELECT @option_group_id_wysiwyg_presets    := max(id) from civicrm_option_group where name = 'wysiwyg_presets';
+SELECT @option_group_id_ps    := max(id) from civicrm_option_group where name = 'pledge_status';
+SELECT @option_group_id_crs    := max(id) from civicrm_option_group where name = 'contribution_recur_status';
+SELECT @option_group_id_env    := max(id) from civicrm_option_group where name = 'environment';
+SELECT @option_group_id_default_assignee := max(id) from civicrm_option_group where name = 'activity_default_assignee';
 
 SELECT @contributeCompId := max(id) FROM civicrm_component where name = 'CiviContribute';
 SELECT @eventCompId      := max(id) FROM civicrm_component where name = 'CiviEvent';
@@ -4906,6 +4959,8 @@ VALUES
    (@option_group_id_act, 'Follow up',          14, 'Follow up',          NULL, 0,  0, 14, '', 0, 1, 1, @caseCompId, NULL, 'fa-share-square-o'),
    (@option_group_id_act, 'Change Case Type',   15, 'Change Case Type',   NULL, 0,  0, 15, '', 0, 1, 1, @caseCompId, NULL, 'fa-random'),
    (@option_group_id_act, 'Change Case Status', 16, 'Change Case Status', NULL, 0,  0, 16, '', 0, 1, 1, @caseCompId, NULL, 'fa-pencil-square-o'),
+   (@option_group_id_act, 'Change Case Subject',53, 'Change Case Subject',NULL, 0,  0, 53, '', 0, 1, 1, @caseCompId, NULL, 'fa-pencil-square-o'),
+   (@option_group_id_act, 'Change Custom Data', 33, 'Change Custom Data', NULL, 0,  0, 33, '', 0, 1, 1, @caseCompId, NULL, 'fa-table'),
 
    (@option_group_id_act, 'Membership Renewal Reminder',        17, 'Membership Renewal Reminder',  NULL, 1, NULL, 17, 'offline membership renewal reminder.',                      0, 1, 1, @memberCompId, NULL, NULL),
    (@option_group_id_act, 'Change Case Start Date',             18, 'Change Case Start Date',         NULL, 0,  0, 18, '', 0, 1, 1, @caseCompId, NULL , 'fa-calendar'),
@@ -4924,11 +4979,8 @@ VALUES
    (@option_group_id_act, 'Canvass',                            29, 'Canvass', NULL,0, 0, 28, '', 0, 1, 1, @campaignCompId, NULL, NULL),
    (@option_group_id_act, 'PhoneBank',                          30, 'PhoneBank', NULL,0, 0, 29, '', 0, 1, 1, @campaignCompId, NULL, NULL),
    (@option_group_id_act, 'WalkList',                           31, 'WalkList', NULL,0, 0, 30, '', 0, 1, 1, @campaignCompId, NULL, NULL),
-   (@option_group_id_act, 'Petition Signature',                           32, 'Petition', NULL,0, 0, 31, '', 0, 1, 1, @campaignCompId, NULL, NULL),
+   (@option_group_id_act, 'Petition Signature',                 32, 'Petition', NULL,0, 0, 31, '', 0, 1, 1, @campaignCompId, NULL, NULL),
    (@option_group_id_act, 'Mass SMS',                           34, 'Mass SMS',         NULL, 1, NULL, 34, 'Mass SMS',                                                    0, 1, 1, NULL, NULL, NULL),
-
--- Activity Types for CiviCampaign CiviCase
-   (@option_group_id_act, 'Change Custom Data',                 33, 'Change Custom Data', NULL,0, 0, 33, '', 0, 1, 1, @caseCompId, NULL, 'fa-table'),
 
 -- Additional Membership-related Activity Types
    (@option_group_id_act, 'Change Membership Status',           35, 'Change Membership Status',   NULL, 1, NULL, 35, 'Change Membership Status.',                         0, 1, 1, @memberCompId, NULL, NULL),
@@ -4965,10 +5017,7 @@ VALUES
    (@option_group_id_act, 'Contact Deleted by Merge', 52, 'Contact Deleted by Merge', NULL, 1, NULL, 52, 'Contact was merged into another contact',0, 1, 1, NULL, NULL, NULL),
 
   -- Activity Type for failed payment
-   (@option_group_id_act, 'Failed Payment', 53, 'Failed Payment', NULL, 1, 0, 53, 'Failed Payment', 0, 1, 1, @contributeCompId, NULL, NULL),
-
-  -- Activity Type for Close Accounting Period
-   (@option_group_id_act, 'Close Accounting Period', 54, 'Close Accounting Period', NULL, 1, 0, 54, 'Close Accounting Period', 0, 1, 1, @contributeCompId, NULL, NULL),
+   (@option_group_id_act, 'Failed Payment', 54, 'Failed Payment', NULL, 1, 0, 54, 'Failed Payment', 0, 1, 1, @contributeCompId, NULL, NULL),
 
    (@option_group_id_gender, 'Female', 1, 'Female', NULL, 0, NULL, 1, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_gender, 'Male',   2, 'Male',   NULL, 0, NULL, 2, NULL, 0, 0, 1, NULL, NULL, NULL),
@@ -5130,16 +5179,17 @@ VALUES
   (@option_group_id_adOpt, 'Street Address'    ,  1, 'street_address', NULL, 0, NULL,  1, NULL, 0, 0, 1, NULL, NULL, NULL),
   (@option_group_id_adOpt, 'Supplemental Address 1'  ,  2, 'supplemental_address_1', NULL, 0, NULL,  2, NULL, 0, 0, 1, NULL, NULL, NULL),
   (@option_group_id_adOpt, 'Supplemental Address 2'  ,  3, 'supplemental_address_2', NULL, 0, NULL,  3, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'City'              ,  4, 'city'          , NULL, 0, NULL,  4, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'Postal Code' ,  5, 'postal_code'   , NULL, 0, NULL,  5, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'Postal Code Suffix',  6, 'postal_code_suffix', NULL, 0, NULL,  6, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'County'            ,  7, 'county'        , NULL, 0, NULL,  7, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'State/Province'  ,  8, 'state_province', NULL, 0, NULL,  8, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'Country'           ,  9, 'country'       , NULL, 0, NULL,  9, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'Latitude'          , 10, 'geo_code_1'    , NULL, 0, NULL, 10, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'Longitude'         , 11, 'geo_code_2', NULL, 0, NULL, 11, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'Address Name'      , 12, 'address_name', NULL, 0, NULL, 12, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_adOpt, 'Street Address Parsing', 13, 'street_address_parsing', NULL, 0, NULL, 13, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'Supplemental Address 3'  ,  4, 'supplemental_address_3', NULL, 0, NULL, 4, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'City'              ,  5, 'city'          , NULL, 0, NULL,  5, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'Postal Code' ,  6, 'postal_code'   , NULL, 0, NULL,  6, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'Postal Code Suffix',  7, 'postal_code_suffix', NULL, 0, NULL,  7, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'County'            ,  8, 'county'        , NULL, 0, NULL,  8, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'State/Province'  ,  9, 'state_province', NULL, 0, NULL,  9, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'Country'           , 10, 'country'       , NULL, 0, NULL, 10, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'Latitude'          , 11, 'geo_code_1'    , NULL, 0, NULL, 11, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'Longitude'         , 12, 'geo_code_2', NULL, 0, NULL, 12, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'Address Name'      , 13, 'address_name', NULL, 0, NULL, 13, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_adOpt, 'Street Address Parsing', 14, 'street_address_parsing', NULL, 0, NULL, 14, NULL, 0, 0, 1, NULL, NULL, NULL),
 
   (@option_group_id_gType, 'Access Control', 1, 'Access Control', NULL, 0, NULL, 1, NULL, 0, 1, 1, NULL, NULL, NULL),
   (@option_group_id_gType, 'Mailing List',   2, 'Mailing List',   NULL, 0, NULL, 2, NULL, 0, 1, 1, NULL, NULL, NULL),
@@ -5208,8 +5258,6 @@ VALUES
   (@option_group_id_report, 'Mail Click-Through Report', 'Mailing/clicks', 'CRM_Report_Form_Mailing_Clicks', NULL, 0, NULL, 37, 'Display clicks from each mailing', 0, 0, 1, @mailCompId, NULL, NULL),
   (@option_group_id_report, 'Contact Logging Report (Summary)', 'logging/contact/summary', 'CRM_Report_Form_Contact_LoggingSummary', NULL, 0, NULL, 38, 'Contact modification report for the logging infrastructure (summary).', 0, 0, 0, NULL, NULL, NULL),
   (@option_group_id_report, 'Contact Logging Report (Detail)', 'logging/contact/detail', 'CRM_Report_Form_Contact_LoggingDetail', NULL, 0, NULL, 39, 'Contact modification report for the logging infrastructure (detail).', 0, 0, 0, NULL, NULL, NULL),
-  (@option_group_id_report, 'Contribute Logging Report (Summary)', 'logging/contribute/summary', 'CRM_Report_Form_Contribute_LoggingSummary', NULL, 0, NULL, 40, 'Contribute modification report for the logging infrastructure (summary).', 0, 0, 0, @contributeCompId, NULL, NULL),
-  (@option_group_id_report, 'Contribute Logging Report (Detail)', 'logging/contribute/detail', 'CRM_Report_Form_Contribute_LoggingDetail', NULL, 0, NULL, 41, 'Contribute modification report for the logging infrastructure (detail).', 0, 0, 0, @contributeCompId, NULL, NULL),
   (@option_group_id_report, 'Grant Report (Statistics)', 'grant/statistics', 'CRM_Report_Form_Grant_Statistics', NULL, 0, NULL, 42, 'Shows statistics for Grants.', 0, 0, 1, @grantCompId, NULL, NULL),
   (@option_group_id_report, 'Survey Report (Detail)',    'survey/detail', 'CRM_Report_Form_Campaign_SurveyDetails',  NULL, 0, NULL, 43, 'Detailed report for canvassing, phone-banking, walk lists or other surveys.', 0, 0, 1, @campaignCompId, NULL, NULL),
   (@option_group_id_report, 'Personal Campaign Page Report', 'contribute/pcp', 'CRM_Report_Form_Contribute_PCP', NULL, 0, NULL, 44, 'Summarizes amount raised and number of contributors for each Personal Campaign Page.', 0, 0, 1, @contributeCompId, NULL, NULL),
@@ -5219,16 +5267,16 @@ VALUES
   (@option_group_id_report, 'Contribution and Membership Details', 'member/contributionDetail', 'CRM_Report_Form_Member_ContributionDetail', NULL, 0, NULL, 48, 'Contribution details for any type of contribution, plus associated membership information for contributions which are in payment for memberships.', 0, 0, 1, @memberCompId, NULL, NULL),
   (@option_group_id_report, 'Recurring Contributions Report', 'contribute/recur', 'CRM_Report_Form_Contribute_Recur',               NULL, 0, NULL, 49, 'Provides information about the status of recurring contributions', 0, 0, 1, @contributeCompId, NULL, NULL),
   (@option_group_id_report, 'Recurring Contributions Summary', 'contribute/recursummary', 'CRM_Report_Form_Contribute_RecurSummary',               NULL, 0, NULL, 49, 'Provides simple summary for each payment instrument for which there are recurring contributions (e.g. Credit Card, Standing Order, Direct Debit, etc., NULL), showing within a given date range.', 0, 0, 1, @contributeCompId, NULL, NULL),
-  (@option_group_id_report, 'Deferred Revenue Details', 'contribute/deferredrevenue', 'CRM_Report_Form_Contribute_DeferredRevenue', NULL, 0, NULL, 50, 'Deferred Revenue Details Report', 0, 0, 1, @contributeCompId, NULL, NULL), 
+  (@option_group_id_report, 'Deferred Revenue Details', 'contribute/deferredrevenue', 'CRM_Report_Form_Contribute_DeferredRevenue', NULL, 0, NULL, 50, 'Deferred Revenue Details Report', 0, 0, 1, @contributeCompId, NULL, NULL),
 
-  (@option_group_id_acs, 'Scheduled',  1, 'Scheduled',  NULL, 0, 1,    1, NULL, 0, 1, 1, NULL, NULL, NULL),
-  (@option_group_id_acs, 'Completed',  2, 'Completed',  NULL, 0, NULL, 2, NULL, 0, 1, 1, NULL, NULL, NULL),
-  (@option_group_id_acs, 'Cancelled',  3, 'Cancelled',  NULL, 0, NULL, 3, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_acs, 'Scheduled',    1, 'Scheduled',    NULL, 0, 1,    1, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_acs, 'Completed',    2, 'Completed',    NULL, 1, NULL, 2, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_acs, 'Cancelled',    3, 'Cancelled',    NULL, 2, NULL, 3, NULL, 0, 1, 1, NULL, NULL, NULL),
   (@option_group_id_acs, 'Left Message', 4, 'Left Message', NULL, 0, NULL, 4, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_acs, 'Unreachable', 5, 'Unreachable', NULL, 0, NULL, 5, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_acs, 'Not Required',  6, 'Not Required',  NULL, 0, NULL, 6, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_acs, 'Available',  7, 'Available',  NULL, 0, NULL, 7, NULL, 0, 0, 1, NULL, NULL, NULL),
-  (@option_group_id_acs, 'No-show',  8, 'No_show',  NULL, 0, NULL, 8, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_acs, 'Unreachable',  5, 'Unreachable',  NULL, 2, NULL, 5, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_acs, 'Not Required', 6, 'Not Required', NULL, 2, NULL, 6, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_acs, 'Available',    7, 'Available',    NULL, 0, NULL, 7, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_acs, 'No-show',      8, 'No_show',      NULL, 2, NULL, 8, NULL, 0, 0, 1, NULL, NULL, NULL),
 
   (@option_group_id_cas, 'Ongoing' , 1, 'Open'  ,  'Opened', 0, 1,    1, NULL, 0, 1, 1, NULL, NULL, NULL),
   (@option_group_id_cas, 'Resolved', 2, 'Closed',  'Closed', 0, NULL, 2, NULL, 0, 1, 1, NULL, NULL, NULL),
@@ -5252,6 +5300,7 @@ VALUES
   (@option_group_id_sfe, 'docx', 12, 'docx',  NULL, 0, 0, 12, NULL, 0, 0, 1, NULL, NULL, NULL),
   (@option_group_id_sfe, 'xlsx', 13, 'xlsx',  NULL, 0, 0, 13, NULL, 0, 0, 1, NULL, NULL, NULL),
   (@option_group_id_sfe, 'odt',  14, 'odt',   NULL, 0, 0, 14, NULL, 0, 0, 1, NULL, NULL, NULL),
+  (@option_group_id_sfe, 'ics',  15, 'ics',   NULL, 0, 0, 15, NULL, 0, 0, 1, NULL, NULL, NULL),
 
   (@option_group_id_we, 'Textarea', 1, 'Textarea', NULL, 0, NULL, 1, NULL, 0, 1, 1, NULL, NULL, NULL),
   (@option_group_id_we, 'CKEditor', 2, 'CKEditor', NULL, 0, NULL, 2, NULL, 0, 1, 1, NULL, NULL, NULL),
@@ -5545,6 +5594,11 @@ VALUES
 (@option_group_id_wysiwyg_presets, 'CiviMail',  '2', 'civimail',  NULL, NULL, 0, 2, NULL, 0, 1, 1, @mailCompId, NULL, NULL),
 (@option_group_id_wysiwyg_presets, 'CiviEvent', '3', 'civievent', NULL, NULL, 0, 3, NULL, 0, 1, 1, @eventCompId, NULL, NULL),
 
+-- Environment
+(@option_group_id_env, 'Production', 'Production', 'Production', NULL, NULL, 1, 1, 'Production Environment', 0, 1, 1, NULL, NULL, NULL),
+(@option_group_id_env, 'Staging', 'Staging', 'Staging', NULL, NULL, 0, 2, 'Staging Environment', 0, 1, 1, NULL, NULL, NULL),
+(@option_group_id_env, 'Development', 'Development', 'Development', NULL, NULL, 0, 3, 'Development Environment', 0, 1, 1, NULL, NULL, NULL),
+
 -- Relative Date Filters
    (@option_group_id_date_filter, 'Today', 'this.day', 'this.day', NULL, NULL, NULL,1, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_date_filter, 'This week', 'this.week', 'this.week', NULL, NULL, NULL,2, NULL, 0, 0, 1, NULL, NULL, NULL),
@@ -5559,9 +5613,9 @@ VALUES
    (@option_group_id_date_filter, 'Previous fiscal year', 'previous.fiscal_year', 'previous.fiscal_year', NULL, NULL, NULL,11, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_date_filter, 'Previous calendar year', 'previous.year', 'previous.year', NULL, NULL, NULL,12, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_date_filter, 'Last 7 days including today', 'ending.week', 'ending.week', NULL, NULL, NULL,13, NULL, 0, 0, 1, NULL, NULL, NULL),
-   (@option_group_id_date_filter, 'Last 30 days including today', 'ending.month', 'ending.month', NULL, NULL, NULL,14, NULL, 0, 0, 1, NULL, NULL, NULL),
-   (@option_group_id_date_filter, 'Last 60 days including today', 'ending_2.month', 'ending_2.month', NULL, NULL, NULL,15, NULL, 0, 0, 1, NULL, NULL, NULL),
-   (@option_group_id_date_filter, 'Last 90 days including today', 'ending.quarter', 'ending.quarter', NULL, NULL, NULL,16, NULL, 0, 0, 1, NULL, NULL, NULL),
+   (@option_group_id_date_filter, 'Last 30 days including today', 'ending_30.day', 'ending.month', NULL, NULL, NULL,14, NULL, 0, 0, 1, NULL, NULL, NULL),
+   (@option_group_id_date_filter, 'Last 60 days including today', 'ending_60.day', 'ending_2.month', NULL, NULL, NULL,15, NULL, 0, 0, 1, NULL, NULL, NULL),
+   (@option_group_id_date_filter, 'Last 90 days including today', 'ending_90.day', 'ending.quarter', NULL, NULL, NULL,16, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_date_filter, 'Last 12 months including today', 'ending.year', 'ending.year', NULL, NULL, NULL,17, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_date_filter, 'Last 2 years including today', 'ending_2.year', 'ending_2.year', NULL, NULL, NULL,18, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_date_filter, 'Last 3 years including today', 'ending_3.year', 'ending_3.year', NULL, NULL, NULL,19, NULL, 0, 0, 1, NULL, NULL, NULL),
@@ -5607,7 +5661,32 @@ VALUES
    (@option_group_id_date_filter, 'From end of previous week', 'greater_previous.week', 'greater_previous.week', NULL, NULL, NULL,59, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_date_filter, 'From end of previous calendar month', 'greater_previous.month', 'greater_previous.month', NULL, NULL, NULL,60, NULL, 0, 0, 1, NULL, NULL, NULL),
    (@option_group_id_date_filter, 'From end of previous quarter', 'greater_previous.quarter', 'greater_previous.quarter', NULL, NULL, NULL,61, NULL, 0, 0, 1, NULL, NULL, NULL),
-   (@option_group_id_date_filter, 'From end of previous calendar year', 'greater_previous.year', 'greater_previous.year', NULL, NULL, NULL,62, NULL, 0, 0, 1, NULL, NULL, NULL);
+   (@option_group_id_date_filter, 'From end of previous calendar year', 'greater_previous.year', 'greater_previous.year', NULL, NULL, NULL,62, NULL, 0, 0, 1, NULL, NULL, NULL),
+
+-- Pledge Status
+  (@option_group_id_ps, 'Completed'  , 1, 'Completed'  , NULL, 0, NULL, 1, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_ps, 'Pending'    , 2, 'Pending'    , NULL, 0, NULL, 2, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_ps, 'Cancelled'  , 3, 'Cancelled'  , NULL, 0, NULL, 3, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_ps, 'In Progress', 5, 'In Progress', NULL, 0, NULL, 4, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_ps, 'Overdue'    , 6, 'Overdue'    , NULL, 0, NULL, 5, NULL, 0, 1, 1, NULL, NULL, NULL),
+
+
+-- Contribution Recur Status
+  (@option_group_id_crs, 'Completed'  , 1, 'Completed'  , NULL, 0, NULL, 1, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_crs, 'Pending'    , 2, 'Pending'    , NULL, 0, NULL, 2, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_crs, 'Cancelled'  , 3, 'Cancelled'  , NULL, 0, NULL, 3, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_crs, 'Failed'     , 4, 'Failed'     , NULL, 0, NULL, 4, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_crs, 'In Progress', 5, 'In Progress', NULL, 0, NULL, 5, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_crs, 'Overdue'    , 6, 'Overdue'    , NULL, 0, NULL, 6, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_crs, 'Processing' , 7, 'Processing' , NULL, 0, NULL, 7, NULL, 0, 1, 1, NULL, NULL, NULL),
+  (@option_group_id_crs, 'Failing'    , 8, 'Failing'    , NULL, 0, NULL, 8, NULL, 0, 1, 1, NULL, NULL, NULL),
+
+-- CiviCase - Activity Assignee Default
+--  (`option_group_id`,             `label`,                                                `value`, `name`,                    `grouping`, `filter`, `is_default`, `weight`, `description`, `is_optgroup`, `is_reserved`, `is_active`, `component_id`, `visibility_id`, `icon`)
+(@option_group_id_default_assignee, 'None',                           '1',     'NONE',                    NULL,       0,         1,           1,         NULL,          0,             0,             1,           NULL,            NULL,           NULL),
+(@option_group_id_default_assignee, 'By relationship to case client', '2',     'BY_RELATIONSHIP',         NULL,       0,         0,           1,         NULL,          0,             0,             1,           NULL,            NULL,           NULL),
+(@option_group_id_default_assignee, 'Specific contact',               '3',     'SPECIFIC_CONTACT',        NULL,       0,         0,           1,         NULL,          0,             0,             1,           NULL,            NULL,           NULL),
+(@option_group_id_default_assignee, 'User creating the case',          '4',     'USER_CREATING_THE_CASE',  NULL,       0,         0,           1,         NULL,          0,             0,             1,           NULL,            NULL,           NULL);
 
 -- financial accounts
 SELECT @opval := value FROM civicrm_option_value WHERE name = 'Revenue' and option_group_id = @option_group_id_fat;
@@ -5810,7 +5889,7 @@ VALUES
   (@option_group_id_languages, 0, 0, 'os_GE', 'os', 'Ossetian, Ossetic', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'pa_IN', 'pa', 'Panjabi, Punjabi', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'pi_KH', 'pi', 'Pali', @counter := @counter + 1),
-  (@option_group_id_languages, 0, 0, 'fa_IR', 'fa', 'Persian (Iran)', @counter := @counter + 1),
+  (@option_group_id_languages, 0, 1, 'fa_IR', 'fa', 'Persian (Iran)', @counter := @counter + 1),
   (@option_group_id_languages, 0, 1, 'pl_PL', 'pl', 'Polish', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'ps_AF', 'ps', 'Pashto, Pushto', @counter := @counter + 1),
   (@option_group_id_languages, 0, 1, 'pt_BR', 'pt', 'Portuguese (Brazil)', @counter := @counter + 1),
@@ -5826,7 +5905,7 @@ VALUES
   (@option_group_id_languages, 0, 0, 'se_NO', 'se', 'Northern Sami', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'sm_WS', 'sm', 'Samoan', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'sg_CF', 'sg', 'Sango', @counter := @counter + 1),
-  (@option_group_id_languages, 0, 0, 'sr_RS', 'sr', 'Serbian', @counter := @counter + 1),
+  (@option_group_id_languages, 0, 1, 'sr_RS', 'sr', 'Serbian', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'gd_GB', 'gd', 'Scottish Gaelic; Gaelic', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'sn_ZW', 'sn', 'Shona', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'si_LK', 'si', 'Sinhala, Sinhalese', @counter := @counter + 1),
@@ -5857,7 +5936,7 @@ VALUES
   (@option_group_id_languages, 0, 0, 'tw_GH', 'tw', 'Twi', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'ty_PF', 'ty', 'Tahitian', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'ug_CN', 'ug', 'Uighur, Uyghur', @counter := @counter + 1),
-  (@option_group_id_languages, 0, 0, 'uk_UA', 'uk', 'Ukrainian', @counter := @counter + 1),
+  (@option_group_id_languages, 0, 1, 'uk_UA', 'uk', 'Ukrainian', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'ur_PK', 'ur', 'Urdu', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 'uz_UZ', 'uz', 'Uzbek', @counter := @counter + 1),
   (@option_group_id_languages, 0, 0, 've_ZA', 've', 'Venda', @counter := @counter + 1),
@@ -6143,7 +6222,7 @@ INSERT INTO civicrm_mailing_bounce_pattern
     (@bounceTypeID, 'unknown( or illegal)? user( account)?'),
     (@bounceTypeID, 'unrecognized recipient'),
     (@bounceTypeID, 'unregistered address'),
-    (@bounceTypeID, 'user (unknown|does not exist)'),
+    (@bounceTypeID, 'user (unknown|(does not|doesn\'t) exist)'),
     (@bounceTypeID, 'user doesn\'t have an? \w+ account'),
     (@bounceTypeID, 'user(\'s e-?mail name is)? not found'),
     (@bounceTypeID, '^Validation failed for:'),
@@ -6249,7 +6328,7 @@ INSERT INTO civicrm_mailing_bounce_pattern
     (@bounceTypeID, 'sender was rejected'),
     (@bounceTypeID, 'spam(check| reduction software| filters?)'),
     (@bounceTypeID, 'blocked by a user configured filter'),
-    (@bounceTypeID, '(detected|rejected) as spam'),
+    (@bounceTypeID, '(detected|rejected) (as|due to) spam'),
     (@bounceTypeID, 'X-HmXmrOriginalRecipient'),
     (@bounceTypeID, 'Client host .[^ ]*. blocked'),
     (@bounceTypeID, 'automatic(ally-generated)? messages are not accepted'),
@@ -6258,7 +6337,8 @@ INSERT INTO civicrm_mailing_bounce_pattern
     (@bounceTypeID, 'has a policy that( [^ ]*)? prohibited the mail that you sent'),
     (@bounceTypeID, 'is likely unsolicited mail'),
     (@bounceTypeID, 'Local Policy Violation'),
-    (@bounceTypeID, 'ni bilo mogo..?e dostaviti zaradi varnostnega pravilnika');
+    (@bounceTypeID, 'ni bilo mogo..?e dostaviti zaradi varnostnega pravilnika'),
+    (@bounceTypeID, 'abuse report');
 
 INSERT INTO civicrm_mailing_bounce_type
         (name, description, hold_threshold)
@@ -6416,9 +6496,9 @@ INSERT INTO `civicrm_contact_type`
   ( 3, 'Organization', 'Organization', NULL, NULL, 1, 1);
 
 -- +--------------------------------------------------------------------+
--- | CiviCRM version 4.7                                                |
+-- | CiviCRM version 5                                                  |
 -- +--------------------------------------------------------------------+
--- | Copyright CiviCRM LLC (c) 2004-2017                                |
+-- | Copyright CiviCRM LLC (c) 2004-2019                                |
 -- +--------------------------------------------------------------------+
 -- | This file is a part of CiviCRM.                                    |
 -- |                                                                    |
@@ -7880,7 +7960,8 @@ INSERT INTO civicrm_msg_template
       
       
       ('Contributions - Receipt (on-line)', '{if $is_pay_later}{ts}Invoice{/ts}{else}{ts}Receipt{/ts}{/if} - {$title}
-', '{if $receipt_text}
+', '{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}{$greeting},{/if}
+{if $receipt_text}
 {$receipt_text}
 {/if}
 {if $is_pay_later}
@@ -7946,10 +8027,15 @@ INSERT INTO civicrm_msg_template
 {ts}Transaction #{/ts}: {$trxn_id}
 {/if}
 
-{if $is_recur and ($contributeMode eq \'notify\' or $contributeMode eq \'directIPN\')}
-{ts}This is a recurring contribution. You can cancel future contributions at:{/ts}
+{if $is_recur}
+{ts}This is a recurring contribution.{/ts}
+
+{if $cancelSubscriptionUrl}
+{ts}You can cancel future contributions at:{/ts}
 
 {$cancelSubscriptionUrl}
+
+{/if}
 
 {if $updateSubscriptionBillingUrl}
 {ts}You can update billing details for this recurring contribution at:{/ts}
@@ -7957,10 +8043,13 @@ INSERT INTO civicrm_msg_template
 {$updateSubscriptionBillingUrl}
 
 {/if}
+
+{if $updateSubscriptionUrl}
 {ts}You can update recurring contribution amount or change the number of installments for this recurring contribution at:{/ts}
 
 {$updateSubscriptionUrl}
 
+{/if}
 {/if}
 
 {if $honor_block_is_active}
@@ -8088,7 +8177,8 @@ INSERT INTO civicrm_msg_template
  {$customName}: {$customValue}
 {/if}
 {/foreach}
-{/if}', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{/if}
+', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8111,7 +8201,7 @@ INSERT INTO civicrm_msg_template
 
   <tr>
    <td>
-
+     {assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
     {if $receipt_text}
      <p>{$receipt_text|htmlize}</p>
     {/if}
@@ -8279,27 +8369,30 @@ INSERT INTO civicrm_msg_template
       </tr>
      {/if}
 
-     {if $is_recur}
-      {if $contributeMode eq \'notify\' or $contributeMode eq \'directIPN\'}
-       <tr>
+    {if $is_recur}
+      <tr>
         <td  colspan="2" {$labelStyle}>
-         {ts 1=$cancelSubscriptionUrl}This is a recurring contribution. You can cancel future contributions by <a href="%1">visiting this web page</a>.{/ts}
+          {ts}This is a recurring contribution.{/ts}
+          {if $cancelSubscriptionUrl}
+            {ts 1=$cancelSubscriptionUrl}You can cancel future contributions by <a href="%1">visiting this web page</a>.{/ts}
+          {/if}
         </td>
-        {if $updateSubscriptionBillingUrl}
-         </tr>
-         <tr>
-         <td colspan="2" {$labelStyle}>
-          {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
-         </td>
-        {/if}
-       </tr>
-       <tr>
-        <td colspan="2" {$labelStyle}>
-         {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
-        </td>
-       </tr>
+      </tr>
+      {if $updateSubscriptionBillingUrl}
+        <tr>
+          <td colspan="2" {$labelStyle}>
+            {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+          </td>
+        </tr>
       {/if}
-     {/if}
+      {if $updateSubscriptionUrl}
+        <tr>
+          <td colspan="2" {$labelStyle}>
+            {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+          </td>
+        </tr>
+      {/if}
+    {/if}
 
      {if $honor_block_is_active}
       <tr>
@@ -8563,7 +8656,8 @@ INSERT INTO civicrm_msg_template
 </html>
 ', @tpl_ovid_contribution_online_receipt, 1,          0),
       ('Contributions - Receipt (on-line)', '{if $is_pay_later}{ts}Invoice{/ts}{else}{ts}Receipt{/ts}{/if} - {$title}
-', '{if $receipt_text}
+', '{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}{$greeting},{/if}
+{if $receipt_text}
 {$receipt_text}
 {/if}
 {if $is_pay_later}
@@ -8629,10 +8723,15 @@ INSERT INTO civicrm_msg_template
 {ts}Transaction #{/ts}: {$trxn_id}
 {/if}
 
-{if $is_recur and ($contributeMode eq \'notify\' or $contributeMode eq \'directIPN\')}
-{ts}This is a recurring contribution. You can cancel future contributions at:{/ts}
+{if $is_recur}
+{ts}This is a recurring contribution.{/ts}
+
+{if $cancelSubscriptionUrl}
+{ts}You can cancel future contributions at:{/ts}
 
 {$cancelSubscriptionUrl}
+
+{/if}
 
 {if $updateSubscriptionBillingUrl}
 {ts}You can update billing details for this recurring contribution at:{/ts}
@@ -8640,10 +8739,13 @@ INSERT INTO civicrm_msg_template
 {$updateSubscriptionBillingUrl}
 
 {/if}
+
+{if $updateSubscriptionUrl}
 {ts}You can update recurring contribution amount or change the number of installments for this recurring contribution at:{/ts}
 
 {$updateSubscriptionUrl}
 
+{/if}
 {/if}
 
 {if $honor_block_is_active}
@@ -8771,7 +8873,8 @@ INSERT INTO civicrm_msg_template
  {$customName}: {$customValue}
 {/if}
 {/foreach}
-{/if}', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{/if}
+', '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8794,7 +8897,7 @@ INSERT INTO civicrm_msg_template
 
   <tr>
    <td>
-
+     {assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
     {if $receipt_text}
      <p>{$receipt_text|htmlize}</p>
     {/if}
@@ -8962,27 +9065,30 @@ INSERT INTO civicrm_msg_template
       </tr>
      {/if}
 
-     {if $is_recur}
-      {if $contributeMode eq \'notify\' or $contributeMode eq \'directIPN\'}
-       <tr>
+    {if $is_recur}
+      <tr>
         <td  colspan="2" {$labelStyle}>
-         {ts 1=$cancelSubscriptionUrl}This is a recurring contribution. You can cancel future contributions by <a href="%1">visiting this web page</a>.{/ts}
+          {ts}This is a recurring contribution.{/ts}
+          {if $cancelSubscriptionUrl}
+            {ts 1=$cancelSubscriptionUrl}You can cancel future contributions by <a href="%1">visiting this web page</a>.{/ts}
+          {/if}
         </td>
-        {if $updateSubscriptionBillingUrl}
-         </tr>
-         <tr>
-         <td colspan="2" {$labelStyle}>
-          {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
-         </td>
-        {/if}
-       </tr>
-       <tr>
-        <td colspan="2" {$labelStyle}>
-         {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
-        </td>
-       </tr>
+      </tr>
+      {if $updateSubscriptionBillingUrl}
+        <tr>
+          <td colspan="2" {$labelStyle}>
+            {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+          </td>
+        </tr>
       {/if}
-     {/if}
+      {if $updateSubscriptionUrl}
+        <tr>
+          <td colspan="2" {$labelStyle}>
+            {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+          </td>
+        </tr>
+      {/if}
+    {/if}
 
      {if $honor_block_is_active}
       <tr>
@@ -9308,7 +9414,7 @@ INSERT INTO civicrm_msg_template
         <tr>
           <td style = "padding-left:17px;"><font size = "1" align = "center">{$supplemental_address_2}  {$stateProvinceAbbreviation}</font></td>
           <td colspan="1"></td>
-          <td style = "padding-left:70px;"><font size = "1" align = "right">{$invoice_id}</font></td>
+          <td style = "padding-left:70px;"><font size = "1" align = "right">{$invoice_number}</font></td>
           <td>
             <font size = "1" align = "right">
               {if $domain_city}{$domain_city}{/if}
@@ -9362,7 +9468,7 @@ INSERT INTO civicrm_msg_template
                       {$value.label}
                     {else}
                       {$value.field_title} - {$value.label}
-                    {/if} 
+                    {/if}
                     {if $value.description}
                       <div>{$value.description|truncate:30:"..."}</div>
                     {/if}
@@ -9404,6 +9510,7 @@ INSERT INTO civicrm_msg_template
                 <td colspan = "3"></td>
                 <td style = "padding-left:20px;text-align:right;"><b><font size = "1">{ts 1=$defaultCurrency}TOTAL %1{/ts}</font></b></td>
                 <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amount|crmMoney:$currency}</font></td>
+                <td style = "padding-left:34px;"><font size = "1" align = "right"></font></td>
               </tr>
               {if $is_pay_later == 0}
                 <tr>
@@ -9416,7 +9523,7 @@ INSERT INTO civicrm_msg_template
                     {/if}
                     </font>
                   </td>
-                  <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amount|crmMoney:$currency}</font></td>
+                  <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amountPaid|crmMoney:$currency}</font></td>
                 </tr>
                 <tr>
                   <td colspan = "3"></td>
@@ -9426,7 +9533,7 @@ INSERT INTO civicrm_msg_template
                   <td colspan = "3"></td>
                   <td style = "padding-left:20px;text-align:right;"><b><font size = "1">{ts}AMOUNT DUE:{/ts} </font></b></td>
                   <td style = "padding-left:34px;text-align:right;"><b><font size = "1">{$amountDue|crmMoney:$currency}</font></b></td>
-                  <td style = "padding-left:34px;"><font size = "1" align = "right"></fonts></td>
+                  <td style = "padding-left:34px;"><font size = "1" align = "right"></font></td>
                 </tr>
               {/if}
               <br/><br/><br/>
@@ -9471,7 +9578,7 @@ INSERT INTO civicrm_msg_template
                 <tr>
                   <td colspan = "2"></td>
                   <td><font size = "1" align = "right" style="font-weight:bold;">{ts}Invoice Number: {/ts}</font></td>
-                  <td><font size = "1" align = "right">{$invoice_id}</font></td>
+                  <td><font size = "1" align = "right">{$invoice_number}</font></td>
                 </tr>
                 <tr><td colspan = "5"style = "color:#F5F5F5;"><hr></hr></td></tr>
                 {if $is_pay_later == 1}
@@ -9568,7 +9675,7 @@ INSERT INTO civicrm_msg_template
           <td></td>
           <td style = "padding-left:70px;"><font size = "1"align = "right">{$source}</font></td>
           <td>
-            <font size = "1" align = "right"> 
+            <font size = "1" align = "right">
               {if $domain_phone}{$domain_phone}{/if}
             </font>
           </td>
@@ -9578,9 +9685,9 @@ INSERT INTO civicrm_msg_template
           <td></td>
           <td></td>
           <td>
-            <font size = "1" align = "right"> 
+            <font size = "1" align = "right">
               {if $domain_email}{$domain_email}{/if}
-            </font> 
+            </font>
           </td>
         </tr>
       </table>
@@ -9609,7 +9716,7 @@ INSERT INTO civicrm_msg_template
                         {$value.label}
                       {else}
                         {$value.field_title} - {$value.label}
-                      {/if} 
+                      {/if}
                       {if $value.description}
                         <div>{$value.description|truncate:30:"..."}</div>
                       {/if}
@@ -9666,7 +9773,7 @@ INSERT INTO civicrm_msg_template
                   <td colspan = "3"></td>
                   <td style = "padding-left:28px;text-align:right;"><b><font size = "1">{ts}REMAINING CREDIT{/ts}</font></b></td>
                   <td style = "padding-left:28px;text-align:right;"><b><font size = "1">{$amountDue|crmMoney:$currency}</font></b></td>
-                  <td style = "padding-left:28px;"><font size = "1" align = "right"></fonts></td>
+                  <td style = "padding-left:28px;"><font size = "1" align = "right"></font></td>
                 </tr>
               {/if}
               <br/><br/><br/>
@@ -9778,7 +9885,7 @@ INSERT INTO civicrm_msg_template
         <tr>
           <td style = "padding-left:17px;"><font size = "1" align = "center">{$supplemental_address_2}  {$stateProvinceAbbreviation}</font></td>
           <td colspan="1"></td>
-          <td style = "padding-left:70px;"><font size = "1" align = "right">{$invoice_id}</font></td>
+          <td style = "padding-left:70px;"><font size = "1" align = "right">{$invoice_number}</font></td>
           <td>
             <font size = "1" align = "right">
               {if $domain_city}{$domain_city}{/if}
@@ -9832,7 +9939,7 @@ INSERT INTO civicrm_msg_template
                       {$value.label}
                     {else}
                       {$value.field_title} - {$value.label}
-                    {/if} 
+                    {/if}
                     {if $value.description}
                       <div>{$value.description|truncate:30:"..."}</div>
                     {/if}
@@ -9874,6 +9981,7 @@ INSERT INTO civicrm_msg_template
                 <td colspan = "3"></td>
                 <td style = "padding-left:20px;text-align:right;"><b><font size = "1">{ts 1=$defaultCurrency}TOTAL %1{/ts}</font></b></td>
                 <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amount|crmMoney:$currency}</font></td>
+                <td style = "padding-left:34px;"><font size = "1" align = "right"></font></td>
               </tr>
               {if $is_pay_later == 0}
                 <tr>
@@ -9886,7 +9994,7 @@ INSERT INTO civicrm_msg_template
                     {/if}
                     </font>
                   </td>
-                  <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amount|crmMoney:$currency}</font></td>
+                  <td style = "padding-left:34px;text-align:right;"><font size = "1">{$amountPaid|crmMoney:$currency}</font></td>
                 </tr>
                 <tr>
                   <td colspan = "3"></td>
@@ -9896,7 +10004,7 @@ INSERT INTO civicrm_msg_template
                   <td colspan = "3"></td>
                   <td style = "padding-left:20px;text-align:right;"><b><font size = "1">{ts}AMOUNT DUE:{/ts} </font></b></td>
                   <td style = "padding-left:34px;text-align:right;"><b><font size = "1">{$amountDue|crmMoney:$currency}</font></b></td>
-                  <td style = "padding-left:34px;"><font size = "1" align = "right"></fonts></td>
+                  <td style = "padding-left:34px;"><font size = "1" align = "right"></font></td>
                 </tr>
               {/if}
               <br/><br/><br/>
@@ -9941,7 +10049,7 @@ INSERT INTO civicrm_msg_template
                 <tr>
                   <td colspan = "2"></td>
                   <td><font size = "1" align = "right" style="font-weight:bold;">{ts}Invoice Number: {/ts}</font></td>
-                  <td><font size = "1" align = "right">{$invoice_id}</font></td>
+                  <td><font size = "1" align = "right">{$invoice_number}</font></td>
                 </tr>
                 <tr><td colspan = "5"style = "color:#F5F5F5;"><hr></hr></td></tr>
                 {if $is_pay_later == 1}
@@ -10038,7 +10146,7 @@ INSERT INTO civicrm_msg_template
           <td></td>
           <td style = "padding-left:70px;"><font size = "1"align = "right">{$source}</font></td>
           <td>
-            <font size = "1" align = "right"> 
+            <font size = "1" align = "right">
               {if $domain_phone}{$domain_phone}{/if}
             </font>
           </td>
@@ -10048,9 +10156,9 @@ INSERT INTO civicrm_msg_template
           <td></td>
           <td></td>
           <td>
-            <font size = "1" align = "right"> 
+            <font size = "1" align = "right">
               {if $domain_email}{$domain_email}{/if}
-            </font> 
+            </font>
           </td>
         </tr>
       </table>
@@ -10079,7 +10187,7 @@ INSERT INTO civicrm_msg_template
                         {$value.label}
                       {else}
                         {$value.field_title} - {$value.label}
-                      {/if} 
+                      {/if}
                       {if $value.description}
                         <div>{$value.description|truncate:30:"..."}</div>
                       {/if}
@@ -10136,7 +10244,7 @@ INSERT INTO civicrm_msg_template
                   <td colspan = "3"></td>
                   <td style = "padding-left:28px;text-align:right;"><b><font size = "1">{ts}REMAINING CREDIT{/ts}</font></b></td>
                   <td style = "padding-left:28px;text-align:right;"><b><font size = "1">{$amountDue|crmMoney:$currency}</font></b></td>
-                  <td style = "padding-left:28px;"><font size = "1" align = "right"></fonts></td>
+                  <td style = "padding-left:28px;"><font size = "1" align = "right"></font></td>
                 </tr>
               {/if}
               <br/><br/><br/>
@@ -10199,7 +10307,10 @@ INSERT INTO civicrm_msg_template
 
 {ts 1=$recur_frequency_interval 2=$recur_frequency_unit}This membership will be automatically renewed every %1 %2(s).{/ts}
 
-{ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+{if $cancelSubscriptionUrl}
+{ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+
+{/if}
 
 {if $updateSubscriptionBillingUrl}
 {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this automatically renewed membership by <a href="%1">visiting this web page</a>.{/ts}
@@ -10213,13 +10324,20 @@ INSERT INTO civicrm_msg_template
 
 {ts}Start Date{/ts}:  {$recur_start_date|crmDate}
 
+{if $cancelSubscriptionUrl}
 {ts 1=$cancelSubscriptionUrl}You can cancel the recurring contribution option by <a href="%1">visiting this web page</a>.{/ts}
+
+{/if}
 
 {if $updateSubscriptionBillingUrl}
 {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
 
 {/if}
+
+{if $updateSubscriptionUrl}
 {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+
+{/if}
 {/if}
 
 {elseif $recur_txnType eq \'END\'}
@@ -10283,11 +10401,13 @@ INSERT INTO civicrm_msg_template
          <p>{ts 1=$recur_frequency_interval 2=$recur_frequency_unit}This membership will be automatically renewed every %1 %2(s). {/ts}</p>
         </td>
        </tr>
+       {if $cancelSubscriptionUrl}
        <tr>
-        <td {$labelStyle}>
-         {ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
-        </td>
+         <td {$labelStyle}>
+           {ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+         </td>
        </tr>
+       {/if}
        {if $updateSubscriptionBillingUrl}
          <tr>
           <td {$labelStyle}>
@@ -10303,23 +10423,27 @@ INSERT INTO civicrm_msg_template
         <p>{ts}Start Date{/ts}: {$recur_start_date|crmDate}</p>
        </td>
       </tr>
+      {if $cancelSubscriptionUrl}
       <tr>
         <td {$labelStyle}>
-         {ts 1=$cancelSubscriptionUrl} You can cancel the recurring contribution option by <a href="%1">visiting this web page</a>.{/ts}
+          {ts 1=$cancelSubscriptionUrl} You can cancel the recurring contribution option by <a href="%1">visiting this web page</a>.{/ts}
         </td>
       </tr>
+      {/if}
       {if $updateSubscriptionBillingUrl}
         <tr>
           <td {$labelStyle}>
-           {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+            {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
           </td>
         </tr>
       {/if}
+      {if $updateSubscriptionUrl}
       <tr>
         <td {$labelStyle}>
-   {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+          {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
         </td>
-       </tr>
+      </tr>
+      {/if}
      {/if}
 
     {elseif $recur_txnType eq \'END\'}
@@ -10384,7 +10508,10 @@ INSERT INTO civicrm_msg_template
 
 {ts 1=$recur_frequency_interval 2=$recur_frequency_unit}This membership will be automatically renewed every %1 %2(s).{/ts}
 
-{ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+{if $cancelSubscriptionUrl}
+{ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+
+{/if}
 
 {if $updateSubscriptionBillingUrl}
 {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this automatically renewed membership by <a href="%1">visiting this web page</a>.{/ts}
@@ -10398,13 +10525,20 @@ INSERT INTO civicrm_msg_template
 
 {ts}Start Date{/ts}:  {$recur_start_date|crmDate}
 
+{if $cancelSubscriptionUrl}
 {ts 1=$cancelSubscriptionUrl}You can cancel the recurring contribution option by <a href="%1">visiting this web page</a>.{/ts}
+
+{/if}
 
 {if $updateSubscriptionBillingUrl}
 {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
 
 {/if}
+
+{if $updateSubscriptionUrl}
 {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+
+{/if}
 {/if}
 
 {elseif $recur_txnType eq \'END\'}
@@ -10468,11 +10602,13 @@ INSERT INTO civicrm_msg_template
          <p>{ts 1=$recur_frequency_interval 2=$recur_frequency_unit}This membership will be automatically renewed every %1 %2(s). {/ts}</p>
         </td>
        </tr>
+       {if $cancelSubscriptionUrl}
        <tr>
-        <td {$labelStyle}>
-         {ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
-        </td>
+         <td {$labelStyle}>
+           {ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+         </td>
        </tr>
+       {/if}
        {if $updateSubscriptionBillingUrl}
          <tr>
           <td {$labelStyle}>
@@ -10488,23 +10624,27 @@ INSERT INTO civicrm_msg_template
         <p>{ts}Start Date{/ts}: {$recur_start_date|crmDate}</p>
        </td>
       </tr>
+      {if $cancelSubscriptionUrl}
       <tr>
         <td {$labelStyle}>
-         {ts 1=$cancelSubscriptionUrl} You can cancel the recurring contribution option by <a href="%1">visiting this web page</a>.{/ts}
+          {ts 1=$cancelSubscriptionUrl} You can cancel the recurring contribution option by <a href="%1">visiting this web page</a>.{/ts}
         </td>
       </tr>
+      {/if}
       {if $updateSubscriptionBillingUrl}
         <tr>
           <td {$labelStyle}>
-           {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+            {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
           </td>
         </tr>
       {/if}
+      {if $updateSubscriptionUrl}
       <tr>
         <td {$labelStyle}>
-   {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
+          {ts 1=$updateSubscriptionUrl}You can update recurring contribution amount or change the number of installments details for this recurring contribution by <a href="%1">visiting this web page</a>.{/ts}
         </td>
-       </tr>
+      </tr>
+      {/if}
      {/if}
 
     {elseif $recur_txnType eq \'END\'}
@@ -11771,16 +11911,12 @@ INSERT INTO civicrm_msg_template
 ', @tpl_ovid_pcp_owner_notify, 0,          1) ,      
       
       
-      ('Additional Payment Receipt or Refund Notification', '{if $isRefund}{ts}Refund Notification{/ts}{else}{ts}Payment Receipt{/ts}{/if} - {if $component eq \'event\'}{$event.title}{/if}', 'Dear {$contactDisplayName}
-{if $paymentConfig.confirm_email_text}
-{$paymentConfig.confirm_email_text}
-{elseif $isRefund}
+      ('Additional Payment Receipt or Refund Notification', '{if $isRefund}{ts}Refund Notification{/ts}{else}{ts}Payment Receipt{/ts}{/if} - {if $component eq \'event\'}{$event.title}{/if}', '{if $emailGreeting}{$emailGreeting},
+{/if}{if $isRefund}
 {ts}A refund has been issued based on changes in your registration selections.{/ts}
 {else}
 {ts}A payment has been received.{/ts}
 {/if}
-
-{ts}Please print this confirmation for your records.{/ts}
 
 {if $isRefund}
 ===============================================================================
@@ -11806,7 +11942,7 @@ INSERT INTO civicrm_msg_template
 
 {if $paymentsComplete}
 
-{ts}Thank-you. This completes your payment for {/ts}{if $component eq \'event\'}{$event.event_title}{/if}.
+{ts}Thank you for completing payment.{/ts}
 {/if}
 {/if}
 {if $receive_date}
@@ -11821,7 +11957,7 @@ INSERT INTO civicrm_msg_template
 {if $checkNumber}
 {ts}Check Number{/ts}: {$checkNumber}
 {/if}
-{if $contributeMode eq \'direct\' and !$isAmountzero}
+{if $billingName || $address}
 
 ===============================================================================
 
@@ -11833,7 +11969,7 @@ INSERT INTO civicrm_msg_template
 {$address}
 {/if}
 
-{if $contributeMode eq \'direct\' and !$isAmountzero}
+{if $credit_card_number}
 ===========================================================
 {ts}Credit Card Information{/ts}
 
@@ -11853,7 +11989,7 @@ INSERT INTO civicrm_msg_template
 {$event.event_title}
 {$event.event_start_date|crmDate}{if $event.event_end_date}-{if $event.event_end_date|date_format:"%Y%m%d" == $event.event_start_date|date_format:"%Y%m%d"}{$event.event_end_date|crmDate:0:1}{else}{$event.event_end_date|crmDate}{/if}{/if}
 
-{if $event.participant_role neq \'Attendee\' and $defaultRole}
+{if $event.participant_role}
 {ts}Participant Role{/ts}: {$event.participant_role}
 {/if}
 
@@ -11889,7 +12025,6 @@ INSERT INTO civicrm_msg_template
 {capture assign=emptyBlockStyle }style="padding: 10px; border-bottom: 1px solid #999;background-color: #f7f7f7;"{/capture}
 {capture assign=emptyBlockValueStyle }style="padding: 10px; border-bottom: 1px solid #999;"{/capture}
 
-<p>Dear {$contactDisplayName}</p>
 <center>
  <table width="620" border="0" cellpadding="0" cellspacing="0" id="crm-event_receipt" style="font-family: Arial, Verdana, sans-serif; text-align: left;">
 
@@ -11898,17 +12033,14 @@ INSERT INTO civicrm_msg_template
   <!-- END HEADER -->
 
   <!-- BEGIN CONTENT -->
-
+   {if $emailGreeting}<tr><td>{$emailGreeting},</td></tr>{/if}
   <tr>
     <td>
-      {if $paymentConfig.confirm_email_text}
-      <p>{$paymentConfig.confirm_email_text|htmlize}</p>
-      {elseif $isRefund}
+      {if $isRefund}
       <p>{ts}A refund has been issued based on changes in your registration selections.{/ts}</p>
       {else}
       <p>{ts}A payment has been received.{/ts}</p>
       {/if}
-      <p>{ts}Please print this confirmation for your records.{/ts}</p>
     </td>
   </tr>
   <tr>
@@ -11920,7 +12052,7 @@ INSERT INTO civicrm_msg_template
   </tr>
   <tr>
     <td {$labelStyle}>
-      {ts}Total Fees{/ts}
+      {ts}Total Amount{/ts}
     </td>
     <td {$valueStyle}>
       {$totalAmount|crmMoney}
@@ -11948,26 +12080,26 @@ INSERT INTO civicrm_msg_template
     </tr>
     <tr>
       <td {$labelStyle}>
-  {ts}{if $component eq \'event\'}Total Fees{/if}{/ts}
+        {ts}Total Amount{/ts}
       </td>
       <td {$valueStyle}>
-  {$totalAmount|crmMoney}
+        {$totalAmount|crmMoney}
       </td>
       </tr>
       <tr>
       <td {$labelStyle}>
-  {ts}This Payment Amount{/ts}
+        {ts}This Payment Amount{/ts}
       </td>
       <td {$valueStyle}>
-  {$paymentAmount|crmMoney}
+        {$paymentAmount|crmMoney}
       </td>
       </tr>
      <tr>
       <td {$labelStyle}>
-  {ts}Balance Owed{/ts}
+        {ts}Balance Owed{/ts}
       </td>
        <td {$valueStyle}>
-  {$amountOwed|crmMoney}
+         {$amountOwed|crmMoney}
       </td> {* This will be zero after final payment. *}
      </tr>
      <tr> <td {$emptyBlockStyle}></td>
@@ -11975,7 +12107,7 @@ INSERT INTO civicrm_msg_template
       {if $paymentsComplete}
       <tr>
       <td colspan=\'2\' {$valueStyle}>
-  {ts}Thank-you. This completes your payment for {if $component eq \'event\'}{$event.event_title}{/if}.{/ts}
+        {ts}Thank you for completing payment.{/ts}
       </td>
      </tr>
       {/if}
@@ -11983,10 +12115,10 @@ INSERT INTO civicrm_msg_template
   {if $receive_date}
     <tr>
       <td {$labelStyle}>
-  {ts}Transaction Date{/ts}
+        {ts}Transaction Date{/ts}
       </td>
       <td {$valueStyle}>
-  {$receive_date|crmDate}
+        {$receive_date|crmDate}
       </td>
     </tr>
   {/if}
@@ -12026,7 +12158,7 @@ INSERT INTO civicrm_msg_template
     <tr>
       <td>
   <table style="border: 1px solid #999; margin: 1em 0em 1em; border-collapse: collapse; width:100%;">
-    {if $contributeMode eq \'direct\' and !$isAmountzero}
+    {if $billingName || $address}
           <tr>
             <th {$headerStyle}>
         {ts}Billing Name and Address{/ts}
@@ -12039,7 +12171,7 @@ INSERT INTO civicrm_msg_template
             </td>
           </tr>
     {/if}
-    {if $contributeMode eq\'direct\' and !$isAmountzero}
+    {if $credit_card_number}
           <tr>
             <th {$headerStyle}>
         {ts}Credit Card Information{/ts}
@@ -12066,7 +12198,7 @@ INSERT INTO civicrm_msg_template
       </td>
     </tr>
 
-    {if $event.participant_role neq \'Attendee\' and $defaultRole}
+    {if $event.participant_role}
     <tr>
       <td {$labelStyle}>
         {ts}Participant Role{/ts}
@@ -12131,16 +12263,12 @@ INSERT INTO civicrm_msg_template
  </body>
 </html>
 ', @tpl_ovid_payment_or_refund_notification, 1,          0),
-      ('Additional Payment Receipt or Refund Notification', '{if $isRefund}{ts}Refund Notification{/ts}{else}{ts}Payment Receipt{/ts}{/if} - {if $component eq \'event\'}{$event.title}{/if}', 'Dear {$contactDisplayName}
-{if $paymentConfig.confirm_email_text}
-{$paymentConfig.confirm_email_text}
-{elseif $isRefund}
+      ('Additional Payment Receipt or Refund Notification', '{if $isRefund}{ts}Refund Notification{/ts}{else}{ts}Payment Receipt{/ts}{/if} - {if $component eq \'event\'}{$event.title}{/if}', '{if $emailGreeting}{$emailGreeting},
+{/if}{if $isRefund}
 {ts}A refund has been issued based on changes in your registration selections.{/ts}
 {else}
 {ts}A payment has been received.{/ts}
 {/if}
-
-{ts}Please print this confirmation for your records.{/ts}
 
 {if $isRefund}
 ===============================================================================
@@ -12166,7 +12294,7 @@ INSERT INTO civicrm_msg_template
 
 {if $paymentsComplete}
 
-{ts}Thank-you. This completes your payment for {/ts}{if $component eq \'event\'}{$event.event_title}{/if}.
+{ts}Thank you for completing payment.{/ts}
 {/if}
 {/if}
 {if $receive_date}
@@ -12181,7 +12309,7 @@ INSERT INTO civicrm_msg_template
 {if $checkNumber}
 {ts}Check Number{/ts}: {$checkNumber}
 {/if}
-{if $contributeMode eq \'direct\' and !$isAmountzero}
+{if $billingName || $address}
 
 ===============================================================================
 
@@ -12193,7 +12321,7 @@ INSERT INTO civicrm_msg_template
 {$address}
 {/if}
 
-{if $contributeMode eq \'direct\' and !$isAmountzero}
+{if $credit_card_number}
 ===========================================================
 {ts}Credit Card Information{/ts}
 
@@ -12213,7 +12341,7 @@ INSERT INTO civicrm_msg_template
 {$event.event_title}
 {$event.event_start_date|crmDate}{if $event.event_end_date}-{if $event.event_end_date|date_format:"%Y%m%d" == $event.event_start_date|date_format:"%Y%m%d"}{$event.event_end_date|crmDate:0:1}{else}{$event.event_end_date|crmDate}{/if}{/if}
 
-{if $event.participant_role neq \'Attendee\' and $defaultRole}
+{if $event.participant_role}
 {ts}Participant Role{/ts}: {$event.participant_role}
 {/if}
 
@@ -12249,7 +12377,6 @@ INSERT INTO civicrm_msg_template
 {capture assign=emptyBlockStyle }style="padding: 10px; border-bottom: 1px solid #999;background-color: #f7f7f7;"{/capture}
 {capture assign=emptyBlockValueStyle }style="padding: 10px; border-bottom: 1px solid #999;"{/capture}
 
-<p>Dear {$contactDisplayName}</p>
 <center>
  <table width="620" border="0" cellpadding="0" cellspacing="0" id="crm-event_receipt" style="font-family: Arial, Verdana, sans-serif; text-align: left;">
 
@@ -12258,17 +12385,14 @@ INSERT INTO civicrm_msg_template
   <!-- END HEADER -->
 
   <!-- BEGIN CONTENT -->
-
+   {if $emailGreeting}<tr><td>{$emailGreeting},</td></tr>{/if}
   <tr>
     <td>
-      {if $paymentConfig.confirm_email_text}
-      <p>{$paymentConfig.confirm_email_text|htmlize}</p>
-      {elseif $isRefund}
+      {if $isRefund}
       <p>{ts}A refund has been issued based on changes in your registration selections.{/ts}</p>
       {else}
       <p>{ts}A payment has been received.{/ts}</p>
       {/if}
-      <p>{ts}Please print this confirmation for your records.{/ts}</p>
     </td>
   </tr>
   <tr>
@@ -12280,7 +12404,7 @@ INSERT INTO civicrm_msg_template
   </tr>
   <tr>
     <td {$labelStyle}>
-      {ts}Total Fees{/ts}
+      {ts}Total Amount{/ts}
     </td>
     <td {$valueStyle}>
       {$totalAmount|crmMoney}
@@ -12308,26 +12432,26 @@ INSERT INTO civicrm_msg_template
     </tr>
     <tr>
       <td {$labelStyle}>
-  {ts}{if $component eq \'event\'}Total Fees{/if}{/ts}
+        {ts}Total Amount{/ts}
       </td>
       <td {$valueStyle}>
-  {$totalAmount|crmMoney}
+        {$totalAmount|crmMoney}
       </td>
       </tr>
       <tr>
       <td {$labelStyle}>
-  {ts}This Payment Amount{/ts}
+        {ts}This Payment Amount{/ts}
       </td>
       <td {$valueStyle}>
-  {$paymentAmount|crmMoney}
+        {$paymentAmount|crmMoney}
       </td>
       </tr>
      <tr>
       <td {$labelStyle}>
-  {ts}Balance Owed{/ts}
+        {ts}Balance Owed{/ts}
       </td>
        <td {$valueStyle}>
-  {$amountOwed|crmMoney}
+         {$amountOwed|crmMoney}
       </td> {* This will be zero after final payment. *}
      </tr>
      <tr> <td {$emptyBlockStyle}></td>
@@ -12335,7 +12459,7 @@ INSERT INTO civicrm_msg_template
       {if $paymentsComplete}
       <tr>
       <td colspan=\'2\' {$valueStyle}>
-  {ts}Thank-you. This completes your payment for {if $component eq \'event\'}{$event.event_title}{/if}.{/ts}
+        {ts}Thank you for completing payment.{/ts}
       </td>
      </tr>
       {/if}
@@ -12343,10 +12467,10 @@ INSERT INTO civicrm_msg_template
   {if $receive_date}
     <tr>
       <td {$labelStyle}>
-  {ts}Transaction Date{/ts}
+        {ts}Transaction Date{/ts}
       </td>
       <td {$valueStyle}>
-  {$receive_date|crmDate}
+        {$receive_date|crmDate}
       </td>
     </tr>
   {/if}
@@ -12386,7 +12510,7 @@ INSERT INTO civicrm_msg_template
     <tr>
       <td>
   <table style="border: 1px solid #999; margin: 1em 0em 1em; border-collapse: collapse; width:100%;">
-    {if $contributeMode eq \'direct\' and !$isAmountzero}
+    {if $billingName || $address}
           <tr>
             <th {$headerStyle}>
         {ts}Billing Name and Address{/ts}
@@ -12399,7 +12523,7 @@ INSERT INTO civicrm_msg_template
             </td>
           </tr>
     {/if}
-    {if $contributeMode eq\'direct\' and !$isAmountzero}
+    {if $credit_card_number}
           <tr>
             <th {$headerStyle}>
         {ts}Credit Card Information{/ts}
@@ -12426,7 +12550,7 @@ INSERT INTO civicrm_msg_template
       </td>
     </tr>
 
-    {if $event.participant_role neq \'Attendee\' and $defaultRole}
+    {if $event.participant_role}
     <tr>
       <td {$labelStyle}>
         {ts}Participant Role{/ts}
@@ -14109,8 +14233,8 @@ INSERT INTO civicrm_msg_template
 ', @tpl_ovid_event_offline_receipt, 0,          1) ,      
       
       
-      ('Events - Registration Confirmation and Receipt (on-line)', '{if $isOnWaitlist}{ts}Wait List Confirmation{/ts}{else}{ts}Registration Confirmation{/ts}{/if} - {$event.event_title}', '{contact.email_greeting},
-
+      ('Events - Registration Confirmation and Receipt (on-line)', '{if $isOnWaitlist}{ts}Wait List Confirmation{/ts}{elseif $isRequireApproval}{ts}Registration Request Confirmation{/ts}{else}{ts}Registration Confirmation{/ts}{/if} - {$event.event_title}
+', '{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}{$greeting},{/if}
 {if $event.confirm_email_text AND (not $isOnWaitlist AND not $isRequireApproval)}
 {$event.confirm_email_text}
 
@@ -14212,7 +14336,7 @@ INSERT INTO civicrm_msg_template
 {if $payer.name}
 You were registered by: {$payer.name}
 {/if}
-{if $event.is_monetary} {* This section for Paid events only.*}
+{if $event.is_monetary and not $isRequireApproval} {* This section for Paid events only.*}
 
 ==========================================================={if $pricesetFieldsCount }===================={/if}
 
@@ -14438,7 +14562,7 @@ You were registered by: {$payer.name}
 
   <tr>
    <td>
-  <p>{contact.email_greeting},</p>
+     {assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
 
     {if $event.confirm_email_text AND (not $isOnWaitlist AND not $isRequireApproval)}
      <p>{$event.confirm_email_text|htmlize}</p>
@@ -14590,7 +14714,7 @@ You were registered by: {$payer.name}
        </td>
      </tr>
     {/if}
-    {if $event.is_monetary}
+    {if $event.is_monetary and not $isRequireApproval}
 
       <tr>
        <th {$headerStyle}>
@@ -14926,8 +15050,8 @@ You were registered by: {$payer.name}
 </body>
 </html>
 ', @tpl_ovid_event_online_receipt, 1,          0),
-      ('Events - Registration Confirmation and Receipt (on-line)', '{if $isOnWaitlist}{ts}Wait List Confirmation{/ts}{else}{ts}Registration Confirmation{/ts}{/if} - {$event.event_title}', '{contact.email_greeting},
-
+      ('Events - Registration Confirmation and Receipt (on-line)', '{if $isOnWaitlist}{ts}Wait List Confirmation{/ts}{elseif $isRequireApproval}{ts}Registration Request Confirmation{/ts}{else}{ts}Registration Confirmation{/ts}{/if} - {$event.event_title}
+', '{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}{$greeting},{/if}
 {if $event.confirm_email_text AND (not $isOnWaitlist AND not $isRequireApproval)}
 {$event.confirm_email_text}
 
@@ -15029,7 +15153,7 @@ You were registered by: {$payer.name}
 {if $payer.name}
 You were registered by: {$payer.name}
 {/if}
-{if $event.is_monetary} {* This section for Paid events only.*}
+{if $event.is_monetary and not $isRequireApproval} {* This section for Paid events only.*}
 
 ==========================================================={if $pricesetFieldsCount }===================={/if}
 
@@ -15255,7 +15379,7 @@ You were registered by: {$payer.name}
 
   <tr>
    <td>
-  <p>{contact.email_greeting},</p>
+     {assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
 
     {if $event.confirm_email_text AND (not $isOnWaitlist AND not $isRequireApproval)}
      <p>{$event.confirm_email_text|htmlize}</p>
@@ -15407,7 +15531,7 @@ You were registered by: {$payer.name}
        </td>
      </tr>
     {/if}
-    {if $event.is_monetary}
+    {if $event.is_monetary and not $isRequireApproval}
 
       <tr>
        <th {$headerStyle}>
@@ -18830,7 +18954,8 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
       
       
       ('Memberships - Receipt (on-line)', '{if $is_pay_later}{ts}Invoice{/ts}{else}{ts}Receipt{/ts}{/if} - {$title}
-', '{if $receipt_text}
+', '{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}{$greeting},{/if}
+{if $receipt_text}
 {$receipt_text}
 {/if}
 {if $is_pay_later}
@@ -18944,12 +19069,16 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
 
 {/if}
 {if $is_recur}
-{if $contributeMode eq \'notify\' or $contributeMode eq \'directIPN\'}
-{ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by visiting this web page: %1.{/ts}
+{ts}This membership will be renewed automatically.{/ts}
+{if $cancelSubscriptionUrl}
+
+{ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by visiting this web page: %1.{/ts}
+
+{/if}
+
 {if $updateSubscriptionBillingUrl}
 
 {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this automatically renewed membership by <a href="%1">visiting this web page</a>.{/ts}
-{/if}
 {/if}
 {/if}
 
@@ -19094,7 +19223,7 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
 
   <tr>
    <td>
-
+     {assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
     {if $receipt_text}
      <p>{$receipt_text|htmlize}</p>
     {/if}
@@ -19378,10 +19507,12 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
       </tr>
      {/if}
      {if $is_recur}
-      {if $contributeMode eq \'notify\' or $contributeMode eq \'directIPN\'}
        <tr>
         <td colspan="2" {$labelStyle}>
-         {ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+         {ts}This membership will be renewed automatically.{/ts}
+         {if $cancelSubscriptionUrl}
+           {ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+         {/if}
         </td>
        </tr>
        {if $updateSubscriptionBillingUrl}
@@ -19391,7 +19522,6 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
           </td>
          </tr>
        {/if}
-      {/if}
      {/if}
 
      {if $honor_block_is_active}
@@ -19629,7 +19759,8 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
 </html>
 ', @tpl_ovid_membership_online_receipt, 1,          0),
       ('Memberships - Receipt (on-line)', '{if $is_pay_later}{ts}Invoice{/ts}{else}{ts}Receipt{/ts}{/if} - {$title}
-', '{if $receipt_text}
+', '{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}{$greeting},{/if}
+{if $receipt_text}
 {$receipt_text}
 {/if}
 {if $is_pay_later}
@@ -19743,12 +19874,16 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
 
 {/if}
 {if $is_recur}
-{if $contributeMode eq \'notify\' or $contributeMode eq \'directIPN\'}
-{ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by visiting this web page: %1.{/ts}
+{ts}This membership will be renewed automatically.{/ts}
+{if $cancelSubscriptionUrl}
+
+{ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by visiting this web page: %1.{/ts}
+
+{/if}
+
 {if $updateSubscriptionBillingUrl}
 
 {ts 1=$updateSubscriptionBillingUrl}You can update billing details for this automatically renewed membership by <a href="%1">visiting this web page</a>.{/ts}
-{/if}
 {/if}
 {/if}
 
@@ -19893,7 +20028,7 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
 
   <tr>
    <td>
-
+     {assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
     {if $receipt_text}
      <p>{$receipt_text|htmlize}</p>
     {/if}
@@ -20177,10 +20312,12 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
       </tr>
      {/if}
      {if $is_recur}
-      {if $contributeMode eq \'notify\' or $contributeMode eq \'directIPN\'}
        <tr>
         <td colspan="2" {$labelStyle}>
-         {ts 1=$cancelSubscriptionUrl}This membership will be renewed automatically. You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+         {ts}This membership will be renewed automatically.{/ts}
+         {if $cancelSubscriptionUrl}
+           {ts 1=$cancelSubscriptionUrl}You can cancel the auto-renewal option by <a href="%1">visiting this web page</a>.{/ts}
+         {/if}
         </td>
        </tr>
        {if $updateSubscriptionBillingUrl}
@@ -20190,7 +20327,6 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
           </td>
          </tr>
        {/if}
-      {/if}
      {/if}
 
      {if $honor_block_is_active}
@@ -20820,9 +20956,9 @@ or want to inquire about reinstating your registration for this event.{/ts}</p>
       
       
       ('Pledges - Acknowledgement', '{ts}Thank you for your Pledge{/ts}
-', '{ts 1=$contact.display_name}Dear %1{/ts},
+', '{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
 
-{ts}Thank you for your generous pledge. Please print this acknowledgment for your records.{/ts}
+{ts}Thank you for your generous pledge.{/ts}
 
 ===========================================================
 {ts}Pledge Information{/ts}
@@ -20888,8 +21024,8 @@ or need to modify your payment schedule.{/ts}
 
   <tr>
    <td>
-    <p>{ts 1=$contact.display_name}dear %1{/ts},</p>
-    <p>{ts}thank you for your generous pledge. please print this acknowledgment for your records.{/ts}</p>
+    {assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
+    <p>{ts}Thank you for your generous pledge.{/ts}</p>
    </td>
   </tr>
   <tr>
@@ -20984,9 +21120,9 @@ or need to modify your payment schedule.{/ts}</p>
 </html>
 ', @tpl_ovid_pledge_acknowledge, 1,          0),
       ('Pledges - Acknowledgement', '{ts}Thank you for your Pledge{/ts}
-', '{ts 1=$contact.display_name}Dear %1{/ts},
+', '{assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
 
-{ts}Thank you for your generous pledge. Please print this acknowledgment for your records.{/ts}
+{ts}Thank you for your generous pledge.{/ts}
 
 ===========================================================
 {ts}Pledge Information{/ts}
@@ -21052,8 +21188,8 @@ or need to modify your payment schedule.{/ts}
 
   <tr>
    <td>
-    <p>{ts 1=$contact.display_name}dear %1{/ts},</p>
-    <p>{ts}thank you for your generous pledge. please print this acknowledgment for your records.{/ts}</p>
+    {assign var="greeting" value="{contact.email_greeting}"}{if $greeting}<p>{$greeting},</p>{/if}
+    <p>{ts}Thank you for your generous pledge.{/ts}</p>
    </td>
   </tr>
   <tr>
@@ -23095,9 +23231,9 @@ VALUES
   (@option_group_id_soft_credit_type   , 'Personal Campaign Page', 10, 'pcp', 10, 0, 1, 1),
   (@option_group_id_soft_credit_type   , 'Gift', 11, 'gift', 11, 0, 1, 1);
 -- +--------------------------------------------------------------------+
--- | CiviCRM version 4.7                                                |
+-- | CiviCRM version 5                                                  |
 -- +--------------------------------------------------------------------+
--- | Copyright CiviCRM LLC (c) 2004-2017                                |
+-- | Copyright CiviCRM LLC (c) 2004-2019                                |
 -- +--------------------------------------------------------------------+
 -- | This file is a part of CiviCRM.                                    |
 -- |                                                                    |
@@ -23156,9 +23292,9 @@ VALUES
  ( @domainID, 'Home', 'Home', 'civicrm/dashboard?reset=1', NULL, '', NULL, 1, NULL, 0);
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    (  @domainID, NULL, 'Search',  'Search...',    NULL, '',  NULL, '1', NULL, 10 );
+    (  @domainID, NULL, 'Search',  'Search',    NULL, '',  NULL, '1', NULL, 10, 'crm-i fa-search' );
 
 SET @searchlastID:=LAST_INSERT_ID();
 
@@ -23183,9 +23319,9 @@ VALUES
     ( @domainID, 'civicrm/contact/search/custom/list?reset=1',              'Custom Searches', 'Custom Searches', NULL, '',                 @searchlastID, '1', NULL, 12 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL,  'Contacts', 'Contacts', NULL, '', NULL, '1', NULL, 20 );
+    ( @domainID, NULL,  'Contacts', 'Contacts', NULL, '', NULL, '1', NULL, 20, 'crm-i fa-address-book-o' );
 
 SET @contactlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23211,9 +23347,9 @@ VALUES
     ( @domainID, 'civicrm/contact/deduperules?reset=1',  'Find and Merge Duplicate Contacts', 'Find and Merge Duplicate Contacts', 'administer dedupe rules,merge duplicate contacts', 'OR', @contactlastID, '1', NULL, 13 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL,  'Contributions', 'Contributions', 'access CiviContribute', '',      NULL,           '1', NULL,  30 );
+    ( @domainID, NULL, 'Contributions', 'Contributions', 'access CiviContribute', '', NULL, '1', NULL,  30, 'crm-i fa-credit-card' );
 
 SET @contributionlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23260,9 +23396,9 @@ VALUES
     ( @domainID, 'civicrm/financial/financialbatches?reset=1&batchStatus=5', 'Exported Batches',          'Exported Batches',         'view own manual batches,view all manual batches', 'OR',  @financialTransactionID, '1', NULL, 4 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Events',  'Events', 'access CiviEvent', '', NULL, '1', NULL, 40 );
+    ( @domainID, NULL, 'Events',  'Events', 'access CiviEvent', '', NULL, '1', NULL, 40, 'crm-i fa-calendar' );
 
 SET @eventlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23281,9 +23417,9 @@ VALUES
     ( @domainID, 'civicrm/admin/price?reset=1',                             'Manage Price Sets',  'Manage Price Sets',    'access CiviEvent,edit all events', 'AND',    @eventlastID, '1', NULL, 11 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Mailings', 'Mailings', 'access CiviMail,create mailings,approve mailings,schedule mailings', 'OR', NULL, '1', NULL, 50 );
+    ( @domainID, NULL, 'Mailings', 'Mailings', 'access CiviMail,create mailings,approve mailings,schedule mailings,send SMS', 'OR', NULL, '1', NULL, 50, 'crm-i fa-envelope-o' );
 
 SET @mailinglastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23297,15 +23433,15 @@ VALUES
     ( @domainID, 'civicrm/admin/component?reset=1',                         'Headers, Footers, and Automated Messages', 'Headers, Footers, and Automated Messages', 'access CiviMail,administer CiviCRM', 'AND', @mailinglastID, '1', NULL, 6 ),
     ( @domainID, 'civicrm/admin/messageTemplates?reset=1',                  'Message Templates', 'Message Templates',                 'edit message templates', '', @mailinglastID, '1', NULL, 7 ),
     ( @domainID, 'civicrm/admin/options/from_email_address?reset=1', 'From Email Addresses', 'From Email Addresses', 'administer CiviCRM', '', @mailinglastID, '1', 1, 8 ),
-    ( @domainID, 'civicrm/sms/send?reset=1',  'New SMS', 'New SMS', 'administer CiviCRM', NULL, @mailinglastID, '1', NULL, 9 ),
-    ( @domainID, 'civicrm/mailing/browse?reset=1&sms=1', 'Find Mass SMS', 'Find Mass SMS', 'administer CiviCRM', NULL, @mailinglastID, '1', 1, 10 ),
+    ( @domainID, 'civicrm/sms/send?reset=1',  'New SMS', 'New SMS', 'send SMS', NULL, @mailinglastID, '1', NULL, 9 ),
+    ( @domainID, 'civicrm/mailing/browse?reset=1&sms=1', 'Find Mass SMS', 'Find Mass SMS', 'send SMS', NULL, @mailinglastID, '1', 1, 10 ),
     ( @domainID, 'civicrm/a/#/abtest/new',                                  'New A/B Test', 'New A/B Test',                                        'access CiviMail', '', @mailinglastID, '1', NULL, 15 ),
     ( @domainID, 'civicrm/a/#/abtest',                                      'Manage A/B Tests', 'Manage A/B Tests',                                'access CiviMail', '', @mailinglastID, '1', 1, 16 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Memberships', 'Memberships', 'access CiviMember', '', NULL, '1', NULL, 60 );
+    ( @domainID, NULL, 'Memberships', 'Memberships', 'access CiviMember', '', NULL, '1', NULL, 60, 'crm-i fa-id-badge' );
 
 SET @memberlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23321,9 +23457,9 @@ VALUES
     ( @domainID, 'civicrm/admin/price?reset=1',                         'Manage Price Sets',   'Manage Price Sets', 'access CiviMember,administer CiviCRM', 'AND',  @memberlastID, '1', NULL, 8 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Campaigns', 'Campaigns', 'interview campaign contacts,release campaign contacts,reserve campaign contacts,manage campaign,administer CiviCampaign,gotv campaign contacts', 'OR', NULL, '1', NULL, 70 );
+    ( @domainID, NULL, 'Campaigns', 'Campaigns', 'interview campaign contacts,release campaign contacts,reserve campaign contacts,manage campaign,administer CiviCampaign,gotv campaign contacts', 'OR', NULL, '1', NULL, 70, 'crm-i fa-bullhorn' );
 
 SET @campaignlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23348,9 +23484,9 @@ VALUES
     ( @domainID, 'civicrm/campaign/gotv?reset=1', 'GOTV (Voter Tracking)', 'Voter Listing', 'administer CiviCampaign,manage campaign,release campaign contacts,gotv campaign contacts', 'OR', @campaignlastID, '1', NULL, 10 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Cases', 'Cases', 'access my cases and activities,access all cases and activities', 'OR', NULL, '1', NULL, 80 );
+    ( @domainID, NULL, 'Cases', 'Cases', 'access my cases and activities,access all cases and activities', 'OR', NULL, '1', NULL, 80, 'crm-i fa-folder-open-o' );
 
 SET @caselastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23362,9 +23498,9 @@ VALUES
     ( @domainID, 'civicrm/report/list?compid=7&reset=1', 'Case Reports', 'Case Reports', 'access my cases and activities,access all cases and activities,administer CiviCase', 'OR', @caselastID, '1', 0,    4 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Grants', 'Grants', 'access CiviGrant', '', NULL, '1', NULL, 90 );
+    ( @domainID, NULL, 'Grants', 'Grants', 'access CiviGrant', '', NULL, '1', NULL, 90, 'crm-i fa-money' );
 
 SET @grantlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23376,9 +23512,9 @@ VALUES
     ( @domainID, 'civicrm/report/list?compid=5&reset=1', 'Grant Reports', 'Grant Reports', 'access CiviGrant', '', @grantlastID, '1', 0,    4 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Administer', 'Administer', 'administer CiviCRM', '', NULL, '1', NULL, 100 );
+    ( @domainID, NULL, 'Administer', 'Administer', 'administer CiviCRM', '', NULL, '1', NULL, 100, 'crm-i fa-gears' );
 
 SET @adminlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23418,7 +23554,7 @@ VALUES
 INSERT INTO civicrm_navigation
     ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
 VALUES
-    ( @domainID, NULL, 'Dropdown Options', 'Dropdown Options', 'administer CiviCRM', '', @CustomizelastID, '1', NULL, 8 );
+    ( @domainID, 'civicrm/admin/options?action=browse&reset=1', 'Dropdown Options', 'Dropdown Options', 'administer CiviCRM', '', @CustomizelastID, '1', NULL, 8 );
 
 SET @optionListlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23536,10 +23672,11 @@ SET @adminCaselastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
     ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
 VALUES
-    ( @domainID, 'civicrm/a/#/caseType',            'Case Types',      'Case Types',      'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 1 ),
-    ( @domainID, 'civicrm/admin/options/redaction_rule?reset=1',  'Redaction Rules', 'Redaction Rules', 'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 2 ),
-    ( @domainID, 'civicrm/admin/options/case_status?reset=1',  'Case Statuses', 'Case Statuses', 'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 3 ),
-    ( @domainID, 'civicrm/admin/options/encounter_medium?reset=1',  'Encounter Medium', 'Encounter Medium', 'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 4 );
+    ( @domainID, 'civicrm/admin/setting/case?reset=1',   'CiviCase Settings',      'CiviCase Settings',      'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 1 ),
+    ( @domainID, 'civicrm/a/#/caseType',            'Case Types',      'Case Types',      'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 2 ),
+    ( @domainID, 'civicrm/admin/options/redaction_rule?reset=1',  'Redaction Rules', 'Redaction Rules', 'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 3 ),
+    ( @domainID, 'civicrm/admin/options/case_status?reset=1',  'Case Statuses', 'Case Statuses', 'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 4 ),
+    ( @domainID, 'civicrm/admin/options/encounter_medium?reset=1',  'Encounter Medium', 'Encounter Medium', 'administer CiviCase', NULL, @adminCaselastID, '1', NULL, 5 );
 
 INSERT INTO civicrm_navigation
     ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
@@ -23644,9 +23781,9 @@ VALUES
     ( @domainID, 'civicrm/admin/report/options/report_template?reset=1',   'Manage Templates', 'Manage Templates', 'administer Reports',  '', @adminReportlastID, '1', NULL, 3 ),
     ( @domainID, 'civicrm/admin/report/register?reset=1',                  'Register Report',  'Register Report',  'administer Reports',  '', @adminReportlastID, '1', NULL, 4 );
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Support', 'Support', NULL, '',  NULL, '1', NULL, 110);
+    ( @domainID, NULL, 'Support', 'Support', NULL, '',  NULL, '1', NULL, 110, 'crm-i fa-life-ring');
 
 SET @adminHelplastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23673,9 +23810,9 @@ VALUES
 ( @domainID, 'https://civicrm.org/developer-documentation?src=iam', 'Developer Docs', 'Developer Docs', 'administer CiviCRM', '', @devellastID, '1', NULL, 3 );
 
 INSERT INTO civicrm_navigation
-    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight )
+    ( domain_id, url, label, name, permission, permission_operator, parent_id, is_active, has_separator, weight, icon )
 VALUES
-    ( @domainID, NULL, 'Reports', 'Reports', 'access CiviReport', '',  NULL, '1', NULL, 95 );
+    ( @domainID, NULL, 'Reports', 'Reports', 'access CiviReport', '',  NULL, '1', NULL, 95, 'crm-i fa-bar-chart' );
 
 SET @reportlastID:=LAST_INSERT_ID();
 INSERT INTO civicrm_navigation
@@ -23912,5 +24049,4 @@ INSERT INTO `civicrm_report_instance`
     ( `domain_id`, `title`, `report_id`, `description`, `permission`, `form_values`)
 VALUES
     (  @domainID, 'Survey Details', 'survey/detail', 'Detailed report for canvassing, phone-banking, walk lists or other surveys.', 'access CiviReport', 'a:39:{s:6:"fields";a:2:{s:9:"sort_name";s:1:"1";s:6:"result";s:1:"1";}s:22:"assignee_contact_id_op";s:2:"eq";s:25:"assignee_contact_id_value";s:0:"";s:12:"sort_name_op";s:3:"has";s:15:"sort_name_value";s:0:"";s:17:"street_number_min";s:0:"";s:17:"street_number_max";s:0:"";s:16:"street_number_op";s:3:"lte";s:19:"street_number_value";s:0:"";s:14:"street_name_op";s:3:"has";s:17:"street_name_value";s:0:"";s:15:"postal_code_min";s:0:"";s:15:"postal_code_max";s:0:"";s:14:"postal_code_op";s:3:"lte";s:17:"postal_code_value";s:0:"";s:7:"city_op";s:3:"has";s:10:"city_value";s:0:"";s:20:"state_province_id_op";s:2:"in";s:23:"state_province_id_value";a:0:{}s:13:"country_id_op";s:2:"in";s:16:"country_id_value";a:0:{}s:12:"survey_id_op";s:2:"in";s:15:"survey_id_value";a:0:{}s:12:"status_id_op";s:2:"eq";s:15:"status_id_value";s:1:"1";s:11:"custom_1_op";s:2:"in";s:14:"custom_1_value";a:0:{}s:11:"custom_2_op";s:2:"in";s:14:"custom_2_value";a:0:{}s:17:"custom_3_relative";s:1:"0";s:13:"custom_3_from";s:0:"";s:11:"custom_3_to";s:0:"";s:11:"description";s:75:"Detailed report for canvassing, phone-banking, walk lists or other surveys.";s:13:"email_subject";s:0:"";s:8:"email_to";s:0:"";s:8:"email_cc";s:0:"";s:10:"permission";s:17:"access CiviReport";s:6:"groups";s:0:"";s:9:"domain_id";i:1;}');
-
-UPDATE civicrm_domain SET version = '4.7.18';
+UPDATE civicrm_domain SET version = '5.16.2';

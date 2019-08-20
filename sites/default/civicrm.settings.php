@@ -70,7 +70,7 @@ if (!defined('CIVICRM_UF')) {
  *      define( 'CIVICRM_UF_DSN', 'mysql://cms_db_username:cms_db_password@db_server/cms_database?new_link=true');
  */
 if (!defined('CIVICRM_UF_DSN') && CIVICRM_UF !== 'UnitTests') {
-  define( 'CIVICRM_UF_DSN'           , 'mysql://eternity-drupal:s0mething!@localhost/eternity_drupal?new_link=true');
+  define( 'CIVICRM_UF_DSN'           , 'mysql://eternity-drupal:s0mething!@localhost/eternity_drupal_upgrade?new_link=true');
 }
 
 /**
@@ -98,7 +98,7 @@ if (!defined('CIVICRM_DSN')) {
     define('CIVICRM_DSN', $GLOBALS['_CV']['TEST_DB_DSN']);
   }
   else {
-    define('CIVICRM_DSN', 'mysql://eternity-civicrm:s0mething!@localhost/eternity_civicrm?new_link=true');
+    define('CIVICRM_DSN', 'mysql://eternity-drupal:s0mething!@localhost/eternity_civicrm_upgrade?new_link=true');
   }
 }
 
@@ -170,10 +170,10 @@ if (!defined('CIVICRM_LOGGING_DSN')) {
 
 global $civicrm_root;
 
-$civicrm_root = '/var/www/drupal/eternity/sites/all/modules/civicrm';
+$civicrm_root = '/var/www/drupal/upgrade/sites/all/modules/civicrm';
 //$civicrm_root = '/home/vlad/projects/ec/sites/all/modules/civicrm';
 if (!defined('CIVICRM_TEMPLATE_COMPILEDIR')) {
-  define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/var/www/drupal/eternity/sites/default/files/civicrm/templates_c/');
+  define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/var/www/drupal/upgrade/sites/default/files/civicrm/templates_c/');
   //define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/home/vlad/projects/ec/sites/default/files/civicrm/templates_c/');
 }
 
@@ -210,7 +210,7 @@ if (!defined('CIVICRM_TEMPLATE_COMPILEDIR')) {
  *
  */
 if (!defined('CIVICRM_UF_BASEURL')) {
-  define( 'CIVICRM_UF_BASEURL'      , 'http://dev.eternityconnection.org/');
+  define( 'CIVICRM_UF_BASEURL'      , 'http://upgrade.eternityconnection.org/');
   //define( 'CIVICRM_UF_BASEURL'      , 'http://ec/');
 }
 

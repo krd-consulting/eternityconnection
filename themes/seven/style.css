@@ -988,3 +988,7 @@ div.add-or-remove-shortcuts {
   -webkit-border-radius: 8px;
   border-radius: 8px;
 }
+
+input.crm-form-text {
+	border: 1px solid #ccc;
+}

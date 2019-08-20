@@ -1,7 +1,7 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -21,7 +21,7 @@
  | GNU Affero General Public License or the licensing of CiviCRM,     |
  | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
  +--------------------------------------------------------------------+
-*/
+ */
 
 /**
  * Build the $data array for CiviMember related tables
@@ -32,7 +32,6 @@ function _civicrm_member_data(&$data, $enabled) {
   //----------------------------------------------------------------
   // CIVICRM Memberships are here with all the connections.
   //----------------------------------------------------------------
-
 
   $data['civicrm_membership']['table']['group'] = t('CiviCRM Member');
 
@@ -56,8 +55,6 @@ function _civicrm_member_data(&$data, $enabled) {
     'left_field' => 'contact_id',
     'field' => 'contact_id',
   );
-
-
 
   //CiviCRM Memberships - FIELDS
 
@@ -126,11 +123,11 @@ function _civicrm_member_data(&$data, $enabled) {
       'handler' => 'views_handler_sort',
     ),
   );
-  
+
   //Membership Join date
   $data['civicrm_membership']['join_date'] = array(
     'title' => t('Join Date'),
-    'help' => t('The Membership\'s Start Date'),
+    'help' => t("The Membership's Start Date"),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -146,13 +143,13 @@ function _civicrm_member_data(&$data, $enabled) {
 
   civicrm_views_add_date_arguments($data['civicrm_membership'], array(
     'title' => 'Join Date',
-      'name' => 'join_date',
-    ));
+    'name' => 'join_date',
+  ));
 
   //Membership start date
   $data['civicrm_membership']['start_date'] = array(
     'title' => t('Start Date'),
-    'help' => t('The Membership\'s Start Date'),
+    'help' => t("The Membership's Start Date"),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -168,14 +165,13 @@ function _civicrm_member_data(&$data, $enabled) {
 
   civicrm_views_add_date_arguments($data['civicrm_membership'], array(
     'title' => 'Start Date',
-      'name' => 'start_date',
-    ));
-
+    'name' => 'start_date',
+  ));
 
   //Membership end date
   $data['civicrm_membership']['end_date'] = array(
     'title' => t('End Date'),
-    'help' => t('The Membership\'s End Date'),
+    'help' => t("The Membership's End Date"),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -191,9 +187,8 @@ function _civicrm_member_data(&$data, $enabled) {
 
   civicrm_views_add_date_arguments($data['civicrm_membership'], array(
     'title' => 'End Date',
-      'name' => 'end_date',
-    ));
-
+    'name' => 'end_date',
+  ));
 
   //membership Source
   $data['civicrm_membership']['source'] = array(
@@ -260,7 +255,7 @@ function _civicrm_member_data(&$data, $enabled) {
   //Membership end date
   $data['civicrm_membership']['reminder_date'] = array(
     'title' => t('Reminder Date'),
-    'help' => t('The Membership\'s Reminder Date'),
+    'help' => t("The Membership's Reminder Date"),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -276,10 +271,8 @@ function _civicrm_member_data(&$data, $enabled) {
 
   civicrm_views_add_date_arguments($data['civicrm_membership'], array(
     'title' => 'Reminder Date',
-      'name' => 'reminder_date',
-    ));
-
-
+    'name' => 'reminder_date',
+  ));
 
   //Numeric Membership Owner ID
   $data['civicrm_membership']['owner_membership_id'] = array(
@@ -365,4 +358,3 @@ function _civicrm_member_data(&$data, $enabled) {
     );
   }
 }
-

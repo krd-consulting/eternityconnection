@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2017                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -27,7 +27,7 @@
 
 /**
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2017
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 
 /**
@@ -67,21 +67,21 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
   /**
    * Is participant able to walk registration wizard.
    *
-   * @var Boolean
+   * @var bool
    */
   public $_allowConfirmation;
 
   /**
    * Is participant requires approval.
    *
-   * @var Boolean
+   * @var bool
    */
   public $_requireApproval;
 
   /**
    * Is event configured for waitlist.
    *
-   * @var Boolean
+   * @var bool
    */
   public $_allowWaitlist;
 
@@ -154,10 +154,13 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
 
   public $_pcpId;
 
-  /* Is event already full.
+  /**
+   * Is event already full.
    *
-   * @var boolean
+   * @var bool
+   *
    */
+
 
   public $_isEventFull;
 
@@ -167,14 +170,35 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
 
   public $_forcePayement;
 
+  /**
+   * @var bool
+   * @deprecated
+   */
   public $_isBillingAddressRequiredForPayLater;
+
+  /**
+   * Is this a back office form
+   *
+   * @var bool
+   */
+  public $isBackOffice = FALSE;
+
+  /**
+   * Payment instrument iD for the transaction.
+   *
+   * This will generally be drawn from the payment processor and is ignored for
+   * front end forms.
+   *
+   * @var int
+   */
+  public $paymentInstrumentID;
 
   /**
    * Set variables up before form is built.
    */
   public function preProcess() {
     $this->_eventId = CRM_Utils_Request::retrieve('id', 'Positive', $this, TRUE);
-    $this->_action = CRM_Utils_Request::retrieve('action', 'String', $this, FALSE);
+    $this->_action = CRM_Utils_Request::retrieve('action', 'Alphanumeric', $this, FALSE, CRM_Core_Action::ADD);
 
     //CRM-4320
     $this->_participantId = CRM_Utils_Request::retrieve('participantId', 'Positive', $this);
@@ -369,9 +393,7 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
     $this->_contributeMode = $this->get('contributeMode');
     $this->assign('contributeMode', $this->_contributeMode);
 
-    // setting CMS page title
-    CRM_Utils_System::setTitle($this->_values['event']['title']);
-    $this->assign('title', $this->_values['event']['title']);
+    $this->setTitle($this->_values['event']['title']);
 
     $this->assign('paidEvent', $this->_values['event']['is_monetary']);
 
@@ -397,10 +419,7 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
     $this->assign('bltID', $this->_bltID);
     $isShowLocation = CRM_Utils_Array::value('is_show_location', $this->_values['event']);
     $this->assign('isShowLocation', $isShowLocation);
-    //CRM-6907
-    $config->defaultCurrency = CRM_Utils_Array::value('currency', $this->_values['event'],
-      $config->defaultCurrency
-    );
+    CRM_Contribute_BAO_Contribution_Utils::overrideDefaultCurrency($this->_values['event']);
 
     //lets allow user to override campaign.
     $campID = CRM_Utils_Request::retrieve('campID', 'Positive', $this);
@@ -497,9 +516,7 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
 
     // also assign all participantIDs to the template
     // useful in generating confirmation numbers if needed
-    $this->assign('participantIDs',
-      $this->_participantIDS
-    );
+    $this->assign('participantIDs', $this->_participantIDS);
   }
 
   /**
@@ -596,9 +613,7 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
       }
 
       if ($addCaptcha && !$viewOnly) {
-        $captcha = CRM_Utils_ReCAPTCHA::singleton();
-        $captcha->add($this);
-        $this->assign('isCaptcha', TRUE);
+        CRM_Utils_ReCAPTCHA::enableCaptchaOnForm($this);
       }
     }
   }
@@ -739,8 +754,7 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
         'participant_id' => $participant->id,
         'contribution_id' => $contribution->id,
       );
-      $ids = array();
-      $paymentPartcipant = CRM_Event_BAO_ParticipantPayment::create($paymentParams, $ids);
+      $paymentPartcipant = CRM_Event_BAO_ParticipantPayment::create($paymentParams);
     }
 
     //set only primary participant's params for transfer checkout.
@@ -769,12 +783,11 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
       }
 
       // we should use primary email for
-      // 1. free event registration.
-      // 2. pay later participant.
-      // 3. waiting list participant.
-      // 4. require approval participant.
+      // 1. pay later participant.
+      // 2. waiting list participant.
+      // 3. require approval participant.
       if (!empty($this->_params['is_pay_later']) ||
-        $this->_allowWaitlist || $this->_requireApproval || empty($this->_values['event']['is_monetary'])
+        $this->_allowWaitlist || $this->_requireApproval
       ) {
         $mail = 'email-Primary';
       }
@@ -800,23 +813,6 @@ class CRM_Event_Form_Registration extends CRM_Core_Form {
     $params = $form->_params;
     $transaction = new CRM_Core_Transaction();
 
-    $groupName = 'participant_role';
-    $query = "
-SELECT  v.label as label ,v.value as value
-FROM   civicrm_option_value v,
-       civicrm_option_group g
-WHERE  v.option_group_id = g.id
-  AND  g.name            = %1
-  AND  v.is_active       = 1
-  AND  g.is_active       = 1
-";
-    $p = array(1 => array($groupName, 'String'));
-
-    $dao = CRM_Core_DAO::executeQuery($query, $p);
-    if ($dao->fetch()) {
-      $roleID = $dao->value;
-    }
-
     // handle register date CRM-4320
     $registerDate = NULL;
     if (!empty($form->_allowConfirmation) && $form->_participantId) {
@@ -837,9 +833,7 @@ WHERE  v.option_group_id = g.id
       'status_id' => CRM_Utils_Array::value('participant_status',
         $params, 1
       ),
-      'role_id' => CRM_Utils_Array::value('participant_role_id',
-        $params, $roleID
-      ),
+      'role_id' => CRM_Utils_Array::value('participant_role_id', $params) ?: self::getDefaultRoleID(),
       'register_date' => ($registerDate) ? $registerDate : date('YmdHis'),
       'source' => CRM_Utils_String::ellipsify(
         isset($params['participant_source']) ? CRM_Utils_Array::value('participant_source', $params) : CRM_Utils_Array::value('description', $params),
@@ -889,6 +883,21 @@ WHERE  v.option_group_id = g.id
     $transaction->commit();
 
     return $participant;
+  }
+
+  /**
+   * Get the ID of the default (first) participant role
+   *
+   * @return int
+   * @throws \CiviCRM_API3_Exception
+   */
+  private static function getDefaultRoleID() {
+    return (int) civicrm_api3('OptionValue', 'getvalue', [
+      'return' => "value",
+      'option_group_id' => "participant_role",
+      'is_active' => 1,
+      'options' => ['limit' => 1, 'sort' => "is_default DESC"],
+    ]);
   }
 
   /**
@@ -1227,7 +1236,7 @@ WHERE  v.option_group_id = g.id
    *
    * @param string $elementName
    * @param array $optionIds
-   * @param CRM_Core_form $form
+   * @param CRM_Core_Form $form
    */
   public static function resetSubmittedValue($elementName, $optionIds = array(), &$form) {
     if (empty($elementName) ||
@@ -1237,10 +1246,10 @@ WHERE  v.option_group_id = g.id
       return;
     }
     foreach (array(
-               'constantValues',
-               'submitValues',
-               'defaultValues',
-             ) as $val) {
+      'constantValues',
+      'submitValues',
+      'defaultValues',
+    ) as $val) {
       $values = $form->{"_$val"};
       if (!is_array($values) || empty($values)) {
         continue;

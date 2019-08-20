@@ -1,8 +1,8 @@
 {*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2017                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -56,6 +56,10 @@
         <div class="crm-field-wrapper">
           {$form.supplemental_address_2.label}<br />
           {$form.supplemental_address_2.html}
+        </div>
+        <div class="crm-field-wrapper">
+          {$form.supplemental_address_3.label}<br />
+          {$form.supplemental_address_3.html}
         </div>
         <div class="crm-field-wrapper">
           {$form.city.label}<br />

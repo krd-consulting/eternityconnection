@@ -29,6 +29,7 @@
         ret[fieldName] = $(this).text();
         if (this === el) {
           ret.field = fieldName;
+          ret.params = $(this).data('params');
         }
       }
     });
@@ -132,7 +133,7 @@
         var
           info = $i.crmEditableEntity(),
           $el = $($i),
-          params = {},
+          params = info.params || {},
           action = $i.data('action') || info.action;
         if (!info.field) {
           return false;
@@ -159,7 +160,7 @@
               var options = optionsCache[$el.data('optionsHashKey')];
               value = options && options[value] ? options[value] : '';
             }
-            $el.trigger('crmFormSuccess');
+            $el.trigger('crmFormSuccess', [value]);
             editableSettings.success.call($el[0], info.entity, info.field, value, data, settings);
           })
           .fail(function(data) {

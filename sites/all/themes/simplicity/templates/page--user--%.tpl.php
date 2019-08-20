@@ -76,7 +76,7 @@
 
 ?>
 
-<?php dsm($tabs); ?>
+<?php //dsm($tabs); ?>
 
 <?php
 

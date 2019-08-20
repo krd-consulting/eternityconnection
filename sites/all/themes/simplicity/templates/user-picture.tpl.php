@@ -16,7 +16,7 @@
  * @ingroup themeable
  */
 ?>
-<?php dsm($account); ?>
+<!-- ?php dsm($account); ? -->
 
 <?php 
 	$name = preg_split("/[\s,_-]+/", $account->name);

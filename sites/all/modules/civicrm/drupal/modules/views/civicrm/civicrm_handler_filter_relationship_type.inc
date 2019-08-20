@@ -1,7 +1,7 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -21,10 +21,9 @@
  | GNU Affero General Public License or the licensing of CiviCRM,     |
  | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
  +--------------------------------------------------------------------+
-*/
+ */
 
-
-/*
+/**
  * Heavily based on anonymous code contribution. No claim.
  * CiviCRM Views Integration
  *
@@ -33,8 +32,9 @@
  *
  */
 class civicrm_handler_filter_relationship_type extends views_handler_filter_in_operator {
-  static $_relationshipType;
-  function construct() {
+  public static $_relationshipType;
+
+  public function construct() {
     parent::construct();
     if (!self::$_relationshipType) {
       if (!civicrm_initialize()) {
@@ -56,7 +56,7 @@ class civicrm_handler_filter_relationship_type extends views_handler_filter_in_o
     }
   }
 
-  function get_value_options() {
+  public function get_value_options() {
     if (!isset($this->value_options)) {
       $this->value_title = t('Relationship Type');
       $options = array();
@@ -66,6 +66,5 @@ class civicrm_handler_filter_relationship_type extends views_handler_filter_in_o
       $this->value_options = $options;
     }
   }
+
 }
-
-

@@ -1,7 +1,7 @@
 <?php
 /*
    +--------------------------------------------------------------------+
-   | CiviCRM version 4.7                                                |
+   | CiviCRM version 5                                                  |
    +--------------------------------------------------------------------+
    | This file is a part of CiviCRM.                                    |
    |                                                                    |
@@ -21,22 +21,24 @@
    | GNU Affero General Public License or the licensing of CiviCRM,     |
    | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
    +--------------------------------------------------------------------+
+ */
 
-   **
-   * @file Provides Views integration for multi valued fields like
-   * contact subtype and CiviCRM custom field option groups
-   *
-   * @author Matt Chapman <Matt@NinjitsuWeb.com>
-   */
+/**
+ * @file Provides Views integration for multi valued fields like
+ * contact subtype and CiviCRM custom field option groups
+ *
+ * @author Matt Chapman <Matt@NinjitsuWeb.com>
+ */
 class civicrm_handler_filter_custom_option extends views_handler_filter_in_operator {
-  function construct() {
+
+  public function construct() {
     parent::construct();
     if (!civicrm_initialize()) {
       return;
     }
   }
 
-  function get_value_options() {
+  public function get_value_options() {
     if (!isset($this->value_options)) {
       if ($this->real_field == 'contact_sub_type') {
         require_once 'CRM/Contact/BAO/ContactType.php';
@@ -57,7 +59,7 @@ class civicrm_handler_filter_custom_option extends views_handler_filter_in_opera
     }
   }
 
-  function operators() {
+  public function operators() {
     $operators = parent::operators();
     $operators += array(
       'all' => array(
@@ -71,7 +73,7 @@ class civicrm_handler_filter_custom_option extends views_handler_filter_in_opera
     return $operators;
   }
 
-  function op_simple() {
+  public function op_simple() {
     if (empty($this->value)) {
       return;
     }
@@ -84,10 +86,10 @@ class civicrm_handler_filter_custom_option extends views_handler_filter_in_opera
     $op = ($this->operator == 'in' || $this->operator == 'all') ? 'LIKE' : 'NOT LIKE';
     $glue = ($this->operator == 'in') ? 'OR ' : 'AND ';
     foreach ($this->value as $value) {
-      $clauses[] = "$this->table_alias.$this->real_field " . $op . " '%" . $sep . $value . $sep . "%' ";
+      $clauses[] = "$this->table_alias.$this->real_field " . $op . " '%" . $sep . CRM_Core_DAO::escapeString($value) . $sep . "%' ";
     }
     $clause = implode($glue, $clauses);
     $this->query->add_where_expression($this->options['group'], $clause);
   }
-}
 
+}

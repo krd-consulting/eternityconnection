@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2017                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -23,12 +23,12 @@
  | GNU Affero General Public License or the licensing of CiviCRM,     |
  | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
  +--------------------------------------------------------------------+
-*/
+ */
 
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2017
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
@@ -41,7 +41,8 @@
  * @{
  */
 require_once 'civicrm_rules_utils.inc';
-function civicrm_rules_rules_action_contact_send_email($to, $subject, $message, $from = NULL, $settings, RulesState$state, RulesPlugin$element) {
+
+function civicrm_rules_rules_action_contact_send_email($to, $subject, $message, $from = NULL, $settings, RulesState $state, RulesPlugin $element) {
 
   $to = str_replace(array("\r", "\n"), ',', $to);
   $toEmails = explode(',', $to);
@@ -51,7 +52,8 @@ function civicrm_rules_rules_action_contact_send_email($to, $subject, $message, 
   foreach ($toEmails as $toEmail) {
     $params            = array();
     $params['from']    = !empty($from) ? str_replace(array(
-      "\r", "\n"), '', $from) : 'Admin';
+      "\r", "\n",
+    ), '', $from) : 'Admin';
     $params['toEmail'] = $toEmail;
     $params['subject'] = $subject;
     $params['text']    = is_array($message) ? implode("\n", $message) : $message;
@@ -144,4 +146,3 @@ function civicrm_rules_options_list() {
   $settings['groups'] = _civicrm_get_groups();
   return $settings;
 }
-

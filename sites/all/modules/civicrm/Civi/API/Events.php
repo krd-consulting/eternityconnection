@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2017                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -96,13 +96,25 @@ class Events {
    * @return array<string>
    */
   public static function allEvents() {
-    return array(
+    return [
       self::AUTHORIZE,
       self::EXCEPTION,
       self::PREPARE,
       self::RESOLVE,
       self::RESPOND,
-    );
+    ];
+  }
+
+  /**
+   * @param \Civi\Core\Event\GenericHookEvent $e
+   * @see \CRM_Utils_Hook::eventDefs
+   */
+  public static function hookEventDefs($e) {
+    $e->inspector->addEventClass(self::AUTHORIZE, 'Civi\API\Event\AuthorizeEvent');
+    $e->inspector->addEventClass(self::EXCEPTION, 'Civi\API\Event\ExceptionEvent');
+    $e->inspector->addEventClass(self::PREPARE, 'Civi\API\Event\PrepareEvent');
+    $e->inspector->addEventClass(self::RESOLVE, 'Civi\API\Event\ResolveEvent');
+    $e->inspector->addEventClass(self::RESPOND, 'Civi\API\Event\RespondEvent');
   }
 
 }

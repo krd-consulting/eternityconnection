@@ -10,20 +10,27 @@
  * and formats it as a Calendar node.
  */
 class calendar_plugin_row_civicrm_event extends calendar_plugin_row_node {
-  // Basic properties that let the row style follow relationships.
-  var $base_table = 'civicrm_event';
-  var $base_field = 'id';
+  /**
+   * Basic properties that let the row style follow relationships.
+   * @var string
+   */
+  public $base_table = 'civicrm_event';
+  public $base_field = 'id';
 
-  // Stores the nodes loaded with pre_render.
-  var $nodes = array();
-  function construct() {
+  /**
+   * Stores the nodes loaded with pre_render.
+   * @var array
+   */
+  public $nodes = array();
+
+  public function construct() {
     parent::construct();
     if (!civicrm_initialize()) {
       return;
     }
   }
 
-  function option_definition() {
+  public function option_definition() {
     $options = parent::option_definition();
     $options['date_fields'] = array('default' => array());
     $options['calendar_date_link'] = array('default' => '');
@@ -39,7 +46,7 @@ class calendar_plugin_row_civicrm_event extends calendar_plugin_row_node {
   /**
    * Provide a form for setting options.
    */
-  function options_form(&$form, &$form_state) {
+  public function options_form(&$form, &$form_state) {
     parent::options_form($form, $form_state);
 
     $form['markup']['#markup'] = t("The calendar row plugin will format view results as calendar items. Make sure this display has a 'Calendar' format and uses a 'Date' contextual filter, or this plugin will not work correctly.");
@@ -88,7 +95,7 @@ class calendar_plugin_row_civicrm_event extends calendar_plugin_row_node {
     }
   }
 
-  function pre_render($values) {
+  public function pre_render($values) {
 
     $ids = array();
     foreach ($values as $row) {
@@ -101,7 +108,7 @@ class calendar_plugin_row_civicrm_event extends calendar_plugin_row_node {
     // and object, hence using DAO
     foreach ($ids as $key => $id) {
       require_once 'CRM/Event/DAO/Event.php';
-      $dao = New CRM_Event_DAO_Event;
+      $dao = new CRM_Event_DAO_Event();
       $dao->id = $id;
       $dao->find();
       $dao->fetch();
@@ -111,7 +118,6 @@ class calendar_plugin_row_civicrm_event extends calendar_plugin_row_node {
       }
       $dao->release();
     }
-
 
     // Identify the date argument and fields that apply to this view.
     // Preload the Date Views field info for each field, keyed by the
@@ -142,7 +148,7 @@ class calendar_plugin_row_civicrm_event extends calendar_plugin_row_node {
     }
   }
 
-  function render($row) {
+  public function render($row) {
     global $base_url;
     $date_info = $this->date_argument->view->date_info;
 
@@ -246,5 +252,5 @@ class calendar_plugin_row_civicrm_event extends calendar_plugin_row_node {
     }
     return $rows;
   }
-}
 
+}

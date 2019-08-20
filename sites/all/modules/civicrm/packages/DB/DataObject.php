@@ -176,10 +176,7 @@ $GLOBALS['_DB_DATAOBJECT']['QUERYENDTIME'] = 0;
 
 
 // this will be horrifically slow!!!!
-// NOTE: Overload SEGFAULTS ON PHP4 + Zend Optimizer (see define before..)
-// these two are BC/FC handlers for call in PHP4/5
 
-if ( substr(phpversion(),0,1) > 4) {
     class DB_DataObject_Overload
     {
         function __call($method,$args)
@@ -193,31 +190,6 @@ if ( substr(phpversion(),0,1) > 4) {
             return array_keys(get_object_vars($this)) ;
         }
     }
-} else {
-    if (version_compare(phpversion(),'4.3.10','eq') && !defined('DB_DATAOBJECT_NO_OVERLOAD')) {
-        trigger_error(
-            "overload does not work with PHP4.3.10, either upgrade
-            (snaps.php.net) or more recent version
-            or define DB_DATAOBJECT_NO_OVERLOAD as per the manual.
-            ",E_USER_ERROR);
-    }
-
-    if (!function_exists('clone')) {
-        // emulate clone  - as per php_compact, slow but really the correct behaviour..
-        eval('function clone($t) { $r = $t; if (method_exists($r,"__clone")) { $r->__clone(); } return $r; }');
-    }
-    eval('
-        class DB_DataObject_Overload {
-            function __call($method,$args,&$return) {
-                return $this->_call($method,$args,$return);
-            }
-        }
-    ');
-}
-
-
-
-
 
 
  /*
@@ -968,11 +940,6 @@ class DB_DataObject extends DB_DataObject_Overload
             if (!isset($this->$k)) {
                 continue;
             }
-            // dont insert data into mysql timestamps
-            // use query() if you really want to do this!!!!
-            if ($v & DB_DATAOBJECT_MYSQLTIMESTAMP) {
-                continue;
-            }
 
             if ($leftq) {
                 $leftq  .= ', ';
@@ -999,6 +966,19 @@ class DB_DataObject extends DB_DataObject_Overload
                 $rightq .= " NULL ";
                 continue;
             }
+          if (($v & DB_DATAOBJECT_DATE) || ($v & DB_DATAOBJECT_TIME) || $v & DB_DATAOBJECT_MYSQLTIMESTAMP) {
+            if (strpos($this->$k, '-') !== FALSE) {
+              /*
+               * per CRM-14986 we have been having ongoing problems with the format returned from $dao->find(TRUE) NOT
+               * being acceptable for an immediate save. This has resulted in the codebase being smattered with
+               * instances of CRM_Utils_Date::isoToMysql for date fields retrieved in this way
+               * which seems both risky (have to remember to do it for every field) & cludgey.
+               * doing it here should be safe as only fields with a '-' in them will be affected - if they are
+               *  already formatted or empty then this line will not be hit
+               */
+              $this->$k = CRM_Utils_Date::isoToMysql($this->$k);
+            }
+          }
             // DATE is empty... on a col. that can be null..
             // note: this may be usefull for time as well..
             if (!$this->$k &&
@@ -2428,16 +2408,29 @@ class DB_DataObject extends DB_DataObject_Overload
         $t= explode(' ',microtime());
         $_DB_DATAOBJECT['QUERYENDTIME'] = $time = $t[0]+$t[1];
 
+      $maxTries = defined('CIVICRM_DEADLOCK_RETRIES') ? CIVICRM_DEADLOCK_RETRIES : 3;
+      for ($tries = 0;$tries < $maxTries;$tries++) {
+        if ($_DB_driver == 'DB') {
+          try {
+            $result = $DB->query($string);
+          }
+          catch (PEAR_Exception $e) {
+            // CRM-21489 If we have caught a DB lock - let it go around the loop until our tries limit is hit.
+            // else rethrow the exception. The 2 locks we are looking at are mysql code 1205 (lock) and
+            // 1213 (deadlock).
+            $dbErrorMessage = $e->getCause()->getUserInfo();
+            if (!stristr($dbErrorMessage, 'nativecode=1205') && !stristr($dbErrorMessage, 'nativecode=1213')) {
+              throw $e;
+            }
+            $message = (stristr($dbErrorMessage, 'nativecode=1213') ? 'Database deadlock encountered' : 'Database lock encountered');
+            if (($tries + 1) === $maxTries) {
+              throw new CRM_Core_Exception($message, 0, array('sql' => $string, 'trace' => $e->getTrace()));
+            }
+            CRM_Core_Error::debug_log_message("Retrying after $message hit on attempt " . ($tries + 1) . ' at query : ' . $string);
+            continue;
+          }
 
-        for ($tries = 0;$tries < 3;$tries++) {
-
-            if ($_DB_driver == 'DB') {
-                if ($tries) {
-                  CRM_Core_Error::debug_log_message('Attempt: ' . $tries + 1 . ' at query : ' . $string);
-                }
-                $result = $DB->query($string);
-
-            } else {
+        } else {
                 switch (strtolower(substr(trim($string),0,6))) {
 
                     case 'insert':
@@ -2452,7 +2445,7 @@ class DB_DataObject extends DB_DataObject_Overload
                 }
             }
 
-            // see if we got a failure.. - try again a few times..
+            // See CRM-21489 for why I believe this is never hit.
             if (!is_a($result,'PEAR_Error')) {
                 break;
             }
@@ -2462,7 +2455,6 @@ class DB_DataObject extends DB_DataObject_Overload
             sleep(1); // wait before retyring..
             $DB->connect($DB->dsn);
         }
-
 
         if (is_a($result,'PEAR_Error')) {
             if (!empty($_DB_DATAOBJECT['CONFIG']['debug'])) {
@@ -3775,15 +3767,13 @@ class DB_DataObject extends DB_DataObject_Overload
             // at this point if you have set something to an object, and it's not expected
             // the Validate will probably break!!... - rightly so! (your design is broken,
             // so issuing a runtime error like PEAR_Error is probably not appropriate..
-
-            switch (true) {
-                // todo: date time.....
-                case  ($val & DB_DATAOBJECT_STR):
-                    $ret[$key] = Validate::string($this->$key, VALIDATE_PUNCTUATION . VALIDATE_NAME);
-                    continue;
-                case  ($val & DB_DATAOBJECT_INT):
-                    $ret[$key] = Validate::number($this->$key, array('decimal'=>'.'));
-                    continue;
+            if ($val & DB_DATAOBJECT_STR) {
+              $ret[$key] = Validate::string($this->$key, VALIDATE_PUNCTUATION . VALIDATE_NAME);
+              continue;
+            }
+            if ($val & DB_DATAOBJECT_INT) {
+              $ret[$key] = Validate::number($this->$key, array('decimal' => '.'));
+              continue;
             }
         }
         // if any of the results are false or an object (eg. PEAR_Error).. then return the array..

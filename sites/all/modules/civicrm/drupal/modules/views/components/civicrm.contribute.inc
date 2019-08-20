@@ -1,7 +1,7 @@
 <?php
 /*
   +--------------------------------------------------------------------+
-  | CiviCRM version 4.7                                                |
+  | CiviCRM version 5                                                  |
   +--------------------------------------------------------------------+
   | This file is a part of CiviCRM.                                    |
   |                                                                    |
@@ -21,7 +21,7 @@
   | GNU Affero General Public License or the licensing of CiviCRM,     |
   | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
   +--------------------------------------------------------------------+
-*/
+ */
 
 /**
  * Build the $data array for CiviContribute related tables
@@ -60,7 +60,7 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
 
   //TABLE JOINS FOR CIVICRM CONTRIBUTIONS GO HERE!
-  
+
   $data['civicrm_contribution']['table']['join']['civicrm_contact'] = array(
     'left_table' => 'civicrm_contact',
     'left_field' => 'id',
@@ -187,8 +187,6 @@ function _civicrm_contribute_data(&$data, $enabled) {
     ),
   );
 
-
-
   //Contribution Receive Date
   $data['civicrm_contribution']['receive_date'] = array(
     'title' => t('Date Received'),
@@ -208,8 +206,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
 
   civicrm_views_add_date_arguments($data['civicrm_contribution'], array(
     'title' => t('Date Received'),
-      'name' => 'receive_date',
-    ));
+    'name' => 'receive_date',
+  ));
   //Non Deductible Amount of Contribution
   $data['civicrm_contribution']['non_deductible_amount'] = array(
     'title' => t('Non Deductible Amount'),
@@ -372,8 +370,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution'], array(
     'title' => 'Cancel Date',
-      'name' => 'cancel_date',
-    ));
+    'name' => 'cancel_date',
+  ));
 
   //Cancellation Reason
   $data['civicrm_contribution']['cancel_reason'] = array(
@@ -406,6 +404,7 @@ function _civicrm_contribute_data(&$data, $enabled) {
     'filter' => array(
       'handler' => 'civicrm_handler_filter_datetime',
       'is date' => TRUE,
+      'allow empty' => TRUE,
     ),
     'sort' => array(
       'handler' => 'civicrm_handler_sort_date',
@@ -413,8 +412,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution'], array(
     'title' => 'Receipt Date',
-      'name' => 'receipt_date',
-    ));
+    'name' => 'receipt_date',
+  ));
 
   //Contribution Thank You Date
   $data['civicrm_contribution']['thankyou_date'] = array(
@@ -427,6 +426,7 @@ function _civicrm_contribute_data(&$data, $enabled) {
     'filter' => array(
       'handler' => 'civicrm_handler_filter_datetime',
       'is date' => TRUE,
+      'allow empty' => TRUE,
     ),
     'sort' => array(
       'handler' => 'civicrm_handler_sort_date',
@@ -434,8 +434,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution'], array(
     'title' => 'Thank You Date',
-      'name' => 'thankyou_date',
-    ));
+    'name' => 'thankyou_date',
+  ));
 
   //Contribution Source
   $data['civicrm_contribution']['source'] = array(
@@ -523,7 +523,7 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   $data['civicrm_contribution']['check_number'] = array(
     'title' => t('Check Number'),
-    'help' => t('Contribution\'s Check Number'),
+    'help' => t("Contribution's Check Number"),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
@@ -576,13 +576,9 @@ function _civicrm_contribute_data(&$data, $enabled) {
       'label' => t('Contribution -> line-item'),
     ),
   );
-  
-  /*
-   * Soft Credits
-   */
 
+  // Soft Credits
   $data['civicrm_contribution_soft']['table']['group'] = t('CiviCRM  Soft Credits');
-
 
   //TABLE JOINS FOR CIVICRM CONTRIBUTIONS GO HERE!
   $data['civicrm_contribution_soft']['table']['join']['civicrm_contribution'] = array(
@@ -698,14 +694,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
     ),
   );
 
-
-  /*
-     * Soft Credits
-     */
-
-
+  // Soft Credits
   $data['civicrm_contribution_recur']['table']['group'] = t('CiviCRM  Recurring Contributions');
-
 
   //TABLE JOINS FOR CIVICRM CONTRIBUTIONS GO HERE!
   $data['civicrm_contribution_recur']['table']['join']['civicrm_contribution'] = array(
@@ -861,8 +851,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution_recur'], array(
     'title' => 'Recurring Contribution Start Date',
-      'name' => 'start_date',
-    ));
+    'name' => 'start_date',
+  ));
   //Recurring Contribution Create Date
   $data['civicrm_contribution_recur']['create_date'] = array(
     'title' => t('Create Date'),
@@ -881,8 +871,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution_recur'], array(
     'title' => 'Recurring Contribution Create Date',
-      'name' => 'create_date',
-    ));
+    'name' => 'create_date',
+  ));
   //Recurring Contribution Modified Date
   $data['civicrm_contribution_recur']['modified_date'] = array(
     'title' => t('Modified Date'),
@@ -901,8 +891,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution_recur'], array(
     'title' => 'Recurring Contribution Modified Date',
-      'name' => 'modified_date',
-    ));
+    'name' => 'modified_date',
+  ));
   //Recurring Contribution Cancel Date
   $data['civicrm_contribution_recur']['cancel_date'] = array(
     'title' => t('Cancel Date'),
@@ -921,8 +911,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution_recur'], array(
     'title' => 'Recurring Contribution Cancel Date',
-      'name' => 'cancel_date',
-    ));
+    'name' => 'cancel_date',
+  ));
   //Recurring Contribution End Date
   $data['civicrm_contribution_recur']['end_date'] = array(
     'title' => t('End Date'),
@@ -941,8 +931,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution_recur'], array(
     'title' => 'Recurring Contribution End Date',
-      'name' => 'end_date',
-    ));
+    'name' => 'end_date',
+  ));
   //Prcocessor ID
   $data['civicrm_contribution_recur']['processor_id'] = array(
     'title' => t('Processor ID'),
@@ -1007,7 +997,7 @@ function _civicrm_contribute_data(&$data, $enabled) {
   $data['civicrm_contribution_recur']['contribution_status'] = array(
     'title' => t('Contribution Status'),
     'real field' => 'contribution_status_id',
-    'help' => t('The Contribution\'s Status'),
+    'help' => t("The Contribution's Status"),
     'field' => array(
       'handler' => 'civicrm_handler_field_pseudo_constant',
       'click sortable' => TRUE,
@@ -1066,7 +1056,7 @@ function _civicrm_contribute_data(&$data, $enabled) {
     ),
   );
   //Recurring Contribution End Date
-  $data['civicrm_contribution_recur']['next_sched_contribution'] = array(
+  $data['civicrm_contribution_recur']['next_sched_contribution_date'] = array(
     'title' => t('Next Contribution Date'),
     'help' => t('The Next Contribution Date.'),
     'field' => array(
@@ -1083,8 +1073,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution_recur'], array(
     'title' => 'Recurring Contribution Next Date',
-      'name' => 'next_sched_contribution',
-    ));
+    'name' => 'next_sched_contribution_date',
+  ));
   //How many times has the contribution failed
   $data['civicrm_contribution_recur']['failure_count'] = array(
     'title' => t('Failure Count'),
@@ -1123,8 +1113,8 @@ function _civicrm_contribute_data(&$data, $enabled) {
   );
   civicrm_views_add_date_arguments($data['civicrm_contribution_recur'], array(
     'title' => 'Recurring Contribution Failure Retry Date',
-      'name' => 'failure_retry_date',
-    ));
+    'name' => 'failure_retry_date',
+  ));
   //BOOLEAN : Does thie recurring contribution auto-renew?
   $data['civicrm_contribution_recur']['auto_renew'] = array(
     'title' => t('Auto-renew'),
@@ -1347,7 +1337,7 @@ function _civicrm_contribute_data(&$data, $enabled) {
 
   // contribution page
   $data['civicrm_pcp']['contribution_page'] = array(
-    'title' => t('Associated Contribution or Event Page'),
+    'title' => t('Associated Contribution Page'),
     'real field' => 'page_id',
     'help' => t('The Contribution or Event Page with which this Personal Campaign Page is associated.'),
     'field' => array(
@@ -1365,6 +1355,34 @@ function _civicrm_contribute_data(&$data, $enabled) {
       'allow empty' => TRUE,
       'pseudo class' => 'CRM_Contribute_PseudoConstant',
       'pseudo method' => 'contributionPage',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+  // event page
+  $data['civicrm_pcp']['event_page'] = array(
+    'title' => t('Associated Event Page'),
+    'real field' => 'page_id',
+    'help' => t('The Event or Event Page with which this Personal Campaign Page is associated.'),
+    'field' => array(
+      'handler' => 'civicrm_handler_field_pseudo_constant',
+      'click sortable' => TRUE,
+      'pseudo class' => 'CRM_Event_PseudoConstant',
+      'pseudo method' => 'event',
+      'pseudo args' => array(NULL, FALSE, 'is_template = 0'),
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+      'numeric' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'civicrm_handler_filter_pseudo_constant',
+      'allow empty' => TRUE,
+      'pseudo class' => 'CRM_Event_PseudoConstant',
+      'pseudo method' => 'event',
+      'pseudo args' => array(NULL, FALSE, 'is_template = 0'),
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
@@ -1530,4 +1548,3 @@ function _civicrm_contribute_data(&$data, $enabled) {
     ),
   );
 }
-

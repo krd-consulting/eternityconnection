@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2017                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -28,7 +28,7 @@
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2017
+ * @copyright CiviCRM LLC (c) 2004-2019
  */
 class CRM_Utils_Check_Message {
   /**
@@ -57,6 +57,12 @@ class CRM_Utils_Check_Message {
    *   help text (to be presented separately from the message)
    */
   private $help;
+
+  /**
+   * @var array
+   *   actions which can be performed with this message
+   */
+  private $actions = [];
 
   /**
    * @var string
@@ -155,6 +161,27 @@ class CRM_Utils_Check_Message {
   }
 
   /**
+   * Set optional additional actions text.
+   *
+   * @param string $title
+   *   Text displayed on the status message as a link or button.
+   * @param string $confirmation
+   *   Optional confirmation message before performing action
+   * @param string $type
+   *   Currently supports: api3 or href
+   * @param array $params
+   *   Params to be passed to CRM.api3 or CRM.url depending on type
+   */
+  public function addAction($title, $confirmation, $type, $params) {
+    $this->actions[] = [
+      'title' => $title,
+      'confirm' => $confirmation,
+      'type' => $type,
+      'params' => $params,
+    ];
+  }
+
+  /**
    * Set severity level
    *
    * @param string|int $level
@@ -180,7 +207,7 @@ class CRM_Utils_Check_Message {
    * @return array
    */
   public function toArray() {
-    $array = array(
+    $array = [
       'name' => $this->name,
       'message' => $this->message,
       'title' => $this->title,
@@ -188,12 +215,15 @@ class CRM_Utils_Check_Message {
       'severity_id' => $this->level,
       'is_visible' => (int) $this->isVisible(),
       'icon' => $this->icon,
-    );
+    ];
     if ($this->getHiddenUntil()) {
       $array['hidden_until'] = $this->getHiddenUntil();
     }
     if (!empty($this->help)) {
       $array['help'] = $this->help;
+    }
+    if (!empty($this->actions)) {
+      $array['actions'] = $this->actions;
     }
     return $array;
   }
@@ -237,14 +267,14 @@ class CRM_Utils_Check_Message {
     if ($this->level < 2) {
       return FALSE;
     }
-    $statusPreferenceParams = array(
+    $statusPreferenceParams = [
       'name' => $this->getName(),
       'domain_id' => CRM_Core_Config::domainID(),
       'sequential' => 1,
-    );
+    ];
     // Check if there's a StatusPreference matching this name/domain.
     $statusPreference = civicrm_api3('StatusPreference', 'get', $statusPreferenceParams);
-    $prefs = CRM_Utils_Array::value('values', $statusPreference, array());
+    $prefs = CRM_Utils_Array::value('values', $statusPreference, []);
     if ($prefs) {
       // If so, compare severity to StatusPreference->severity.
       if ($this->level <= $prefs[0]['ignore_severity']) {

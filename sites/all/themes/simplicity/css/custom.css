@@ -2,7 +2,6 @@
  * Override this file as intended. It will always be provided as blank by the theme.
  */
 
-
 .padded_fixed {
 	min-width: 85px;
 	padding-left: 5px;
@@ -38,6 +37,20 @@
 	display: flex;
 }
 
+#user-info > h1 {
+	margin-bottom: 0px;
+}
+
+.user-info-section-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.user-info-section-header .badge {
+	vertical-align: top;
+}
+
 #user-info-container .user-picture {
 	margin-right: 1em;
 }
@@ -54,7 +67,7 @@
 	width: 200px;
 	display: inline-block;
 	border-radius: 50%;
-	background-color: orange;
+	background-color: #5E9DF1;
 	text-align: center;
 	line-height: 200px;
 	color: white;
@@ -62,29 +75,61 @@
 	font-family: 'Ubuntu Condensed';
 }
 
-#user-info-container #user-info {
-	flex-grow: 1; 
-}
-
-#user-contact-info-container #crm-container > div {
-	display: flex;
-	flex-wrap: wrap;
-}
-
-#user-contact-info-container #crm-container > div > div {
-	width: 50%;
-}
-
-#user-contact-info-container .crm-section {
-	padding-bottom: 1em;
-}
-
-#user-contact-info-container .crm-section .label {
-	padding: 0px;
-}
-
 @media screen and (max-width: 600px) {
-  #user-contact-info-container #crm-container > div > div {
-    width: 100%;
-  }
+	#user-info-container {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+
+	#user-info-container > div {
+		text-align: center;
+		margin-right: 0em;
+	}
+
+	#user-info-container #user-info .user-roles > div {
+		width: 100%;
+	}
+
+	#user-contact-info-container #crm-container > div > div {
+    		width: 100%;
+	}
+}
+
+/* Appointment List */
+ul.appointment-list, ul.meeting-list, ul.report-list, ul.course-list {
+	list-style: none;
+}
+
+ul.appointment-list h4, ul.meeting-list h4, ul.report-list h4, ul.course-list h4 {
+	margin-bottom: 0px;
+}
+
+ul.appointment-list span.date-display-single, ul.meeting-list span.date-display-single, ul.report-list span.date-display-single, ul.course-list span.date-display-single {
+	margin-top: 0.75em;
+	display: block;
+}
+
+ul.report-list > li > div  * {
+	display: inline-block;
+}
+
+ul.report-list .views-label {
+	font-weight: bold;
+}
+
+
+ul.appointment-list > li, ul.meeting-list > li, ul.course-list > li {
+	display: flex;
+	align-items: center;
+	padding: 1em 0px;
+	border-bottom: 1px solid #e5e5e5;
+}
+
+
+ul.appointment-list > li > div:first-child {
+	flex-grow: 1;
+}
+
+ul.appointment-list > li .btn-edit {
+	margin-right: 1em;
 }

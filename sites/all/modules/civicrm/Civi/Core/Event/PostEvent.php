@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2017                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -31,7 +31,18 @@ namespace Civi\Core\Event;
  * Class AuthorizeEvent
  * @package Civi\API\Event
  */
-class PostEvent extends \Symfony\Component\EventDispatcher\Event {
+class PostEvent extends GenericHookEvent {
+
+  /**
+   * This adapter automatically emits a narrower event.
+   *
+   * For example, `hook_civicrm_pre(Contact, ...)` will also dispatch `hook_civicrm_pre::Contact`.
+   *
+   * @param \Civi\Core\Event\PostEvent $event
+   */
+  public static function dispatchSubevent(PostEvent $event) {
+    \Civi::service('dispatcher')->dispatch("hook_civicrm_post::" . $event->entity, $event);
+  }
 
   /**
    * @var string 'create'|'edit'|'delete' etc
@@ -44,7 +55,7 @@ class PostEvent extends \Symfony\Component\EventDispatcher\Event {
   public $entity;
 
   /**
-   * @var int|NULL
+   * @var int|null
    */
   public $id;
 
@@ -54,16 +65,25 @@ class PostEvent extends \Symfony\Component\EventDispatcher\Event {
   public $object;
 
   /**
-   * @param $action
-   * @param $entity
-   * @param $id
-   * @param $object
+   * Class constructor
+   *
+   * @param string $action
+   * @param string $entity
+   * @param int $id
+   * @param object $object
    */
-  public function __construct($action, $entity, $id, $object) {
+  public function __construct($action, $entity, $id, &$object) {
     $this->action = $action;
     $this->entity = $entity;
     $this->id = $id;
-    $this->object = $object;
+    $this->object = &$object;
+  }
+
+  /**
+   * @inheritDoc
+   */
+  public function getHookValues() {
+    return [$this->action, $this->entity, $this->id, &$this->object];
   }
 
 }

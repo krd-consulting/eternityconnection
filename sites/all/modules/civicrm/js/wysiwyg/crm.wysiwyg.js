@@ -34,14 +34,16 @@
     },
     // Fallback function to use when a wysiwyg has not been initialized
     _insertIntoTextarea: function(item, text) {
-      var origVal = $(item).val();
-      var origPos = item[0].selectionStart;
-      var newVal = origVal + text;
-      $(item).val(newVal);
-      var newPos = (origPos + text.length);
-      item[0].selectionStart = newPos;
-      item[0].selectionEnd = newPos;
-      $(item).triggerHandler('change');
+      var itemObj = $(item);
+      var origVal = itemObj.val();
+      var origStart = itemObj[0].selectionStart;
+      var origEnd = itemObj[0].selectionEnd;
+      var newVal = origVal.substring(0, origStart) + text + origVal.substring(origEnd);
+      itemObj.val(newVal);
+      var newPos = (origStart + text.length);
+      itemObj[0].selectionStart = newPos;
+      itemObj[0].selectionEnd = newPos;
+      itemObj.triggerHandler('change');
       CRM.wysiwyg.focus(item);
     },
     // Create a "collapsed" textarea that expands into a wysiwyg when clicked
@@ -51,6 +53,9 @@
         .on('blur', function () {
           CRM.wysiwyg.destroy(item);
           $(item).hide().next('.replace-plain').show().html($(item).val());
+        })
+        .on('change', function() {
+          $(this).next('.replace-plain').html($(this).val());
         })
         .after('<div class="replace-plain" tabindex="0"></div>');
       $(item).next('.replace-plain')

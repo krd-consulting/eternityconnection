@@ -1,9 +1,9 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
- | Copyright CiviCRM LLC (c) 2004-2017                                |
+ | Copyright CiviCRM LLC (c) 2004-2019                                |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -23,17 +23,18 @@
  | GNU Affero General Public License or the licensing of CiviCRM,     |
  | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
  +--------------------------------------------------------------------+
-*/
+ */
 
 /**
  *
  * @package CRM
- * @copyright CiviCRM LLC (c) 2004-2017
+ * @copyright CiviCRM LLC (c) 2004-2019
  * $Id$
  *
  */
 
 require_once 'civicrm_rules_utils.inc';
+
 function civicrm_rules_condition_event_node(&$entityobj, $roleID, $field) {
   //just a hack for our site
   //SELECT * FROM `content_type_og_node` WHERE `field_civicrm_event_value` =993
@@ -92,4 +93,3 @@ function civicrm_rules_events_argument_civicrm_event($eventobj) {
 function civicrm_rules_get_event_type_options() {
   return civicrm_rules_get_options('event_type');
 }
-

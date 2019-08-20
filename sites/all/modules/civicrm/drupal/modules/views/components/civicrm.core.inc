@@ -1,7 +1,7 @@
 <?php
 /*
  +--------------------------------------------------------------------+
- | CiviCRM version 4.7                                                |
+ | CiviCRM version 5                                                  |
  +--------------------------------------------------------------------+
  | This file is a part of CiviCRM.                                    |
  |                                                                    |
@@ -21,7 +21,7 @@
  | GNU Affero General Public License or the licensing of CiviCRM,     |
  | see the CiviCRM license FAQ at http://civicrm.org/licensing        |
  +--------------------------------------------------------------------+
-*/
+ */
 
 /**
  * Build the $data array for all the filed that are part of any CivicRM install
@@ -43,7 +43,6 @@ function _civicrm_core_data(&$data, $enabled) {
   //------------------------------------------------------
   // CiviCRM Contacts Views Table
   //------------------------------------------------------
-
 
   $data['civicrm_contact']['table']['group'] = t('CiviCRM Contacts');
 
@@ -158,6 +157,18 @@ function _civicrm_core_data(&$data, $enabled) {
     ),
   );
 
+  $data['civicrm_event']['civicrm_participant'] = array(
+    'real field' => 'id',
+    'title' => t('CiviCRM Participant'),
+    'help' => t('Allows a Participant Contact relationship from an Event'),
+    'relationship' => array(
+      'base' => 'civicrm_participant',
+      'base field' => 'event_id',
+      'handler' => 'civicrm_handler_relationship_participant',
+      'label' => t('CiviCRM Participant'),
+    ),
+  );
+
   // Drupal ID of the contact (from uf_match.uf_id)
   $data['civicrm_contact']['drupal_id'] = array(
     'real field' => 'id',
@@ -182,6 +193,26 @@ function _civicrm_core_data(&$data, $enabled) {
   $data['civicrm_contact']['sort_name'] = array(
     'title' => t('Sort Name'),
     'help' => t('The Contact Name for sorting purposes, Last Name then First'),
+    'field' => array(
+      'handler' => 'civicrm_handler_field_contact_link',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_string',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+      'allow empty' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+  //Current Employer ID
+  $data['civicrm_contact']['employer_id'] = array(
+    'title' => t('Current Employer Id'),
+    'help' => t('Current Employer Id'),
     'field' => array(
       'handler' => 'civicrm_handler_field_contact_link',
       'click sortable' => TRUE,
@@ -242,7 +273,7 @@ function _civicrm_core_data(&$data, $enabled) {
   $data['civicrm_contact']['gender'] = array(
     'title' => t('Gender'),
     'real field' => 'gender_id',
-    'help' => t('Contact\'s Gender'),
+    'help' => t("Contact's Gender"),
     'field' => array(
       'handler' => 'civicrm_handler_field_pseudo_constant',
       'click sortable' => TRUE,
@@ -583,13 +614,17 @@ function _civicrm_core_data(&$data, $enabled) {
     'title' => t('Organization Name'),
     'real field' => 'organization_name',
     // The help that appears on the UI,
-    'help' => t('The display name of the contact\'s organizations.'),
+    'help' => t("The display name of the contact's organizations."),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
     ),
     'sort' => array(
       'handler' => 'views_handler_sort',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+      'allow empty' => TRUE,
     ),
     'argument' => array(
       'handler' => 'views_handler_argument_string',
@@ -639,7 +674,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //Birth Date
   $data['civicrm_contact']['birth_date'] = array(
     'title' => t('Birth Date'),
-    'help' => t('The contact\'s birth date.'),
+    'help' => t("The contact's birth date."),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -656,7 +691,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //Deceased Date
   $data['civicrm_contact']['deceased_date'] = array(
     'title' => t('Deceased Date'),
-    'help' => t('The contact\'s deceased date.'),
+    'help' => t("The contact's deceased date."),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -673,7 +708,7 @@ function _civicrm_core_data(&$data, $enabled) {
   // Last modified date
   $data['civicrm_contact']['modified_date'] = array(
     'title' => t('Modified date'),
-    'help' => t('The date the contact\'s record was last modified.'),
+    'help' => t("The date the contact's record was last modified."),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -716,7 +751,6 @@ function _civicrm_core_data(&$data, $enabled) {
   );
   civicrm_views_add_fields($fields, $data['civicrm_contact'], 'civicrm_contact', $skipFields);
 
-
   // CHILLING OUT AT THE CIVICRM_ADDRESS TABLE
 
   $data['civicrm_address']['table']['group'] = t('CiviCRM Address');
@@ -731,8 +765,8 @@ function _civicrm_core_data(&$data, $enabled) {
   );
   //CiviCRM Address
   $data['civicrm_address']['table']['join']['civicrm_address'] = array(
-      'left_field' => 'id',
-      'field' => 'id',
+    'left_field' => 'id',
+    'field' => 'id',
   );
 
   //CiviCRM Address Using Contacts as a pitstop before going on to Participants
@@ -799,7 +833,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //BOOLEAN : IS PRIMARY ADDRESS
   $data['civicrm_address']['is_primary'] = array(
     'title' => t('Is Primary Address'),
-    'help' => t('Is this address the contact\'s primary address?'),
+    'help' => t("Is this address the contact's primary address?"),
     'field' => array(
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
@@ -818,7 +852,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //BOOLEAN : IS BILLING ADDRESS
   $data['civicrm_address']['is_billing'] = array(
     'title' => t('Is Billing Address'),
-    'help' => t('Is this address the contact\'s billing address?'),
+    'help' => t("Is this address the contact's billing address?"),
     'field' => array(
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
@@ -906,6 +940,27 @@ function _civicrm_core_data(&$data, $enabled) {
   $data['civicrm_address']['supplemental_address_2'] = array(
     'title' => t('2nd Supplemental Street Address'),
     'help' => t('2nd Supplemental Street Address such as Apartment or Suite Number or Department'),
+    'field' => array(
+      'handler' => 'civicrm_handler_field_address',
+      'click sortable' => TRUE,
+      'dao class' => 'CRM_Core_DAO_Address',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_string',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+      'allow empty' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+  //FULL STREET ADDRESS SUPPLEMENTAL 3
+  $data['civicrm_address']['supplemental_address_3'] = array(
+    'title' => t('3rd Supplemental Street Address'),
+    'help' => t('3rd Supplemental Street Address such as Apartment or Suite Number or Department'),
     'field' => array(
       'handler' => 'civicrm_handler_field_address',
       'click sortable' => TRUE,
@@ -1115,24 +1170,23 @@ function _civicrm_core_data(&$data, $enabled) {
   civicrm_views_add_fields($fields, $data['civicrm_address'], 'civicrm_address');
 
   // CIVICRM_NOTE table
-
   $data['civicrm_note']['table']['group'] = t('CiviCRM Note');
+  $data['civicrm_note']['table']['join'] = array();
 
-  // Explain how this table joins to others.
-  $data['civicrm_note']['table']['join'] = array(
-    // Directly links to contact table.
-    'civicrm_contact' => array(
+  foreach (array_keys(CRM_Core_BAO_Note::entityTables()) as $entityTable) {
+    // Explain how this table joins to others.
+    $data['civicrm_note']['table']['join'][$entityTable] = array(
       'left_field' => 'id',
       'field' => 'entity_id',
       'extra' => array(
         array(
           'field' => 'entity_table',
-          'value' => 'civicrm_contact',
+          'value' => $entityTable,
           'numeric' => FALSE,
         ),
       ),
-    ),
-  );
+    );
+  }
 
   // NOTE TEXT
   $data['civicrm_note']['note'] = array(
@@ -1154,7 +1208,6 @@ function _civicrm_core_data(&$data, $enabled) {
     ),
   );
 
-
   // CHILLING OUT AT THE CIVICRM_EMAIL TABLE
 
   $data['civicrm_email']['table']['group'] = t('CiviCRM Email');
@@ -1170,8 +1223,8 @@ function _civicrm_core_data(&$data, $enabled) {
 
   //CiviCRM Email
   $data['civicrm_email']['table']['join']['civicrm_email'] = array(
-      'left_field' => 'id',
-      'field' => 'id',
+    'left_field' => 'id',
+    'field' => 'id',
   );
 
   //CiviCRM Email Using Contacts as a pitstop before going on to Participants
@@ -1232,7 +1285,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //BOOLEAN : IS PRIMARY EMAIL
   $data['civicrm_email']['is_primary'] = array(
     'title' => t('Is Primary Email'),
-    'help' => t('Is this address the contact\'s primary email?'),
+    'help' => t("Is this address the contact's primary email?"),
     'field' => array(
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
@@ -1252,7 +1305,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //BOOLEAN : IS BILLING EMAIL
   $data['civicrm_email']['is_billing'] = array(
     'title' => t('Is Billing Email'),
-    'help' => t('Is this address the contact\'s billing email?'),
+    'help' => t("Is this address the contact's billing email?"),
     'field' => array(
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
@@ -1316,7 +1369,6 @@ function _civicrm_core_data(&$data, $enabled) {
     ),
   );
 
-
   // CHILLING OUT AT THE CIVICRM_PHONE TABLE
 
   $data['civicrm_phone']['table']['group'] = t('CiviCRM Phone Details');
@@ -1332,8 +1384,8 @@ function _civicrm_core_data(&$data, $enabled) {
 
   //CiviCRM Phone
   $data['civicrm_phone']['table']['join']['civicrm_phone'] = array(
-      'left_field' => 'id',
-      'field' => 'id',
+    'left_field' => 'id',
+    'field' => 'id',
   );
 
   //CiviCRM Phone Using Contacts as a pitstop before going on to Participants
@@ -1357,7 +1409,6 @@ function _civicrm_core_data(&$data, $enabled) {
     'field' => 'contact_id',
   );
 
-
   //CiviCRM Phone Using Locations as a pitstop before going on to Events
   $data['civicrm_phone']['table']['join']['civicrm_event'] = array(
     'left_table' => 'civicrm_loc_block',
@@ -1378,11 +1429,10 @@ function _civicrm_core_data(&$data, $enabled) {
     'field' => 'contact_id',
   );
 
-
   //BOOLEAN : IS PRIMARY EMAIL
   $data['civicrm_phone']['is_primary'] = array(
     'title' => t('Is Primary Phone'),
-    'help' => t('Is this the contact\'s primary phone?'),
+    'help' => t("Is this the contact's primary phone?"),
     'field' => array(
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
@@ -1401,7 +1451,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //BOOLEAN : IS BILLING EMAIL
   $data['civicrm_phone']['is_billing'] = array(
     'title' => t('Is Billing Phone'),
-    'help' => t('Is this the contact\'s billing phone?'),
+    'help' => t("Is this the contact's billing phone?"),
     'field' => array(
       'handler' => 'views_handler_field_boolean',
       'click sortable' => TRUE,
@@ -1502,7 +1552,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //CONTACT ID contact this number belongs to
   $data['civicrm_phone']['contact_id'] = array(
     'title' => t('Contact ID'),
-    'help' => t('Contact phone number belongs to '),
+    'help' => t('Contact phone number belongs to.'),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
@@ -1554,212 +1604,209 @@ function _civicrm_core_data(&$data, $enabled) {
     ),
   );
 
-
   // CHILLING OUT AT THE CIVICRM_IM TABLE
 
   $data['civicrm_im']['table']['group'] = t('CiviCRM Instant Messaging');
 
   // Explain how this table joins to others.
   $data['civicrm_im']['table']['join'] = array(
-      // Directly links to contact table.
-      'civicrm_contact' => array(
-          'left_field' => 'id',
-          'field' => 'contact_id',
-      ),
+    // Directly links to contact table.
+    'civicrm_contact' => array(
+      'left_field' => 'id',
+      'field' => 'contact_id',
+    ),
   );
 
   //CiviCRM Im
   $data['civicrm_im']['table']['join']['civicrm_im'] = array(
-      'left_field' => 'id',
-      'field' => 'id',
+    'left_field' => 'id',
+    'field' => 'id',
   );
 
   //CiviCRM Im Using Contacts as a pitstop before going on to Participants
   $data['civicrm_im']['table']['join']['civicrm_participant'] = array(
-      'left_table' => 'civicrm_contact',
-      'left_field' => 'id',
-      'field' => 'contact_id',
+    'left_table' => 'civicrm_contact',
+    'left_field' => 'id',
+    'field' => 'contact_id',
   );
 
   //CiviCRM Im Using Contacts as a pitstop before going on to Contributions
   $data['civicrm_im']['table']['join']['civicrm_contribution'] = array(
-      'left_table' => 'civicrm_contact',
-      'left_field' => 'id',
-      'field' => 'contact_id',
+    'left_table' => 'civicrm_contact',
+    'left_field' => 'id',
+    'field' => 'contact_id',
   );
 
   //CiviCRM Im Using Contacts as a pitstop before going on to Activities
   $data['civicrm_im']['table']['join']['civicrm_activity'] = array(
-      'left_table' => 'civicrm_contact',
-      'left_field' => 'id',
-      'field' => 'contact_id',
+    'left_table' => 'civicrm_contact',
+    'left_field' => 'id',
+    'field' => 'contact_id',
   );
-
 
   //CiviCRM Im Using Locations as a pitstop before going on to Events
   $data['civicrm_im']['table']['join']['civicrm_event'] = array(
-      'left_table' => 'civicrm_loc_block',
-      'left_field' => 'im_id',
-      'field' => 'id',
+    'left_table' => 'civicrm_loc_block',
+    'left_field' => 'im_id',
+    'field' => 'id',
   );
   //CiviCRM Im Using Contacts as a pitstop before going on to Memberhsips
   $data['civicrm_im']['table']['join']['civicrm_membership'] = array(
-      'left_table' => 'civicrm_contact',
-      'left_field' => 'id',
-      'field' => 'contact_id',
+    'left_table' => 'civicrm_contact',
+    'left_field' => 'id',
+    'field' => 'contact_id',
   );
 
   //Display Im Details in User Views
   $data['civicrm_im']['table']['join']['users'] = array(
-      'left_table' => 'civicrm_uf_match',
-      'left_field' => 'contact_id',
-      'field' => 'contact_id',
+    'left_table' => 'civicrm_uf_match',
+    'left_field' => 'contact_id',
+    'field' => 'contact_id',
   );
-
 
   //BOOLEAN : IS PRIMARY IM
   $data['civicrm_im']['is_primary'] = array(
-      'title' => t('Is Primary Instant Messaging'),
-      'help' => t('Is this the contact\'s primary Instant Messaging?'),
-      'field' => array(
-          'handler' => 'views_handler_field_boolean',
-          'click sortable' => TRUE,
-      ),
-      'argument' => array(
-          'handler' => 'views_handler_argument',
-      ),
-      'filter' => array(
-          'handler' => 'views_handler_filter_boolean_operator',
-      ),
-      'sort' => array(
-          'handler' => 'views_handler_sort',
-      ),
+    'title' => t('Is Primary Instant Messaging'),
+    'help' => t("Is this the contact's primary Instant Messaging?"),
+    'field' => array(
+      'handler' => 'views_handler_field_boolean',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_boolean_operator',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
   );
 
   //BOOLEAN : IS BILLING IM
   $data['civicrm_im']['is_billing'] = array(
-      'title' => t('Is Billing Instant Messaging'),
-      'help' => t('Is this the contact\'s billing Instant Messaging?'),
-      'field' => array(
-          'handler' => 'views_handler_field_boolean',
-          'click sortable' => TRUE,
-      ),
-      'argument' => array(
-          'handler' => 'views_handler_argument',
-      ),
-      'filter' => array(
-          'handler' => 'views_handler_filter_boolean_operator',
-      ),
-      'sort' => array(
-          'handler' => 'views_handler_sort',
-      ),
+    'title' => t('Is Billing Instant Messaging'),
+    'help' => t("Is this the contact's billing Instant Messaging?"),
+    'field' => array(
+      'handler' => 'views_handler_field_boolean',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_boolean_operator',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
   );
 
   //IM'S LOCATION TYPE
   $data['civicrm_im']['location_type'] = array(
-      'title' => t('Location Type'),
-      'real field' => 'location_type_id',
-      'help' => t('The Location of the Instant Messaging for the Contact'),
-      'field' => array(
-          'handler' => 'civicrm_handler_field_pseudo_constant',
-          'click sortable' => TRUE,
-          'pseudo class' => 'CRM_Core_PseudoConstant',
-          'pseudo method' => 'get',
-          'dao class' => 'CRM_Core_DAO_IM',
-      ),
-      'argument' => array(
-          'handler' => 'views_handler_argument',
-      ),
-      'filter' => array(
-          'handler' => 'civicrm_handler_filter_pseudo_constant',
-          'allow empty' => TRUE,
-          'pseudo class' => 'CRM_Core_PseudoConstant',
-          'pseudo method' => 'get',
-          'dao class' => 'CRM_Core_DAO_IM',
-      ),
-      'sort' => array(
-          'handler' => 'views_handler_sort',
-      ),
+    'title' => t('Location Type'),
+    'real field' => 'location_type_id',
+    'help' => t('The Location of the Instant Messaging for the Contact'),
+    'field' => array(
+      'handler' => 'civicrm_handler_field_pseudo_constant',
+      'click sortable' => TRUE,
+      'pseudo class' => 'CRM_Core_PseudoConstant',
+      'pseudo method' => 'get',
+      'dao class' => 'CRM_Core_DAO_IM',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+    ),
+    'filter' => array(
+      'handler' => 'civicrm_handler_filter_pseudo_constant',
+      'allow empty' => TRUE,
+      'pseudo class' => 'CRM_Core_PseudoConstant',
+      'pseudo method' => 'get',
+      'dao class' => 'CRM_Core_DAO_IM',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
   );
 
   //NAME
   $data['civicrm_im']['name'] = array(
-      'title' => t('Name'),
-      'help' => t('IM screen name'),
-      'field' => array(
-          'handler' => 'civicrm_handler_field_im',
-          'click sortable' => TRUE,
-      ),
+    'title' => t('Name'),
+    'help' => t('IM screen name'),
+    'field' => array(
+      'handler' => 'civicrm_handler_field_im',
+      'click sortable' => TRUE,
+    ),
   );
 
   // IM ID
   $data['civicrm_im']['id'] = array(
-      'title' => t('Instant Messaging'),
-      'help' => t('Contact Instant Messaging'),
-      'relationship' => array(
-          'base' => 'civicrm_contact',
-          'field' => 'id',
-          'relationship table' => 'civicrm_im',
-          'relationship field' => 'contact_id',
-          'handler' => 'civicrm_handler_relationship_im',
-          'label' => t('CiviCRM Instant Messaging'),
-      ),
+    'title' => t('Instant Messaging'),
+    'help' => t('Contact Instant Messaging'),
+    'relationship' => array(
+      'base' => 'civicrm_contact',
+      'field' => 'id',
+      'relationship table' => 'civicrm_im',
+      'relationship field' => 'contact_id',
+      'handler' => 'civicrm_handler_relationship_im',
+      'label' => t('CiviCRM Instant Messaging'),
+    ),
   );
 
   //CONTACT ID contact this IM belongs to
   $data['civicrm_im']['contact_id'] = array(
-      'title' => t('Contact ID'),
-      'help' => t('Contact Instant Messaging belongs to '),
-      'field' => array(
-          'handler' => 'views_handler_field',
-          'click sortable' => TRUE,
-      ),
-      'argument' => array(
-          'handler' => 'views_handler_argument',
-      ),
-      'filter' => array(
-          'handler' => 'views_handler_filter_string',
-          'allow empty' => TRUE,
-      ),
-      'sort' => array(
-          'handler' => 'views_handler_sort',
-      ),
-      'relationship' => array(
-          'base' => 'civicrm_contact',
-          'base field' => 'id',
-          'handler' => 'views_handler_relationship',
-          'label' => t('Related Instant Messaging'),
-      ),
+    'title' => t('Contact ID'),
+    'help' => t('Contact Instant Messaging belongs to.'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+      'allow empty' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+    'relationship' => array(
+      'base' => 'civicrm_contact',
+      'base field' => 'id',
+      'handler' => 'views_handler_relationship',
+      'label' => t('Related Instant Messaging'),
+    ),
   );
 
   //IM Provider
   $data['civicrm_im']['provider'] = array(
-      'title' => t('IM Provider'),
-      'real field' => 'provider_id',
-      'help' => t('Which IM Provider does this screen name belong to'),
-      'field' => array(
-          'handler' => 'civicrm_handler_field_pseudo_constant',
-          'click sortable' => TRUE,
-          'pseudo class' => 'CRM_Core_PseudoConstant',
-          'pseudo method' => 'get',
-          'dao class' => 'CRM_Core_DAO_IM',
-      ),
-      'argument' => array(
-          'handler' => 'views_handler_argument',
-      ),
-      'filter' => array(
-          'handler' => 'civicrm_handler_filter_pseudo_constant',
-          'allow empty' => TRUE,
-          'pseudo class' => 'CRM_Core_PseudoConstant',
-          'pseudo method' => 'get',
-          'dao class' => 'CRM_Core_DAO_IM',
-      ),
-      'sort' => array(
-          'handler' => 'views_handler_sort',
-      ),
+    'title' => t('IM Provider'),
+    'real field' => 'provider_id',
+    'help' => t('Which IM Provider does this screen name belong to'),
+    'field' => array(
+      'handler' => 'civicrm_handler_field_pseudo_constant',
+      'click sortable' => TRUE,
+      'pseudo class' => 'CRM_Core_PseudoConstant',
+      'pseudo method' => 'get',
+      'dao class' => 'CRM_Core_DAO_IM',
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+    ),
+    'filter' => array(
+      'handler' => 'civicrm_handler_filter_pseudo_constant',
+      'allow empty' => TRUE,
+      'pseudo class' => 'CRM_Core_PseudoConstant',
+      'pseudo method' => 'get',
+      'dao class' => 'CRM_Core_DAO_IM',
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
   );
 
-// CHILLING OUT AT THE CIVICRM_WEBSITE TABLE
+  // CHILLING OUT AT THE CIVICRM_WEBSITE TABLE
 
   $data['civicrm_website']['table']['group'] = t('CiviCRM Website');
 
@@ -1774,8 +1821,8 @@ function _civicrm_core_data(&$data, $enabled) {
 
   //CiviCRM Website
   $data['civicrm_website']['table']['join']['civicrm_website'] = array(
-      'left_field' => 'id',
-      'field' => 'id',
+    'left_field' => 'id',
+    'field' => 'id',
   );
 
   //CiviCRM Website Using Contacts as a pitstop before going on to Participants
@@ -1799,14 +1846,12 @@ function _civicrm_core_data(&$data, $enabled) {
     'field' => 'contact_id',
   );
 
-
   //CiviCRM Website Using Contacts as a pitstop before going on to Memberhsips
   $data['civicrm_website']['table']['join']['civicrm_membership'] = array(
     'left_table' => 'civicrm_contact',
     'left_field' => 'id',
     'field' => 'contact_id',
   );
-
 
   //Display Websites in User Views
   $data['civicrm_website']['table']['join']['users'] = array(
@@ -1944,7 +1989,8 @@ function _civicrm_core_data(&$data, $enabled) {
       'click sortable' => TRUE,
       'pseudo class' => 'CRM_Core_PseudoConstant',
       'pseudo method' => 'activityType',
-      'pseudo args' => array(TRUE, TRUE), // Include cases (if CiviCase is enabled)
+      // Include cases (if CiviCase is enabled)
+      'pseudo args' => array(TRUE, TRUE),
     ),
     'argument' => array(
       'handler' => 'views_handler_argument',
@@ -2015,7 +2061,28 @@ function _civicrm_core_data(&$data, $enabled) {
   //Parent ID
   $data['civicrm_activity']['parent_id'] = array(
     'title' => t('Parent Activity ID'),
-    'help' => t('The numeric ID of the Parent Activity '),
+    'help' => t('The numeric ID of the Parent Activity.'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_numeric',
+      'numeric' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric',
+      'allow empty' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+  // Original ID
+  $data['civicrm_activity']['original_id'] = array(
+    'title' => t('Original Activity ID'),
+    'help' => t('The numeric ID of the Original Activity in a versioned chain.'),
     'field' => array(
       'handler' => 'views_handler_field_numeric',
       'click sortable' => TRUE,
@@ -2074,10 +2141,52 @@ function _civicrm_core_data(&$data, $enabled) {
     'name' => 'activity_date_time',
   ));
 
+  //Created Activity Date
+  $data['civicrm_activity']['created_date'] = array(
+    'title' => t('Created Date'),
+    'help' => t('The Date and Time the activity was created.'),
+    'field' => array(
+      'handler' => 'civicrm_handler_field_datetime',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'civicrm_handler_filter_datetime',
+      'is date' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'civicrm_handler_sort_date',
+    ),
+  );
+  civicrm_views_add_date_arguments($data['civicrm_activity'], array(
+    'title' => 'Created Date',
+    'name' => 'created_date',
+  ));
+
+  //Modified Activity Date
+  $data['civicrm_activity']['modified_date'] = array(
+    'title' => t('Modified Date'),
+    'help' => t('The Date and Time the activity was modified.'),
+    'field' => array(
+      'handler' => 'civicrm_handler_field_datetime',
+      'click sortable' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'civicrm_handler_filter_datetime',
+      'is date' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'civicrm_handler_sort_date',
+    ),
+  );
+  civicrm_views_add_date_arguments($data['civicrm_activity'], array(
+    'title' => 'Modified Date',
+    'name' => 'modified_date',
+  ));
+
   //Activity Duration
   $data['civicrm_activity']['duration'] = array(
     'title' => t('Duration (min)'),
-    'help' => t('The Activity\'s Duration in Minutes'),
+    'help' => t("The Activity's Duration in Minutes"),
     'field' => array(
       'handler' => 'views_handler_field_numeric',
       'click sortable' => TRUE,
@@ -2098,7 +2207,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //Activity Location
   $data['civicrm_activity']['location'] = array(
     'title' => t('Location'),
-    'help' => t('Activity\'s Location in a text string.'),
+    'help' => t("Activity's Location in a text string."),
     'field' => array(
       'handler' => 'views_handler_field',
       'click sortable' => TRUE,
@@ -2134,7 +2243,6 @@ function _civicrm_core_data(&$data, $enabled) {
       'handler' => 'views_handler_sort',
     ),
   );
-
 
   //BOOLEAN : IS A TEST ACTIVITY
   $data['civicrm_activity']['is_test'] = array(
@@ -2358,7 +2466,6 @@ function _civicrm_core_data(&$data, $enabled) {
     ),
   );
 
-
   //TEXT LINKS THAT AREN'T PART OF THE TABLE
   //Contact Text Link
   $data['civicrm_contact']['text_link'] = array(
@@ -2400,7 +2507,6 @@ function _civicrm_core_data(&$data, $enabled) {
     'left_field' => 'contact_id',
     'field' => 'contact_id_a',
   );
-
 
   //CiviCRM Relationships - FIELDS
 
@@ -2555,10 +2661,48 @@ function _civicrm_core_data(&$data, $enabled) {
     ),
   );
 
+  $data['civicrm_relationship']['is_permission_a_b'] = array(
+    'title' => t('Contact A has Permission Over Contact B?'),
+    'help' => t('Contact A has Permission Over Contact B?'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_string',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+      'allow empty' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+  $data['civicrm_relationship']['is_permission_b_a'] = array(
+    'title' => t('Contact B has Permission Over Contact A?'),
+    'help' => t('Contact B has Permission Over Contact A?'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_string',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+      'allow empty' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
   //Relationship start date
   $data['civicrm_relationship']['start_date'] = array(
     'title' => t('Start Date'),
-    'help' => t('The Relationship\'s Start Date'),
+    'help' => t("The Relationship's Start Date"),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -2580,7 +2724,7 @@ function _civicrm_core_data(&$data, $enabled) {
   //Relationship end date
   $data['civicrm_relationship']['end_date'] = array(
     'title' => t('End Date'),
-    'help' => t('The Relationship\'s End Date'),
+    'help' => t("The Relationship's End Date"),
     'field' => array(
       'handler' => 'civicrm_handler_field_datetime',
       'click sortable' => TRUE,
@@ -2652,10 +2796,23 @@ function _civicrm_core_data(&$data, $enabled) {
     );
   }
 
-  /*
-     * Add support for CivicRM groups table
-     */
+  // Add support for CivicRM groups table
+  $data['civicrm_group_contact']['table']['group'] = t('CiviCRM Groups');
 
+  $data['civicrm_group_contact']['table']['join']['civicrm_contact'] = array(
+    'left_field' => 'id',
+    'field' => 'contact_id',
+  );
+
+  $data['civicrm_contact']['table']['join']['civicrm_group_contact'] = array(
+    'left_field' => 'contact_id',
+    'field' => 'id',
+  );
+
+  $data['civicrm_group_contact']['table']['join']['civicrm_group_contact'] = array(
+    'left_field' => 'id',
+    'field' => 'id',
+  );
 
   $data['civicrm_group']['table']['group'] = t('CiviCRM Groups');
 
@@ -2665,51 +2822,58 @@ function _civicrm_core_data(&$data, $enabled) {
     'help' => t("View displays CiviCRM Groups."),
   );
 
+  $data['civicrm_group']['table']['join']['civicrm_contact_contact'] = array(
+    'left_field' => 'group_id',
+    'field' => 'id',
+  );
+
+  $data['civicrm_group_contact']['table']['join']['civicrm_group'] = array(
+    // Directly links to group table
+    'left_field' => 'id',
+    'field' => 'group_id',
+  );
+
+  $data['civicrm_group']['table']['join']['civicrm_group'] = array(
+    'left_field' => 'id',
+    'field' => 'id',
+  );
+
   $data['civicrm_group']['table']['join']['civicrm_contact'] = array(
     'left_table' => 'civicrm_group_contact',
     'left_field' => 'group_id',
     'field' => 'id',
   );
 
-  $data['civicrm_group_contact']['table']['join']['civicrm_contact'] = array(
-    // Directly links to group table
-    'left_field' => 'id',
-    'field' => 'contact_id',
-  );
-
-  $data['civicrm_group_contact']['table']['group'] = t('CiviCRM Groups');
-  $data['civicrm_group_status']['table']['group'] = t('Contact Group Status');
-
-  $data['civicrm_group_contact']['status'] = array(
-    'title' => t('Contact Status'),
-    'help' => t('The group status of the contact'),
-    'field' => array(
-      'handler' => 'civicrm_handler_filter_group_status',
-      'click sortable' => TRUE,
-    ),
-    'filter' => array(
-      'handler' => 'civicrm_handler_filter_group_status',
-      'allow empty' => TRUE,
-    ),
-  );
-
   // CiviCRM Groups - FIELDS
-
-  // Numeric Group ID
+  //Group Contact ID
+  $data['civicrm_group_contact']['id'] = array(
+    'title' => t('Contact in Standard Group'),
+    'help' => t('The contact is part of a standard group'),
+    'relationship' => array(
+      'base' => 'civicrm_contact',
+      'base field' => 'id',
+      'relationship table' => 'civicrm_group_contact',
+      'relationship field' => 'contact_id',
+      'handler' => 'civicrm_handler_relationship_standard_group_contact',
+      'label' => t('CiviCRM Standard Group Contact'),
+    ),
+  );
+  // Group Status
   $data['civicrm_group_contact']['status'] = array(
     'title' => t('Contact Status'),
     'help' => t('The group status of the contact'),
     'field' => array(
-      'handler' => 'civicrm_handler_filter_group_status',
+      'handler' => 'civicrm_handler_field_pseudo_constant',
       'click sortable' => TRUE,
+      'pseudo class' => 'CRM_Contact_BAO_GroupContact',
+      'pseudo method' => 'buildOptions',
+      'pseudo args' => array('status'),
     ),
     'filter' => array(
       'handler' => 'civicrm_handler_filter_group_status',
       'allow empty' => TRUE,
     ),
   );
-
-  //CiviCRM Groups - FIELDS
 
   //Numeric Group ID
   $data['civicrm_group']['id'] = array(
@@ -2730,7 +2894,16 @@ function _civicrm_core_data(&$data, $enabled) {
     'sort' => array(
       'handler' => 'views_handler_sort',
     ),
+    'relationship' => array(
+      'base' => 'civicrm_group_contact',
+      'base field' => 'group_id',
+      'relationship table' => 'civicrm_group',
+      'relationship field' => 'id',
+      'handler' => 'civicrm_handler_relationship_standard_group',
+      'label' => t('CiviCRM Group'),
+    ),
   );
+
   //Is Group Active?
   $data['civicrm_group']['is_active'] = array(
     'title' => t('Is Active'),
@@ -2750,9 +2923,23 @@ function _civicrm_core_data(&$data, $enabled) {
     ),
   );
 
+  $data['civicrm_group']['name'] = array(
+    'title' => t('Machine Name'),
+    'help' => t('Group Machine Name'),
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+    ),
+    'filter' => array(
+      'handler' => 'civicrm_handler_filter_group_name',
+    ),
+  );
 
   $data['civicrm_group']['title'] = array(
-    'title' => t('Title'),
+    'title' => t('Title [Deprecated - Use Name or new Title]'),
     'help' => t('Group Title'),
     'real field' => 'id',
     'field' => array(
@@ -2773,6 +2960,27 @@ function _civicrm_core_data(&$data, $enabled) {
       'handler' => 'views_handler_sort',
     ),
   );
+
+  $data['civicrm_group']['title_'] = array(
+    'title' => t('Title'),
+    'help' => t('Group Title'),
+    'real field' => 'title',
+    'field' => array(
+      'handler' => 'views_handler_field',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+      'allow empty' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
   $data['civicrm_group']['description'] = array(
     'title' => t('Description'),
     'help' => t('Description of the Group'),
@@ -2787,9 +2995,8 @@ function _civicrm_core_data(&$data, $enabled) {
       'handler' => 'views_handler_sort',
     ),
   );
-  /*
-     * Add support for CiviCRM tags
-     */
+
+  // Add support for CiviCRM tags
 
   $data['civicrm_tag']['table']['group'] = t('CiviCRM Tags');
 
@@ -2905,16 +3112,63 @@ function _civicrm_core_data(&$data, $enabled) {
     'sort' => array(
       'handler' => 'views_handler_sort',
     ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_string',
+      'allow empty' => TRUE,
+    ),
   );
 
-  /*
-    * UF Match table - expose drupal ID
-    */
+  $data['civicrm_tag']['parent_id'] = array(
+    'title' => t('Tag Parent ID'),
+    'help' => t('The numeric ID of the parent tag'),
+    'field' => array(
+      'handler' => 'views_handler_field_numeric',
+      'click sortable' => TRUE,
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument_numeric',
+      'numeric' => TRUE,
+    ),
+    'filter' => array(
+      'handler' => 'views_handler_filter_numeric',
+      'allow empty' => TRUE,
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+  $data['civicrm_tag']['parent_name'] = array(
+    'title' => t('Parent Name'),
+    'help' => t('Name of Parent Tag'),
+    'real field' => 'parent_id',
+    'field' => array(
+      'handler' => 'civicrm_handler_field_pseudo_constant',
+      'click sortable' => TRUE,
+      'pseudo class' => 'CRM_Core_PseudoConstant',
+      'pseudo method' => 'get',
+      'pseudo args' => array('CRM_Core_BAO_EntityTag', 'tag_id'),
+    ),
+    'argument' => array(
+      'handler' => 'views_handler_argument',
+    ),
+    'filter' => array(
+      'handler' => 'civicrm_handler_filter_pseudo_constant',
+      'pseudo class' => 'CRM_Core_PseudoConstant',
+      'pseudo method' => 'get',
+      'pseudo args' => array('CRM_Core_BAO_EntityTag', 'tag_id'),
+    ),
+    'sort' => array(
+      'handler' => 'views_handler_sort',
+    ),
+  );
+
+  // UF Match table - expose drupal ID
 
   $data['civicrm_uf_match']['table']['group'] = t("CiviCRM Drupal match table");
   $data['civicrm_uf_match']['table']['join']['civicrm_contact'] = array(
     'left_field' => 'id',
-    'field' => 'contact_id'
+    'field' => 'contact_id',
   );
   $data['civicrm_uf_match']['uf_id'] = array(
     'title' => t('Drupal User ID'),
