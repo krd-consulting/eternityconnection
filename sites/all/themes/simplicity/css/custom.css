@@ -37,8 +37,17 @@
 	display: flex;
 }
 
-#user-info > h1 {
+#user-info > .display-name {
 	margin-bottom: 0px;
+}
+
+#user-info > .user-name {
+	margin: 0px;
+}
+
+#user-info > .user-civi-info > div {
+	display: inline-block;
+	vertical-align: text-top;
 }
 
 .user-info-section-header {
