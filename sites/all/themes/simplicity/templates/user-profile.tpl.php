@@ -1,11 +1,11 @@
 <?php //dsm($variables); ?> 
 <?php
 
- global $civi_user;
-// print '<pre>';
-// print_r($civi_user);
-// print '</pre>';
-
+	global $civi_user;
+	//print '<pre>';
+	//print_r($civi_user);
+	//print '</pre>';
+	$admin = false;
 ?>
 
 
@@ -15,19 +15,23 @@
 	<?php endif  ?>
 	<div id="user-info">
 		<?php
-			if($civi_user['display_name']):
+			if($civi_user['display_name'] && $civi_user['display_name'] != $variables['elements']['#account']->name):
 		?>
-			<h1 class="display-name"><?php echo $civi_user['display_name']; ?></h1>
-			<h2 class="user-name"><?php echo $variables['elements']['#account']->name; ?></h2>
+				<h1 class="display-name"><?php echo $variables['elements']['#account']->name; ?></h1>
+				<h2 class="user-name"><?php echo $civi_user['display_name']; ?></h2>
 		<?php
 			else:
 		?>
-			<h1 class="display-name"><?php echo $variables['elements']['#account']->name; ?></h1>
+				<h1 class="display-name"><?php echo $variables['elements']['#account']->name; ?></h1>
 		<?php
 			endif;
 		?>
 		<div class="user-roles">
-			<?php foreach($variables['elements']['#account']->roles as $role) { 
+			<?php foreach($variables['elements']['#account']->roles as $role) {
+
+				if($role == 'administrator')
+					$admin = true;	
+ 
 				if($role == 'authenticated user')
 					continue;
 			?>
@@ -40,14 +44,27 @@
 				<i class="crm-i fa-home"></i>
 			</div>
 			<div>
-				<div><?php echo $civi_user['street_address'];  ?></div>
-				<div><?php echo $civi_user['supplemental_address_1'];  ?></div>
-				<div><?php echo $civi_user['supplemental_address_2'];  ?></div>
-				<div><?php echo $civi_user['supplemental_address_3'];  ?></div>
-				<div>
-					<?php echo $civi_user['city'];  ?>
-					<?php echo $civi_user['state_province'];  ?>
-				</div>
+				<?php
+					if($admin):
+				?>
+						<a title="Edit address." href="/user/<?php echo $variables['elements']['#account']->uid;  ?>/edit/name_and_address">
+							<div><?php echo $civi_user['street_address'];  ?></div>
+							<div>
+								<?php echo $civi_user['city'];  ?>
+								<?php echo $civi_user['state_province'];  ?>
+							</div>
+						</a>
+				<?php
+					else:
+				?>
+						<div><?php echo $civi_user['street_address'];  ?></div>
+                                        	<div>
+                                           		<?php echo $civi_user['city'];  ?>
+                                       			<?php echo $civi_user['state_province'];  ?>
+                                        	</div>
+				<?php
+					endif;
+				?>
 			</div>
 		</div>
 		<br>
