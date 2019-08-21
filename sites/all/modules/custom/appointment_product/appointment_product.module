@@ -1,6 +1,5 @@
 <?php
 
-
 function appointment_product_permission() {
   return array(
     'provider access' => array(
@@ -725,7 +724,19 @@ function appointment_product_create_appointment_method($values) {
   $new_appointment->type = 'appointment';
   $new_appointment->status = 1;
   $new_appointment->language = 'und';
-  $new_appointment->title = $user->name.'\'s appointment '.$date1_s;
+
+  $appointmentTypes = db_query('SELECT n.title, n.nid, fdp.field_default_price_product_id
+    from node n 
+    inner join field_data_field_default_price fdp ON fdp.entity_id=n.nid and fdp.bundle=\'meeting_type\'
+    where n.type=\'meeting_type\' and n.nid =' . $values['type'] . ' ORDER BY n.title');
+
+  $appointmentType;
+
+  foreach($appointmentTypes as $type) {
+    $appointmentType = $type;
+  }
+
+  $new_appointment->title = $user->name.': '. $appointmentType->title . ' ' . $date1_s;
   $new_appointment->field_date_and_time = array ('und' => array ( 0 => array (
     'value' => $date1,
     'value2' => $date2,
