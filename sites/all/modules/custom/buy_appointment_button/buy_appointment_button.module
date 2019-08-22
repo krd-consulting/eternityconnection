@@ -24,25 +24,6 @@ function buy_appointment_button_preprocess_node ($vars) {
 
 }
 
-/**
- * Implements hook_views_pre_render().
- *
- * Add 'Booked/Available' badge to events in views calendar.
- */
-function buy_appointment_button_views_pre_render(&$view) {
-  if ($view->name == 'appointments') {
-    foreach($view->result as $key => $result) {
-      $text = BAB_BOOKED;
-      if ($result->_field_data['nid']['entity']->status) {
-        $text = BAB_AVAILABLE;
-      }
-      #kpr($view->result[$key]);
-      $view->result[$key]->node_title = '[' . $text . '] ' . $view->result[$key]->node_title;
-    }
-  }
-}
-
-
 
 function buy_appointment_button_preprocess_page(&$vars) {
   if (isset($vars['node'])) {
