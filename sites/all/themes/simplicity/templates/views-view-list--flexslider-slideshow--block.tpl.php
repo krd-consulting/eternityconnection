@@ -33,6 +33,13 @@
         <div class="overlay" style="display: block;"></div>
 
         <div class="content_hero">
+			<?php	
+		    	if(!$user->uid):
+			?>
+				<div><a class="button" href="/user/login" id="loginbutton" style="float: right;">Log In </a></div>
+			<?php
+				endif;
+			?>
             <?php print $row; ?>
         </div>
     </li>
