@@ -34,9 +34,13 @@
 
         <div class="content_hero">
 			<?php	
-		    	if(!$user->uid):
+			    	if(!$user->uid):
 			?>
-				<div><a class="button" href="/user/login" id="loginbutton" style="float: right;">Log In </a></div>
+					<div><a class="button" href="/user/login" id="loginbutton" style="float: right;">Log In </a></div>
+			<?php
+				else:
+			?>
+					<div><a class="button" href="/user/logout" id="loginbutton" style="float: right;">Log Out </a></div>
 			<?php
 				endif;
 			?>
