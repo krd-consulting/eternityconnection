@@ -36,6 +36,19 @@
     top: -190px !important;
 }
 
+/* Work Portfolio Hover */
+.da-thumbs li a div span.short_blurb {
+    display: block;
+    padding: 10px 0;
+    margin: 14px;
+    font-weight: normal;
+    color: white;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.1), 0 -10px 0 rgba(255,255,255,0.3);
+    text-align: center;
+	font-family: 'Ubuntu Condensed';
+    font-style: normal;
+}
 /* User Profile*/
 #user-info-container {
 	display: flex;
