@@ -28,15 +28,15 @@
 
         $terms_string = "";
 
-        if(isset($node->field_project_type[$node->language])){
-            foreach($node->field_project_type[$node->language] as $term_val){
+        if(isset($node->field_profile_type[$node->language])){
+            foreach($node->field_profile_type[$node->language] as $term_val){
 
                 $terms[] = "term-".$term_val['tid'];
 
             }
         }
 
-        $terms_string = implode(" ",$terms);
+        $terms_string = implode(" ",$terms);	
 
         ?>
 
