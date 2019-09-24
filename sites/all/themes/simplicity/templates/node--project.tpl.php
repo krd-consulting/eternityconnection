@@ -86,12 +86,12 @@ if (isset($content['field_project_url']['#object']->field_project_url[$node->lan
     unset($content['field_project_url']);
 }
 
-if (isset($content['field_project_type']['#object']->field_project_type)){
-    $project_type = $content['field_project_type'];
+if (isset($content['field_profile_type']['#object']->field_profile_type)){
+    $project_type = $content['field_profile_type'];
 
     //debug($content['field_project_type']);
 
-    unset($content['field_project_type']);
+    unset($content['field_profile_type']);
 }
 
 //debug($node);
@@ -104,7 +104,7 @@ $url = $protocol.$_SERVER['HTTP_HOST'].$node_url;
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
     <div class="row">
-        <div class="col-md-8">
+        <div>
             <div class="project_images">
 
                 <div class="post-thumbnail slider-thumbnail" data-effect="slide">
@@ -177,58 +177,6 @@ $url = $protocol.$_SERVER['HTTP_HOST'].$node_url;
 	    <?php endif; ?>
 
     </div>
-        <div class="col-md-4 project_info">
-            <?php if (isset($project_type)): ?>
-
-                <h3>
-                    <span style="padding-top: 18px;" class="underline_title_top">
-                        <?php
-                        print t("Featured In");
-                        ?>
-                    </span>
-
-                </h3>
-                <?php
-                    print render($project_type);
-                ?>
-
-            <?php endif; ?>
-            <br/>
-            <div>
-                <div>
-                    <h4>
-                        <span class="underline_title_top">
-                            <?php print t("Share the love"); ?>
-                            <i class="theme_color fa fa-heart fa-1x"></i>
-                        </span>
-
-                    </h4>
-                </div>
-                <ul class="social_icons"><li>
-                        <a class="social_icon small" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=<?php print $url; ?>','sharer','toolbar=0,status=0,width=548,height=325');" href="javascript: void(0)" target="_blank"><i class="fa fa-facebook fa-1x">
-                                <!-- icon --></i><p></p></a>
-                    </li>
-                    <li>
-                        <a class="social_icon small" href="https://plus.google.com/share?url=<?php print $url; ?>" target="_blank"><i class="fa fa-google-plus fa-1x">
-                                <!-- icon --></i><p></p></a>
-                    </li>
-                    <li>
-                        <a class="social_icon small" href="https://twitter.com/home?status=<?php print $url; ?>" target="_blank"><i class="fa fa-twitter fa-1x">
-                                <!-- icon --></i><p></p></a>
-                    </li>
-                    <li>
-                        <a class="social_icon small" href="https://www.linkedin.com/shareArticle?mini=true&url=<?php print $url; ?>&title=&summary=&source=" target="_blank"><i class="fa fa-linkedin fa-1x">
-                                <!-- icon --></i><p></p></a>
-                    </li>
-                    <li>
-                        <a class="social_icon small" href="https://pinterest.com/pin/create/button/?url=&media=<?php print $url; ?>&description=" target="_blank"><i class="fa fa-pinterest fa-1x">
-                                <!-- icon --></i><p></p></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-
   </div>
     <?php if (isset($project_url)): ?>
 
