@@ -785,12 +785,12 @@ function appointment_product_create_appointment_method($values) {
 }
 
 function appointment_product_mail ($key, &$message, $params) {
-  switch ($key) {
+	switch ($key) {
     case 'appointment_created':
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('New Appointment was created for you');
-      $message['body'][] = $text_message = t('Hello!').'<br/>'.t("New appointment time between {$params['date1']} and {$params['date2']} was created.").'<br/>'.t('You list of appointments:').'<br/>'.$params['appointments_list'];
+      $message['body'][] = t('Hello!').'<br/>'.t("New appointment time between {$params['date1']} and {$params['date2']} was created.").'<br/>'.t('You list of appointments:').'<br/>'.$params['appointments_list'];
       break;
     case 'appointment_purchased_provider':
       // Set headers etc
