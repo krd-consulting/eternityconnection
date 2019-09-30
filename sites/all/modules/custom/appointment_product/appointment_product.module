@@ -63,8 +63,9 @@ function _appointment_product_assign_link($node) {
         INNER JOIN field_data_commerce_node_checkout_node cncn ON cncn.bundle=\'commerce_node_checkout\' and cncn.entity_id=cli.line_item_id
         WHERE co.status=\'completed\' and cncn.commerce_node_checkout_node_target_id='.$node->nid)->fetchField();
       $user3 = user_load($attendeeuid);
-      $params = [
+			$params = [
         'app_title' => $app->title,
+				'type' => get_appointment_type($app->field_type['und'][0]['target_id'])->title,
         'nid' => $node->nid,
       ];
       drupal_mail('appointment_product', 'appointment_purchased_buyer', $user3->mail, user_preferred_language($user3), $params);
@@ -839,8 +840,18 @@ function appointment_product_mail ($key, &$message, $params) {
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('You purchased an appointment');
-      $message['body'][] =       $text_message = t('Hello!').'<br/>'.t('You just purchased appointment to video meeting: ').$params['app_title'].'
+			$confirmation_script = file_get_contents(drupal_get_path('module', 'appointment_product') . '/confirmation-script.html');
+      $message['body'][] = $confirmation_script . '<br>' . t('You just purchased appointment to video meeting: ').$params['app_title'].'
       <br/>'.t('You can attend meeting on this page: ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/>';
+			$filename = 'disclaimer-' . strtolower(str_replace(' ' , '-', $params['type'])) . '.pdf';
+			$uri = drupal_get_path('module', 'appointment_product') . '/docs/' . $filename;
+			$file = file_get_contents($uri);
+			$attachment = array(
+      	'filepath' => $uri,
+      );
+
+			$message['params']['attachments'][] = $attachment; 
+
       break;
   }
 }
