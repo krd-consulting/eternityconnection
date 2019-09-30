@@ -66,6 +66,10 @@ h1{
     margin-top: 10px;
 }
 
+h4 {
+   font-size: 18px !important;
+}
+
 .upper{
     text-transform: uppercase;
     margin-bottom: 10px;
@@ -1132,6 +1136,7 @@ ul.gray_icons i{
     padding: 1%;
     border: 1px solid #f5f5f5;
     margin: 1%;
+    min-height: 285px;
 }
 
 .work-list ul.items .work-item.cols-3{
