@@ -81,66 +81,45 @@
  */
 
 ?>
-<div class="contact_page">
+<div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
 
-    <div class="row">
-        <div class="col-md-4">
+  <?php print render($title_prefix); ?>
+  <?php if (!$page): ?>
+    <h2<?php print $title_attributes; ?>><a href="<?php print $node_url; ?>"><?php print $title; ?></a></h2>
+  <?php endif; ?>
+  <?php print render($title_suffix); ?>
 
+  <?php if ($display_submitted): ?>
+  	<p>
+			<strong><?php print $name;  ?></strong>
+			<small>
+				on
+				<?php print $date;  ?>
+			</small>
+		</p>
+	<?php endif; ?>
 
-            <p>
-                <?php
-                print t("We are growing our global community from a head office in Alberta, Canada. Our contact information is below, or you can reach us via the form on the right.");
-                ?>
-            </p>
-            <p>
-            <div style="margin-top:20px;" class="tlf_contacts">
-                <div class="contact_item">
-                    <h5><i class="fa fa fa-phone theme_color fa-1x"></i><span class="padded_fixed"><?php print t(" Telephone:"); ?></span><span class="theme_color"> +1.877.914.SOUL (7685)</span></h5>
-                </div>
-                <div class="contact_item">
-                    <h5><i class="fa fa fa-envelope theme_color fa-1x"></i><span class="padded_fixed"><?php print t(" Email:"); ?></span><span class="theme_color"> info at eternityconnection dot org</span></h5>
-                </div>
-                <div class="contact_item">
-                    <h5><i class="fa fa fa-home theme_color fa-1x"></i><span class="padded_fixed"><?php print t(" Address:"); ?></span><span class="theme_color"> <p style="display:inline-flex">94 Mt. Alderson Cres. W, <br>Lethbridge, Alberta T1K 6P1 <br> Canada </p></span></h5>
-                </div>
-            </div>
-            </p>
-            
-<!--
-    	    <p>
-            <h5 style="margin-top:20px;" >
-                <?php //print t("Find us here: ");?>
-            </h5>
-            <ul class="social_icons"><li>
-                    <a class="social_icon small" href="#"><i class="fa fa-facebook fa-1x">
-                            </i><p></p></a>
-                </li>
-                <li>
-                    <a class="social_icon small" href="#"><i class="fa fa-google-plus fa-1x">
-                            </i><p></p></a>
-                </li>
-                <li>
-                    <a class="social_icon small" href="#"><i class="fa fa-twitter fa-1x">
-                            </i><p></p></a>
-                </li>
-                <li>
-                    <a class="social_icon small" href="#"><i class="fa fa-linkedin fa-1x">
-                            </i><p></p></a>
-                </li>
-                <li>
-                    <a class="social_icon small" href="#"><i class="fa fa-pinterest fa-1x">
-                            </i><p></p></a>
-                </li>
-            </ul>
-            </p>
--->
-        </div>
-        <div class="col-md-8">
-            <?php
-                print render($contact);
-            ?>
-        </div>
+  <div class="content"<?php print $content_attributes; ?>>
+    <?php
+      // We hide the comments and links now so that we can render them later.
+      hide($content['comments']);
+      hide($content['links']);
+      print render($content['body']);
+    ?>
+  </div>
 
+	<?php if($comment_count > 0):  ?>
+		<h3>
+			<?php print $comment_count; ?>
+			<?php
+				if($comment_count > 1) {
+					print 'Comments';
+				} else {
+					print 'Comment';
+				}
+			?>
+		</h3>
+	<?php endif;  ?>
+  <?php print render($content['comments']); ?>
 
-    </div>
 </div>

@@ -219,6 +219,12 @@ if (isset($content['field_post_type']['#object']->field_post_type[$node->languag
         <?php print render($title_suffix); ?>
 
         <div class="post_blog_info">
+            <?php if ($display_submitted): ?>
+                <!--div class="submitted">
+                    < ?php print $submitted; ?>
+                </div-->
+                <h5 class="float-left">by <?php print $name; ?>
+            <?php endif; ?>
 
             <?php if (isset($content['field_post_type']['#object']->field_post_type[$node->language])): ?>
 
@@ -232,11 +238,6 @@ if (isset($content['field_post_type']['#object']->field_post_type[$node->languag
 
             <?php endif; ?>
 
-            <?php if ($display_submitted): ?>
-                <div class="submitted">
-                    <?php print $submitted; ?>
-                </div>
-            <?php endif; ?>
 
         </div>
 

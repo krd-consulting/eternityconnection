@@ -56,6 +56,10 @@
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
   <?php print $scripts; ?>
+	<!-- Global site tag (gtag.js) - Google Ads: 696452797 --> 
+	<script async src="https://www.googletagmanager.com/gtag/js?id=AW-696452797"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-696452797'); </script> 
+	<!-- Event snippet for Page views conversion page -->
+	<script> gtag('event', 'conversion', {'send_to': 'AW-696452797/O6-GCLC-kbQBEL2NjMwC'}); </script> 
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
   <div id="skip-link">

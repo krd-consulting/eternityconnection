@@ -141,6 +141,10 @@ body.not-front {
     color: #ffffff;
 }
 
+.nav > li {
+  background: white;
+}
+
 header#navbar{
     position: fixed;
     top: 0;
@@ -184,9 +188,9 @@ header#navbar.sticky-wrapper{
 }
 
 .logo img {
-    border-bottom: 2px solid #5e9cf1;
-    border-radius: 50%;
-    max-height: 130px;
+    /*border-bottom: 2px solid #5e9cf1; */
+    border-radius: 50%; 
+    max-height: 3.6em;
     vertical-align: middle;
 }
 
@@ -977,7 +981,7 @@ ul.gray_icons i{
     font-family: 'FontAwesome';
     font-size: 25px;
     display: inline-block;
-    content: "\f10d";
+    /*content: "\f10d";*/
     margin-right: 10px;
 }
 
@@ -985,7 +989,7 @@ ul.gray_icons i{
     font-family: 'FontAwesome';
     font-size: 25px;
     display: inline-block;
-    content: "\f10e";
+    /*content: "\f10e";*/
     margin-left: 10px;
 }
 

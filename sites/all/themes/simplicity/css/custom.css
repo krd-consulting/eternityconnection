@@ -2,6 +2,18 @@
  * Override this file as intended. It will always be provided as blank by the theme.
  */
 
+.blog_content .user-picture {
+	width: 30%;
+	float: left;
+	padding: 25px 20px 25px 10px;
+}
+
+.blog_content .user-picture img {
+	border-radius: 2.2em;
+	margin-top: 0.8em;
+}
+
+
 .mr-2 {
 	margin-right: 0.5em;
  }
@@ -53,6 +65,10 @@
     position: absolute !important;
     right: 50px !important;
     top: -190px !important;
+}
+
+.navbar-brand {
+    font-size: 1.5vw!important;
 }
 
 /* Work Portfolio Hover */
