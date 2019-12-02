@@ -1,4 +1,5 @@
 Drupal.settings.ap = {};
+var timezoneOffset = (new Date()).getTimezoneOffset();
 (function($) {  
   var ap_check_is_weeks = function() {
     if($('#edit-weeks-or-months').val()==0) {
@@ -17,11 +18,30 @@ Drupal.settings.ap = {};
     }
   }
   $(document).ready(function() {
-    if ($('.hidden_input').length>0) {
+		
+		timezoneOffset = (new Date()).getTimezoneOffset();
+		Drupal.settings.ap.endofstartweektime = Drupal.settings.ap.startweektime;
+    
+		if ($('.hidden_input').length>0) {
       $('.hidden_input').parent().hide();
     }
     Drupal.settings.ap.current_weeks = $('#edit-weeks .form-item').length;
     Drupal.settings.ap.current_months = $('#edit-months .form-item').length;
+    if ($('#edit-startdatetime-datepicker-popup-0').length>0) {
+      $('#edit-startdatetime-datepicker-popup-0').change(function() {
+				var dateString = $('#edit-startdatetime-datepicker-popup-0').val();
+				var dateArray = dateString.split("/");
+				var date = new Date(dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2]);
+				Drupal.settings.ap.startweektime = date.getTime()/1000 - timezoneOffset*60;
+				Drupal.settings.ap.endofstartweektime = (Drupal.settings.ap.startweektime+24*3600)+((7-(new Date(Drupal.settings.ap.startweektime * 1000 + timezoneOffset*60000)).getDay()) % 7*24*3600);
+
+  			var newdate = new Date(Drupal.settings.ap.startweektime * 1000 + timezoneOffset*60000);      
+	  		var newdate2 = new Date((Drupal.settings.ap.startweektime+((7-newdate.getDay()) % 7*24*3600)) * 1000 + timezoneOffset*60000);      
+      	
+				$('.edit-weeks-1-text-label').html('Week 1' + '<br>' + newdate.getDate()+'.'+(newdate.getMonth()+1)+'.'+newdate.getFullYear().toString().substr(-2)
+      +' - '+newdate2.getDate()+'.'+(newdate2.getMonth()+1)+'.'+newdate2.getFullYear().toString().substr(-2));	
+			});
+    }
     if ($('#edit-startdatetime-timeEntry-popup-1').length>0) {
       $('#edit-startdatetime-timeEntry-popup-1').change(function() {
         $('.ap_start_time').text($('#edit-startdatetime-timeEntry-popup-1').val());
@@ -57,8 +77,10 @@ var ap_weeks_remove_week = function() {
 var ap_weeks_add_week = function() {
   Drupal.settings.ap.current_weeks++;
   var d1 = new Date();
-  var newdate = new Date((Drupal.settings.ap.startweektime+((Drupal.settings.ap.current_weeks-2)*7*24*3600)) * 1000+d1.getTimezoneOffset()*60000);      
-  var newdate2 = new Date((Drupal.settings.ap.startweektime+6*24*3600+((Drupal.settings.ap.current_weeks-2)*7*24*3600)) * 1000+d1.getTimezoneOffset()*60000);      
+	
+
+  var newdate = new Date((Drupal.settings.ap.endofstartweektime+((Drupal.settings.ap.current_weeks-2)*7*24*3600)) * 1000+d1.getTimezoneOffset()*60000);      
+  var newdate2 = new Date((Drupal.settings.ap.endofstartweektime+6*24*3600+((Drupal.settings.ap.current_weeks-2)*7*24*3600)) * 1000+d1.getTimezoneOffset()*60000);      
   var item = jQuery('.form-item-weeks-1').clone();
   item.find('span').html('Week '+(Drupal.settings.ap.current_weeks)+'<br>'+newdate.getDate()+'.'+(newdate.getMonth()+1)+'.'+newdate.getFullYear().toString().substr(-2)
       +' - '+newdate2.getDate()+'.'+(newdate2.getMonth()+1)+'.'+newdate2.getFullYear().toString().substr(-2));

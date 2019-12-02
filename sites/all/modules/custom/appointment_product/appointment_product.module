@@ -591,7 +591,7 @@ function appointment_product_create_appointment() {
   $dt1 = new DateTime("now", new DateTimeZone(drupal_get_user_timezone()));
   drupal_add_js(['ap'=>['usertimezoneoffset'=>drupal_get_user_timezone()]],'setting');
   
-  $dates = [1=>'<span>Week 1<br/>'.date('d.m.y').' - '.date('d.m.y', strtotime('+'.(7-date('N')).' days')).'</span>'];
+  $dates = [1=>'<span class="edit-weeks-1-text-label">Week 1<br/>'.date('d.m.y').' - '.date('d.m.y', strtotime('+'.(7-date('N')).' days')).'</span>'];
   if (isset($_POST) && isset($_POST['is_bulk']) && $_POST['is_bulk']==1 && isset($_POST['weeks']) && is_array($_POST['weeks']) && count($_POST['weeks'])>1) {
     $time1 = strtotime('+'.(8-date('N')).' days');
     $time2 = $time1+518400;
@@ -600,7 +600,7 @@ function appointment_product_create_appointment() {
       $max = $key;
     }
     for($key=2;$key<=$max;$key++) {
-      $dates[$key] = '<span>Week '.$key.'<br/>'.date('d.m.y',($time1+($key-2)*604800)).' - '.date('d.m.y', ($time2+($key-2)*604800)).'</span>';
+      $dates[$key] = '<span class="edit-weeks-' . $key  . '-text-label">Week '.$key.'<br/>'.date('d.m.y',($time1+($key-2)*604800)).' - '.date('d.m.y', ($time2+($key-2)*604800)).'</span>';
     }
   }
   drupal_add_js(['ap'=>['startweektime'=>(strtotime('+'.(8-date('N')).' days')+(((float)$dt1->format('O'))*36))]],'setting');
