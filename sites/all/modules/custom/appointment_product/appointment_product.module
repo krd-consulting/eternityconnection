@@ -63,6 +63,7 @@ function _appointment_product_assign_link($node) {
         INNER JOIN field_data_commerce_node_checkout_node cncn ON cncn.bundle=\'commerce_node_checkout\' and cncn.entity_id=cli.line_item_id
         WHERE co.status=\'completed\' and cncn.commerce_node_checkout_node_target_id='.$node->nid)->fetchField();
       $user3 = user_load($attendeeuid);
+			watchdog('test target', print_r($app->field_type), array(), WATCHDOG_ERROR);
 			$params = [
         'app_title' => $app->title,
 				'type' => get_appointment_type($app->field_type['und'][0]['target_id'])->title,
@@ -726,6 +727,7 @@ function appointment_product_create_appointment_method($values) {
   $new_appointment->status = 1;
   $new_appointment->language = 'und';
 
+	watchdog('test target', print_r($values['type']), array(), WATCHDOG_ERROR);
 	$appointmentType = get_appointment_type($values['type']);
 
   /*$appointmentTypes = db_query('SELECT n.title, n.nid, fdp.field_default_price_product_id
@@ -767,11 +769,10 @@ function appointment_product_create_appointment_method($values) {
 }
 
 function get_appointment_type($appointment_type_id) {
-
-  $appointmentTypes = db_query('SELECT n.title, n.nid, fdp.field_default_price_product_id
-    from node n 
-    inner join field_data_field_default_price fdp ON fdp.entity_id=n.nid and fdp.bundle=\'meeting_type\'
-    where n.type=\'meeting_type\' and n.nid =' . $appointment_type_id . ' ORDER BY n.title');
+ 	$appointmentTypes = db_query('SELECT n.title, n.nid, fdp.field_default_price_product_id
+  	from node n 
+   	inner join field_data_field_default_price fdp ON fdp.entity_id=n.nid and fdp.bundle=\'meeting_type\'
+   	where n.type=\'meeting_type\' and n.nid =' . $appointment_type_id . ' ORDER BY n.title');
 
   $appointmentType;
 
@@ -812,6 +813,7 @@ function generate_appointment_list($user) {
 function appointment_product_mail ($key, &$message, $params) {
 	switch ($key) {
     case 'appointment_created':
+      watchdog('test params', print_r($params, true), array(), WATCHDOG_ERROR);
 			$appointmentType = get_appointment_type($params['new_appointments_list'][0]['type'])->title;
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
@@ -834,7 +836,7 @@ function appointment_product_mail ($key, &$message, $params) {
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('Your appointment was purchased');
       $message['body'][] = t('Hello!').'<br/>'.t('Your appointments was purchased: ').$params['app_title'].'
-      <br/>'.t('You can visit video meeting and moderate it on this page: ').'<a href="/node/'.$params['nid'].'/meeting/moderate">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/moderate</a><br/>';
+      <br/>'.t('At the scheduled time, please use the following link to host your session: ').'<a href="/node/'.$params['nid'].'/meeting/moderate">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/moderate</a><br/>';
       break;
     case 'appointment_purchased_buyer':
       // Set headers etc
@@ -842,7 +844,7 @@ function appointment_product_mail ($key, &$message, $params) {
       $message['subject'] = t('You purchased an appointment');
 			$confirmation_script = file_get_contents(drupal_get_path('module', 'appointment_product') . '/confirmation-script.html');
       $message['body'][] = $confirmation_script . '<br>' . t('You just purchased appointment to video meeting: ').$params['app_title'].'
-      <br/>'.t('You can attend meeting on this page: ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/>';
+      <br/>'.t('Please use the following link to attend your meeting:  ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/>';
 			$filename = 'disclaimer-' . strtolower(str_replace(' ' , '-', $params['type'])) . '.pdf';
 			$uri = drupal_get_path('module', 'appointment_product') . '/docs/' . $filename;
 			$file = file_get_contents($uri);
@@ -880,6 +882,7 @@ function appointment_product_create_appointment_submit($form, &$form_state) {
 			];	
 		}
     if ($form_state['values']['is_bulk']==1) {
+			watchdog('try creating appointment', print_r($form_state['values'], 1), array(), WATCHDOG_ERROR);
       $values = $form_state['values'];
       $date1 = $form_state['values']['startdatetime'];
       $time1 = strtotime($date1);
@@ -893,10 +896,11 @@ function appointment_product_create_appointment_submit($form, &$form_state) {
       foreach($arr as $key=>$val) {
         $max = $key;
       }      
-      $time2 = strtotime('+ '.$max.($form_state['values']['weeks_or_months']==0?' weeks':' months'));
+      $time2 = $time1;
       if ($is_weeks) {
-        $time2 += (7-(integer)date('N'))*86400;
+      	$time2 = strtotime('+ '. ($max - 1) . ' weeks ' . (7 - (integer)date('N', $time1)). ' days', $time1);
       } else {
+      	$time2 = strtotime('+ '. $max . ' months', $time1);
         $time2 += ((integer)date('t',$time2)-(integer)date('d',$time2))*86400;
       }
       $current_time = $time1;
@@ -921,12 +925,14 @@ function appointment_product_create_appointment_submit($form, &$form_state) {
             $time4 = strtotime($current_date.' '.$endtime);
             while ($currentstarttime<$time4) {
               $values['startdatetime'] = date('Y-m-d H:i', $currentstarttime);
+							watchdog('try creating appointment', print_r($values), array(), WATCHDOG_ERROR);
               appointment_product_create_appointment_method($values);
 							$new_appointments_list[] = [
 								'type' => $form_state['values']['type'],
 								'start' => $values['startdatetime'], 
   							'end' => date('Y-m-d H:i', $currentstarttime += $length )	
 							];
+	     
             }
           }
         }
