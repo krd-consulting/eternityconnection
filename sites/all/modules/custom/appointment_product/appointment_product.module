@@ -417,7 +417,9 @@ function appointment_product_form_alter(&$form, &$form_state, $form_id) {
       $app = node_load($app_nid);
       if ($app) {
         if ($form['title']['#default_value']=='') {
-          $form['title']['#default_value'] = 'Meeting for '. $app->title;
+					global $user;
+					$author = user_load($app->uid);
+          $form['title']['#default_value'] = 'Meeting with ' . $author->name . ' and ' .  $user->name;
         }
         global $user;
         $pagetitle = 'Purchase '.$app->title;
@@ -741,7 +743,7 @@ function appointment_product_create_appointment_method($values) {
     $appointmentType = $type;
   }*/
 
-  $new_appointment->title = $user->name.': '. $appointmentType->title . ' ' . $date1_s;
+  $new_appointment->title = $user->name.': '. $appointmentType->title;
   $new_appointment->field_date_and_time = array ('und' => array ( 0 => array (
     'value' => $date1,
     'value2' => $date2,
