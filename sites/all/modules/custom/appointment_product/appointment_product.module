@@ -57,8 +57,10 @@ function _appointment_product_assign_link($node) {
       $provider_timezone;
       if(variable_get('configurable_timezones', 1) && $user2->uid && $user2->timezone) {
         $provider_timezone = $user->timezone;
+        watchdog('test timezone', 'here', array(), WATCHDOG_ERROR);
       }else {
         $provider_timezone = variable_get('date_default_timezone', @date_default_timezone_get());
+        watchdog('test timezone', 'no, here', array(), WATCHDOG_ERROR);
       }
 
       watchdog('test timezone', print_r($provider_timezone, true), array(), WATCHDOG_ERROR);
