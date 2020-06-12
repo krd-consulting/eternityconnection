@@ -62,6 +62,8 @@ function _appointment_product_assign_link($node) {
 				'app_title' => $app->title,
 				'app_id' => $app->nid,
         'nid' => $node->nid,
+        'app_starttime' => $starttime,
+        'app_endtime' => $endtime,
       ];
       $user2 = user_load($app->uid);
       drupal_mail('appointment_product', 'appointment_purchased_provider', $user2->mail, user_preferred_language($user2), $params);
