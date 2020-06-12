@@ -148,7 +148,7 @@ class appointment_product_handler_filter_price_select extends views_handler_filt
    *   Return the stored values in $this->value_options if someone expects it.
    */
   function get_value_options() {
-    $nodes = []; 
+    $nodes = [];
     foreach(entity_load_multiple_by_name('commerce_product', [], array('type' => 'commerce_node_checkout')) as $node) {
       $nodes[$node->product_id] = $node->title;
     }
@@ -166,7 +166,7 @@ class appointment_product_handler_filter_type_select extends views_handler_filte
    *   Return the stored values in $this->value_options if someone expects it.
    */
   function get_value_options() {
-    $nodes = []; 
+    $nodes = [];
     foreach(entity_load_multiple_by_name('node', [], array('type' => 'meeting_type')) as $node) {
       $nodes[$node->nid] = $node->title;
     }
@@ -178,7 +178,7 @@ class appointment_product_handler_filter_type_select extends views_handler_filte
 
 
 function appointment_product_preprocess_calendar_item(&$vars) {
-  if (isset($vars['item']->entity) 
+  if (isset($vars['item']->entity)
       && isset($vars['item']->entity->field_status)
       && isset($vars['item']->entity->field_status['und'])
       && isset($vars['item']->entity->field_status['und'][0]['value'])
@@ -195,7 +195,7 @@ function appointment_product_preprocess_calendar_item(&$vars) {
 
 function appointment_product_node_load($nodes, $types) {
     global $user;
-    
+
     foreach ($nodes as $node) {
     if (bbb_is_meeting_type($node->type)) {
       $meeting = new stdClass();
@@ -217,7 +217,7 @@ function appointment_product_node_load($nodes, $types) {
             );
         $attend = array_merge($attend, $recording);
         $moderate = array_merge($moderate, $recording);
-        
+
         $layout = db_query("SELECT fdl.field_default_layout_value
           FROM {field_data_field_default_layout} fdl
           INNER JOIN {field_data_field_type} ft ON fdl.entity_id=ft.field_type_target_id and ft.bundle='appointment'
@@ -284,18 +284,18 @@ function appointment_product_node_load($nodes, $types) {
           $response = @simplexml_load_string($result);
           curl_close($curl);
 //          $response = bbb_api_call($params, 'setConfigXML');
-            
+
           if (isset($response->returncode) && $response->returncode == 'SUCCESS') {
             $moderate['configToken'] = $response->token;
             $attend['configToken'] = $response->token;
-            
+
           }
           else {
             if (isset($response->returncode)) {
               watchdog('bigbluebutton', '%message', array('%message' => $response->message), WATCHDOG_ERROR);
             }
             return FALSE;
-          }        
+          }
         }
         $meeting->url = array(
           'attend' => bbb_api_join($attend),
@@ -311,7 +311,7 @@ function appointment_product_node_load($nodes, $types) {
   if (in_array('appointment',$types)) {
     foreach($nodes as $nid=>$node) {
       if ($node->type=='appointment') {
-        //check 'locked' appointments. 
+        //check 'locked' appointments.
         if (@$node->field_status['und'][0]['value']==2 && isset($node->field_video_meeting_node['und'])
            && isset($node->field_video_meeting_node['und'][0]['target_id']) && $node->field_video_meeting_node['und'][0]['target_id']>0) {
           $node2 = node_load($node->field_video_meeting_node['und'][0]['target_id']);
@@ -449,7 +449,7 @@ function appointment_product_form_alter(&$form, &$form_state, $form_id) {
         }
       } else {
         drupal_set_message('Unknown appointment specified', 'error');
-      } 
+      }
     } else {
       drupal_set_message('No appointment specified', 'error');
     }
@@ -457,7 +457,7 @@ function appointment_product_form_alter(&$form, &$form_state, $form_id) {
     drupal_set_breadcrumb([l('Home', '')]);
   }
   if ('commerce_checkout_form_checkout' == $form_id) {
-    
+
   }
 }
 
@@ -476,7 +476,7 @@ function appointment_product_process_element($element) {
     if ($app && isset($app->field_appointment_price) && isset($app->field_appointment_price['und']) && isset($app->field_appointment_price['und'][0])) {
       $element['commerce_node_checkout_product']['#default_value'] = $app->field_appointment_price['und'][0]['product_id'];
     }
-  }   
+  }
 
   return $element;
 }
@@ -485,12 +485,12 @@ function appointment_product_process_element($element) {
 function appointment_product_create_appointment() {
   $form = array();
   $form['type'] = array(
-    '#type' => 'fieldset',     
+    '#type' => 'fieldset',
     '#title' => 'Type and Price',
   );
   $types = [];
   $result = db_query('SELECT n.title, n.nid, fdp.field_default_price_product_id
-    from node n 
+    from node n
     inner join field_data_field_default_price fdp ON fdp.entity_id=n.nid and fdp.bundle=\'meeting_type\'
     where n.type=\'meeting_type\' ORDER BY n.title');
   $add_js = '<script type="text/javascript"> var fdp_meeting_types = {';
@@ -498,7 +498,7 @@ function appointment_product_create_appointment() {
   foreach ($result as $row) {
     $types[$row->nid] = $row->title;
     $add_js_items[] = $row->nid.':'.$row->field_default_price_product_id;
-  }    
+  }
   $add_js .= implode(',', $add_js_items).'};
   jQuery(document).ready(function() {
     if (jQuery(\'div.form-item-type select\').length>0) {
@@ -508,11 +508,11 @@ function appointment_product_create_appointment() {
         jQuery(\'input[name=price2]\').val(fdp_meeting_types[val]);
       });
     }
-    
+
   });
   </script>';
   $form['type']['type'] = array(
-    '#type' => 'select',     
+    '#type' => 'select',
     '#title' => 'Type',
     '#required' => TRUE,
     '#options' => $types,
@@ -522,21 +522,21 @@ function appointment_product_create_appointment() {
   $result = db_query('SELECT n.title, n.product_id from commerce_product n where n.type=\'commerce_node_checkout\' ORDER BY n.title');
   foreach ($result as $row) {
     $types[$row->product_id] = $row->title;
-  }    
+  }
   $form['type']['price2'] = array(
-    '#type' => 'hidden',     
+    '#type' => 'hidden',
     '#title' => 'Price2',
     '#required' => TRUE,
   );
   $form['type']['price'] = array(
-    '#type' => 'select',     
+    '#type' => 'select',
     '#title' => 'Price',
     '#disabled' => TRUE,
     '#required' => TRUE,
     '#options' => $types,
   );
   $form['start'] = array(
-    '#type' => 'fieldset',     
+    '#type' => 'fieldset',
     '#title' => 'Start',
     '#description' => 'Select start date and time of appointment',
   );
@@ -546,7 +546,7 @@ function appointment_product_create_appointment() {
     '#required' => TRUE,
   );
   $form['period'] = array(
-    '#type' => 'fieldset',     
+    '#type' => 'fieldset',
     '#title' => 'Duration',
     '#description' => 'Select duration of appointment',
   );
@@ -567,7 +567,7 @@ function appointment_product_create_appointment() {
     '#required' => TRUE,
   );
   $form['bulk'] = array(
-    '#type' => 'fieldset',     
+    '#type' => 'fieldset',
     '#title' => 'Bulk appointments',
     '#description' => 'Click checkbox for bulk creation and select rules',
   );
@@ -577,13 +577,13 @@ function appointment_product_create_appointment() {
     '#default_value' => '0',
   );
   $form['bulk']['options'] = array(
-    '#type' => 'fieldset',     
+    '#type' => 'fieldset',
   );
   $form['bulk']['options'] = array(
-    '#type' => 'fieldset',     
+    '#type' => 'fieldset',
   );
   $form['bulk']['options']['endtime'] = array(
-    '#type' => 'date_popup',    
+    '#type' => 'date_popup',
     '#title' => 'Fill till the \'Time\' (from \'Start\' time: <span class="ap_start_time"></span>)',
     '#date_format' => 'H:i',
   );
@@ -599,10 +599,10 @@ function appointment_product_create_appointment() {
     '#default_value' => ['0'],
     '#title' => 'Fill by months or by weeks?',
   );
-  
+
   $dt1 = new DateTime("now", new DateTimeZone(drupal_get_user_timezone()));
   drupal_add_js(['ap'=>['usertimezoneoffset'=>drupal_get_user_timezone()]],'setting');
-  
+
   $dates = [1=>'<span class="edit-weeks-1-text-label">Week 1<br/>'.date('d.m.y').' - '.date('d.m.y', strtotime('+'.(7-date('N')).' days')).'</span>'];
   if (isset($_POST) && isset($_POST['is_bulk']) && $_POST['is_bulk']==1 && isset($_POST['weeks']) && is_array($_POST['weeks']) && count($_POST['weeks'])>1) {
     $time1 = strtotime('+'.(8-date('N')).' days');
@@ -717,9 +717,9 @@ function appointment_product_create_appointment_method($values) {
   $date1 = date('Y-m-d H:i', $time1-$offset);
   $date2 = date('Y-m-d H:i', $time2-$offset);
 
-  $result = db_query('SELECT n.nid, n.title, st.field_date_and_time_value, st.field_date_and_time_value2 from node n 
+  $result = db_query('SELECT n.nid, n.title, st.field_date_and_time_value, st.field_date_and_time_value2 from node n
     INNER JOIN field_data_field_date_and_time st ON st.entity_id=n.nid and st.bundle=\'appointment\'
-    where n.type=\'appointment\' and n.uid=:userid and 
+    where n.type=\'appointment\' and n.uid=:userid and
       ( (UNIX_TIMESTAMP(st.field_date_and_time_value)>UNIX_TIMESTAMP(:time1) and UNIX_TIMESTAMP(st.field_date_and_time_value)<UNIX_TIMESTAMP(:time2))
        or (UNIX_TIMESTAMP(st.field_date_and_time_value2)>UNIX_TIMESTAMP(:time1) and UNIX_TIMESTAMP(st.field_date_and_time_value2)<UNIX_TIMESTAMP(:time2))
        or (UNIX_TIMESTAMP(st.field_date_and_time_value2)>UNIX_TIMESTAMP(:time1) and UNIX_TIMESTAMP(st.field_date_and_time_value)<=UNIX_TIMESTAMP(:time1)))',
@@ -727,7 +727,7 @@ function appointment_product_create_appointment_method($values) {
   if ($result) {
     $result->field_date_and_time_value = date('Y-m-d H:i', strtotime($result->field_date_and_time_value)+$offset);
     $result->field_date_and_time_value2 = date('Y-m-d H:i', strtotime($result->field_date_and_time_value2)+$offset);
-    drupal_set_message( t("You cannot create new appointment time between {$date1_s} and {$date2_s} because it intersect with time you already created: '!title' between {$result->field_date_and_time_value} and {$result->field_date_and_time_value2}", 
+    drupal_set_message( t("You cannot create new appointment time between {$date1_s} and {$date2_s} because it intersect with time you already created: '!title' between {$result->field_date_and_time_value} and {$result->field_date_and_time_value2}",
       ['!title' => $result->title]));
     return false;
   }
@@ -742,7 +742,7 @@ function appointment_product_create_appointment_method($values) {
 	$appointmentType = get_appointment_type($values['type']);
 
   /*$appointmentTypes = db_query('SELECT n.title, n.nid, fdp.field_default_price_product_id
-    from node n 
+    from node n
     inner join field_data_field_default_price fdp ON fdp.entity_id=n.nid and fdp.bundle=\'meeting_type\'
     where n.type=\'meeting_type\' and n.nid =' . $values['type'] . ' ORDER BY n.title');
 
@@ -769,7 +769,7 @@ function appointment_product_create_appointment_method($values) {
   $text_message = t("New appointment time between {$date1_s} and {$date2_s} was created.");
   drupal_set_message($text_message);
 
-	$app_list = generate_appointment_list($user);  
+	$app_list = generate_appointment_list($user);
 
   $params = [
     'date1' => $date1_s,
@@ -781,7 +781,7 @@ function appointment_product_create_appointment_method($values) {
 
 function get_appointment_type($appointment_type_id) {
  	$appointmentTypes = db_query('SELECT n.title, n.nid, fdp.field_default_price_product_id
-  	from node n 
+  	from node n
    	inner join field_data_field_default_price fdp ON fdp.entity_id=n.nid and fdp.bundle=\'meeting_type\'
    	where n.type=\'meeting_type\' and n.nid =' . $appointment_type_id . ' ORDER BY n.title');
 
@@ -794,7 +794,7 @@ function get_appointment_type($appointment_type_id) {
 	return $appointmentType;
 }
 
-function generate_appointment_list($user) {  
+function generate_appointment_list($user) {
 	$old_date = '';
   $allowed_values = list_allowed_values(field_info_field('field_status'));
   $d = new DateTimeZone(drupal_get_user_timezone());
@@ -802,10 +802,10 @@ function generate_appointment_list($user) {
   $odffset = $d->getOffset($dt1);
   $app_list = '';
   foreach(db_query('
-  SELECT nid from node n 
+  SELECT nid from node n
       inner join field_data_field_date_and_time fdt on fdt.bundle=\'appointment\' and fdt.entity_id=n.nid
      where uid='.$user->uid.' and n.type=\'appointment\' and UNIX_TIMESTAMP(fdt.field_date_and_time_value)>UNIX_TIMESTAMP(CURRENT_TIMESTAMP) ORDER BY UNIX_TIMESTAMP(fdt.field_date_and_time_value) ASC') as $app) {
-    $nodeapp = node_load($app->nid);    
+    $nodeapp = node_load($app->nid);
     $date = date('d-m-Y', strtotime($nodeapp->field_date_and_time['und'][0]['value'])+$odffset);
     if ($date!=$old_date) {
       $app_list .= '
@@ -822,8 +822,6 @@ function generate_appointment_list($user) {
 }
 
 function appointment_product_mail ($key, &$message, $params) {
-	$timezone = drupal_get_user_timezone();
-		
 	switch ($key) {
     case 'appointment_created':
 		$appointmentType = get_appointment_type($params['new_appointments_list'][0]['type'])->title;
@@ -832,19 +830,21 @@ function appointment_product_mail ($key, &$message, $params) {
       $message['subject'] = t('New Appointment was created for you');
       $body = t('Hello!').'<br/>'.t("New appointments were created for you:").'<br>';
 			$body .= '<ul>';
-		
+
 			foreach($params['new_appointments_list'] as $appointment) {
 				$body .= '<li>' .$appointmentType  .' from ' . $appointment['start']  .  ' to ' . $appointment['end']  . '</li>';
 			}
-			
+
 			$body .= '</ul>';
 			$body .= t('Your list of appointments:').'<br/>'.$params['appointments_list'];
-      
+
 			$message['body'][] = $body;
 
 			break;
     case 'appointment_purchased_provider':
       watchdog('appointment_purchased_provider', print_r($params, true), array(), WATCHDOG_ERROR);
+      watchdog('appointment_purchased_provider', print_r($params['app_starttime'], true), array(), WATCHDOG_ERROR);
+      date_format_date($date, 'custom', 'd.m.y H:i')
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('Your appointment was purchased');
@@ -866,26 +866,26 @@ function appointment_product_mail ($key, &$message, $params) {
       	'filepath' => $uri,
       );
 
-			$message['params']['attachments'][] = $attachment; 
+			$message['params']['attachments'][] = $attachment;
 
       break;
   }
 }
 
 function appointment_product_create_appointment_submit($form, &$form_state) {
-	global $user;  
+	global $user;
 
 	if (isset($form_state['values'])) {
 		$new_appointments_list = [];
 		$app_list = generate_appointment_list($user);
-    
+
 		if ($form_state['values']['is_bulk']==0) {
    		appointment_product_create_appointment_method($form_state['values']);
 
   		$date1_s = $date1 = $form_state['values']['startdatetime'];
 		  $time1 = strtotime($date1);
   		$time2 = $time1+(integer)$form_state['values']['hours']*3600+(integer)$form_state['values']['minutes']*60;
-  		$date2_s = date('Y-m-d H:i', $time2);		
+  		$date2_s = date('Y-m-d H:i', $time2);
 
 			$new_appointments_list = [
 				0 => [
@@ -893,7 +893,7 @@ function appointment_product_create_appointment_submit($form, &$form_state) {
 					'start' => $date1_s,
 					'end' => $date2_s
 				]
-			];	
+			];
 		}
     if ($form_state['values']['is_bulk']==1) {
 			watchdog('try creating appointment', print_r($form_state['values'], 1), array(), WATCHDOG_ERROR);
@@ -909,7 +909,7 @@ function appointment_product_create_appointment_submit($form, &$form_state) {
       $max = 1;
       foreach($arr as $key=>$val) {
         $max = $key;
-      }      
+      }
       $time2 = $time1;
       if ($is_weeks) {
       	$time2 = strtotime('+ '. ($max - 1) . ' weeks ' . (7 - (integer)date('N', $time1)). ' days', $time1);
@@ -943,10 +943,10 @@ function appointment_product_create_appointment_submit($form, &$form_state) {
               appointment_product_create_appointment_method($values);
 							$new_appointments_list[] = [
 								'type' => $form_state['values']['type'],
-								'start' => $values['startdatetime'], 
-  							'end' => date('Y-m-d H:i', $currentstarttime += $length )	
+								'start' => $values['startdatetime'],
+  							'end' => date('Y-m-d H:i', $currentstarttime += $length )
 							];
-	     
+
             }
           }
         }
@@ -990,7 +990,7 @@ function _appointment_product_get_allow_attend_button($node) {
     INNER JOIN commerce_line_item cli ON cli.order_id=co.order_id
     INNER JOIN field_data_commerce_node_checkout_node cncn ON cncn.bundle=\'commerce_node_checkout\' and cncn.entity_id=cli.line_item_id
     WHERE co.status=\'completed\' and cncn.commerce_node_checkout_node_target_id='.$node->nid)->fetchField();
-  
+
   if ($attendeeuid==$user->uid) {
     $allow_attend_button = true;
   }
