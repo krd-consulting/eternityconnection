@@ -56,7 +56,7 @@ function _appointment_product_assign_link($node) {
 
       $provider_timezone = 'America/Edmonton';
 
-      $provider_date = new DateTime($buyer_date, new DateTimeZone($provider_timezone));
+      $provider_date = new DateTime($buyer_date[0]['value'], new DateTimeZone($provider_timezone));
 
       //send emails to provider and buyer
       $params = [
