@@ -61,6 +61,15 @@
 
             $(document).ready(function() {
 
+		$('ul.menu > li.expanded').hover(
+			function() {
+				$(this).addClass('open');
+			},
+			function() {
+				$(this).removeClass('open');
+			}
+		);
+
                 $('.flexslider').flexslider();
 
                 //Portfolio

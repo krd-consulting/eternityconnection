@@ -53,7 +53,8 @@ function _appointment_product_assign_link($node) {
       node_save($app);
       //send emails to provider and buyer
       $params = [
-        'app_title' => $app->title,
+				'app_title' => $app->title,
+				'app_id' => $app->nid,
         'nid' => $node->nid,
       ];
       $user2 = user_load($app->uid);
@@ -63,9 +64,9 @@ function _appointment_product_assign_link($node) {
         INNER JOIN field_data_commerce_node_checkout_node cncn ON cncn.bundle=\'commerce_node_checkout\' and cncn.entity_id=cli.line_item_id
         WHERE co.status=\'completed\' and cncn.commerce_node_checkout_node_target_id='.$node->nid)->fetchField();
       $user3 = user_load($attendeeuid);
-			watchdog('test target', print_r($app->field_type), array(), WATCHDOG_ERROR);
 			$params = [
-        'app_title' => $app->title,
+				'app_title' => $app->title,
+				'app_id' => $app->nid,
 				'type' => get_appointment_type($app->field_type['und'][0]['target_id'])->title,
         'nid' => $node->nid,
       ];
@@ -815,7 +816,6 @@ function generate_appointment_list($user) {
 function appointment_product_mail ($key, &$message, $params) {
 	switch ($key) {
     case 'appointment_created':
-      watchdog('test params', print_r($params, true), array(), WATCHDOG_ERROR);
 			$appointmentType = get_appointment_type($params['new_appointments_list'][0]['type'])->title;
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
@@ -834,19 +834,21 @@ function appointment_product_mail ($key, &$message, $params) {
 
 			break;
     case 'appointment_purchased_provider':
+      watchdog('appointment_purchased_provider', print_r($params, true), array(), WATCHDOG_ERROR);
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('Your appointment was purchased');
-      $message['body'][] = t('Hello!').'<br/>'.t('Your appointments was purchased: ').$params['app_title'].'
-      <br/>'.t('At the scheduled time, please use the following link to host your session: ').'<a href="/node/'.$params['nid'].'/meeting/moderate">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/moderate</a><br/>';
+      $message['body'][] = '<div style="margin: 1 rem;">' . t('Hello!').'<br/>'.t('Your appointment was purchased: ').'<a href="'.$GLOBALS['base_url'].'/node/'.$params['app_id'].'">'.$params['app_title'].'</a>'.'
+      <br/>'.t('At the scheduled time, please use the following link to host your session: ').'<a href="/node/'.$params['nid'].'/meeting/moderate">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/moderate</a><br/></div>';
       break;
     case 'appointment_purchased_buyer':
+      watchdog('appointment_purchased_buyer', print_r($params, true), array(), WATCHDOG_ERROR);
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('You purchased an appointment');
 			$confirmation_script = file_get_contents(drupal_get_path('module', 'appointment_product') . '/confirmation-script.html');
-      $message['body'][] = $confirmation_script . '<br>' . t('You just purchased appointment to video meeting: ').$params['app_title'].'
-      <br/>'.t('Please use the following link to attend your meeting:  ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/>';
+      $message['body'][] = '<div style="margin: 1 rem;">' . $confirmation_script . '<br>' . t('You just purchased appointment to video meeting: ').'<a href="'.$GLOBALS['base_url'].'/node/'.$params['app_id'].'">'.$params['app_title'].'</a>'.'
+      <br/>'.t('Please use the following link to attend your meeting:  ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/></div>';
 			$filename = 'disclaimer-' . strtolower(str_replace(' ' , '-', $params['type'])) . '.pdf';
 			$uri = drupal_get_path('module', 'appointment_product') . '/docs/' . $filename;
 			$file = file_get_contents($uri);

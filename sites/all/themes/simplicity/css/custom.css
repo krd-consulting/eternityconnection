@@ -200,7 +200,16 @@ ul.appointment-list > li .btn-edit {
 	margin-right: 1em;
 }
 
+div#wrapper_overall > .alert > ul {
+	width: 75%;
+	margin: 0 auto;
+	text-align: left;
+}
 
+div#wrapper_overall > .alert {
+	margin-bottom: 0px;
+	text-align: center;
+}
 
 .work-list-2{
     position: relative;
@@ -244,3 +253,4 @@ ul.appointment-list > li .btn-edit {
     width:100%;
     height: auto;
 }
+

@@ -95,6 +95,7 @@ else{
 ?>
 
 <div id="wrapper_overall" class="<?php print $layout_type; ?> no-touch">
+  	<?php print $messages; ?>
 
     <?php if ((isset($header_type) && $header_type != "full") || ($layout_type == "boxed")): ?>
 
@@ -229,7 +230,7 @@ else{
                     <h1 class="page-header"><?php print $title; ?></h1>
                 <?php endif; ?>
                 <?php print render($title_suffix); ?>
-                <?php print $messages; ?>
+                <!--<?php print $messages; ?>-->
                 <?php if (!empty($tabs)): ?>
                     <?php print render($tabs); ?>
                 <?php endif; ?>
