@@ -51,6 +51,12 @@ function _appointment_product_assign_link($node) {
     if ($app && $app->field_status['und'][0]['value']==2 && $node->status==1) {
       $app->field_status['und'][0]['value'] = 3;
       node_save($app);
+			// get timezone
+			$timezone = drupal_get_user_timezone();
+			$starttime = field_get_items('node', $app, 'field_date_and_time_value')[0]['value']);
+			$endtime =  field_get_items('node', $app, 'field_date_and_time_value2')[0]['value']);
+			$starttime = new DateObject($starttime, new DateTimeZone($timezone));
+			$endtime = new DateObject($endtime, new DateTimeZone($timezone));
       //send emails to provider and buyer
       $params = [
 				'app_title' => $app->title,
@@ -67,6 +73,8 @@ function _appointment_product_assign_link($node) {
 			$params = [
 				'app_title' => $app->title,
 				'app_id' => $app->nid,
+				'app_starttime' => $starttime,
+				'app_endtime' => $endtime,
 				'type' => get_appointment_type($app->field_type['und'][0]['target_id'])->title,
         'nid' => $node->nid,
       ];
@@ -814,9 +822,11 @@ function generate_appointment_list($user) {
 }
 
 function appointment_product_mail ($key, &$message, $params) {
+	$timezone = drupal_get_user_timezone();
+		
 	switch ($key) {
     case 'appointment_created':
-			$appointmentType = get_appointment_type($params['new_appointments_list'][0]['type'])->title;
+		$appointmentType = get_appointment_type($params['new_appointments_list'][0]['type'])->title;
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('New Appointment was created for you');
@@ -847,8 +857,8 @@ function appointment_product_mail ($key, &$message, $params) {
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('You purchased an appointment');
 			$confirmation_script = file_get_contents(drupal_get_path('module', 'appointment_product') . '/confirmation-script.html');
-      $message['body'][] = '<div style="margin: 1 rem;">' . $confirmation_script . '<br>' . t('You just purchased appointment to video meeting: ').'<a href="'.$GLOBALS['base_url'].'/node/'.$params['app_id'].'">'.$params['app_title'].'</a>'.'
-      <br/>'.t('Please use the following link to attend your meeting:  ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/></div>';
+      $message['body'][] = '<div style="margin: 16px;"><br>' . t('You just purchased appointment to video meeting: ').'<a href="'.$GLOBALS['base_url'].'/node/'.$params['app_id'].'">'.$params['app_title'].'</a>'.'
+      <br/>'.t('Please use the following link to attend your meeting:  ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/>' . $confirmation_script  . '</div>';
 			$filename = 'disclaimer-' . strtolower(str_replace(' ' , '-', $params['type'])) . '.pdf';
 			$uri = drupal_get_path('module', 'appointment_product') . '/docs/' . $filename;
 			$file = file_get_contents($uri);
