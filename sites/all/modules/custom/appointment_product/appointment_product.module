@@ -53,7 +53,7 @@ function _appointment_product_assign_link($node) {
       node_save($app);
 			// get timezone
 			$timezone = drupal_get_user_timezone();
-			$starttime = field_get_items('node', $app, 'field_date_and_time_value')[0]['value'];
+			$starttime = $app->field_date_and_time_value;
 			$endtime =  field_get_items('node', $app, 'field_date_and_time_value2')[0]['value'];
       //send emails to provider and buyer
       $params = [
