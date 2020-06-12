@@ -55,8 +55,6 @@ function _appointment_product_assign_link($node) {
 			$timezone = drupal_get_user_timezone();
 			$starttime = field_get_items('node', $app, 'field_date_and_time_value')[0]['value'];
 			$endtime =  field_get_items('node', $app, 'field_date_and_time_value2')[0]['value'];
-			$starttime = new DateObject($starttime, new DateTimeZone($timezone));
-			$endtime = new DateObject($endtime, new DateTimeZone($timezone));
       //send emails to provider and buyer
       $params = [
 				'app_title' => $app->title,
@@ -845,7 +843,12 @@ function appointment_product_mail ($key, &$message, $params) {
 			break;
     case 'appointment_purchased_provider':
       watchdog('appointment_purchased_provider', print_r($params, true), array(), WATCHDOG_ERROR);
-      watchdog('appointment_purchased_provider', print_r(date_format_date($params['app_starttime'], 'custom', 'd.m.y H:i'), true), array(), WATCHDOG_ERROR);
+      watchdog(
+        'appointment_purchased_provider',
+        print_r($params['app_starttime'], true),
+        array(),
+        WATCHDOG_ERROR
+      );
 
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
