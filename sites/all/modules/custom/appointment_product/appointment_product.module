@@ -64,7 +64,7 @@ function _appointment_product_assign_link($node) {
         'app_title' => $app->title,
         'app_id' => $app->nid,
         'nid' => $node->nid,
-        'app_date' => $provider_date->date
+        'app_date' => $provider_date
       ];
 
       drupal_mail(
@@ -82,7 +82,7 @@ function _appointment_product_assign_link($node) {
 			$params = [
 				'app_title' => $app->title,
 				'app_id' => $app->nid,
-				'app_date' => $buyer_date[0]['value'],
+				'app_date' => new DateTime($buyer_date[0]['value'], $buyer_date[0]['timezone']),
 				'type' => get_appointment_type($app->field_type['und'][0]['target_id'])->title,
         'nid' => $node->nid,
       ];
