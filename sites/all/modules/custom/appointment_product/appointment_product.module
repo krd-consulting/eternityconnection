@@ -845,7 +845,7 @@ function appointment_product_mail ($key, &$message, $params) {
 			break;
     case 'appointment_purchased_provider':
       watchdog('appointment_purchased_provider', print_r($params, true), array(), WATCHDOG_ERROR);
-      watchdog('appointment_purchased_provider', print_r(date_format_date(params['app_starttime'], 'custom', 'd.m.y H:i'), true), array(), WATCHDOG_ERROR);
+      watchdog('appointment_purchased_provider', print_r(date_format_date($params['app_starttime'], 'custom', 'd.m.y H:i'), true), array(), WATCHDOG_ERROR);
 
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
