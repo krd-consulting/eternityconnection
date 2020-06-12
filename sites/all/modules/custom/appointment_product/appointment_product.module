@@ -51,20 +51,33 @@ function _appointment_product_assign_link($node) {
     if ($app && $app->field_status['und'][0]['value']==2 && $node->status==1) {
       $app->field_status['und'][0]['value'] = 3;
       node_save($app);
-			// get timezone
-			$timezone = drupal_get_user_timezone();
-			$starttime = field_get_items('node', $app, 'field_date_and_time');
-			$endtime =  field_get_items('node', $app, 'field_date_and_time_value2')[0]['value'];
+			$buyer_date = field_get_items('node', $app, 'field_date_and_time');
+      $user2 = user_load($app->uid);
+
+      $provider_timezone;
+      if(variable_get('configurable_timezones', 1) && $user->uid && $user->timezone) {
+        $provider_timezone = $user->timezone;
+      }else {
+        $provider_timezone = variable_get('date_default_timezone', @date_default_timezone_get());
+      }
+
+      $provider_date = new DateTime($buyer_date, new DateTimeZone($provider_timezone));
+
       //send emails to provider and buyer
       $params = [
-				'app_title' => $app->title,
-				'app_id' => $app->nid,
+        'app_title' => $app->title,
+        'app_id' => $app->nid,
         'nid' => $node->nid,
-        'app_starttime' => $starttime,
-        'app_endtime' => $endtime,
+        'app_date' => $provider_date
       ];
-      $user2 = user_load($app->uid);
-      drupal_mail('appointment_product', 'appointment_purchased_provider', $user2->mail, user_preferred_language($user2), $params);
+
+      drupal_mail(
+        'appointment_product',
+        'appointment_purchased_provider',
+        $user2->mail,
+        user_preferred_language($user2),
+        $params
+      );
       $attendeeuid = db_query('SELECT co.uid FROM commerce_order co
         INNER JOIN commerce_line_item cli ON cli.order_id=co.order_id
         INNER JOIN field_data_commerce_node_checkout_node cncn ON cncn.bundle=\'commerce_node_checkout\' and cncn.entity_id=cli.line_item_id
@@ -73,8 +86,7 @@ function _appointment_product_assign_link($node) {
 			$params = [
 				'app_title' => $app->title,
 				'app_id' => $app->nid,
-				'app_starttime' => $starttime,
-				'app_endtime' => $endtime,
+				'app_date' => $buyer_date,
 				'type' => get_appointment_type($app->field_type['und'][0]['target_id'])->title,
         'nid' => $node->nid,
       ];
