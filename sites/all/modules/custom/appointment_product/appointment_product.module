@@ -860,8 +860,8 @@ function appointment_product_mail($key, &$message, $params) {
       // Set headers etc
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('Your appointment was purchased');
-      $message['body'][] = '<div style="margin: 1 rem;">' . t('Hello!').'<br/>'.t('Your appointment was purchased: ').'<a href="'.$GLOBALS['base_url'].'/node/'.$params['app_id'].'">'.$params['app_title']. '(' . date_format($params['app_date'], 'F j, Y H:i:s') . ' GMT'. date_format($params['app_date'], 'P') . ') </a>'.'
-      <br/>'.t('At the scheduled time, please use the following link to host your session: ').'<a href="/node/'.$params['nid'].'/meeting/moderate">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/moderate</a><br/></div>';
+      $message['body'][] = t('Hello!').'<br>'.t('Your appointment was purchased: ').'<a href="'.$GLOBALS['base_url'].'/node/'.$params['app_id'].'">'.$params['app_title']. '(' . date_format($params['app_date'], 'F j, Y H:i:s') . ' GMT'. date_format($params['app_date'], 'P') . ') </a>'.'
+      <br/>'.t('At the scheduled time, please use the following link to host your session: ').'<a href="/node/'.$params['nid'].'/meeting/moderate">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/moderate</a><br/>';
       break;
     case 'appointment_purchased_buyer':
       watchdog('appointment_purchased_buyer', print_r($params, true), array(), WATCHDOG_ERROR);
@@ -869,8 +869,8 @@ function appointment_product_mail($key, &$message, $params) {
       // $message['to'] = 'foo@bar.com';
       $message['subject'] = t('You purchased an appointment');
 			$confirmation_script = file_get_contents(drupal_get_path('module', 'appointment_product') . '/confirmation-script.html');
-      $message['body'][] = '<div style="margin: 16px;"><br>' . t('You just purchased an appointment to video meeting: ').'<a href="'.$GLOBALS['base_url'].'/node/'.$params['app_id'].'">'.$params['app_title'].'(' . date_format($params['app_date'], 'F j, Y H:i:s') . ' GMT'. date_format($params['app_date'], 'P') . ') </a>'.'
-      <br/>'.t('Please use the following link to attend your meeting:  ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/>' . $confirmation_script  . '</div>';
+      $message['body'][] = '<br>' . t('You just purchased an appointment to video meeting: ').'<a href="'.$GLOBALS['base_url'].'/node/'.$params['app_id'].'">'. $params['app_title'] . '(' . date_format($params['app_date'], 'F j, Y H:i:s') . ' GMT' . date_format($params['app_date'], 'P') . ') </a>'.'
+      <br/>'.t('Please use the following link to attend your meeting:  ').'<a href="/node/'.$params['nid'].'/meeting/attend">'.$GLOBALS['base_url'].'/node/'.$params['nid'].'/meeting/attend</a><br/>' . $confirmation_script;
 			$filename = 'disclaimer-' . strtolower(str_replace(' ' , '-', $params['type'])) . '.pdf';
 			$uri = drupal_get_path('module', 'appointment_product') . '/docs/' . $filename;
 			$file = file_get_contents($uri);
